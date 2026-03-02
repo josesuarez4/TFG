@@ -1,0 +1,1001 @@
+paciente_id,hospital,operacion,codigo,prioridad,fecha_entrada,fecha_intervencion,estado
+1,Hospital C,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2026-04-13,2026-05-14,En espera
+2,Hospital B,Septoplastia,Z99.11;J45,Normal,2027-03-12,2027-08-21,En espera
+3,Hospital A,Cataratas,H25;H26.2;Q10,Normal,2026-09-28,2027-02-05,En espera
+4,Hospital B,Cirugía de colon,K51;K50,Urgente,2026-04-17,2026-10-12,En espera
+5,Hospital A,Bypass coronario,I25;H34;I21;I63,Urgente,2026-03-13,2026-08-19,Intervenido
+6,Hospital A,Cesárea,O82;A00,Preferente,2027-12-02,,En espera
+7,Hospital A,Cirugía de melanoma,C43;H40,Preferente,2026-01-21,2026-04-14,Intervenido
+8,Hospital A,Apendicectomía,,Preferente,2027-09-07,2028-01-22,Intervenido
+9,Hospital B,Corrección de estrabismo,H50,Normal,2026-05-02,2026-07-14,En espera
+10,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Normal,2027-04-12,2027-09-15,Intervenido
+11,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-08-03,,Cancelado
+12,Hospital A,Marcapasos,I47;I44;I48,Urgente,2026-11-27,2027-02-15,En espera
+13,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2027-04-04,,En espera
+14,Hospital C,Marcapasos,I47;I44;I48,Urgente,2026-03-29,2026-07-04,Intervenido
+15,Hospital C,Marcapasos,I47;I44;I48,Urgente,2027-01-08,2027-01-12,Intervenido
+16,Hospital B,Mastectomía,C50,Urgente,2026-04-10,,En espera
+17,Hospital A,Bypass coronario,I25;H34;I21;I63,Urgente,2027-10-26,2027-12-05,Intervenido
+18,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-05-11,2026-05-28,Intervenido
+19,Hospital C,Amigdalectomía,J03;J35,Preferente,2027-10-24,2028-02-02,Intervenido
+20,Hospital C,Cataratas,H25;H26.2;Q10,Preferente,2026-11-05,2027-02-16,Intervenido
+21,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Urgente,2026-12-10,2027-04-13,Intervenido
+22,Hospital C,Hernias,M50,Preferente,2027-05-07,2027-06-28,En espera
+23,Hospital B,Cirugía de ovarios,O04;N80;Q56,Normal,2027-02-18,,En espera
+24,Hospital C,Miomectomía,Q38,Urgente,2027-01-21,,En espera
+25,Hospital C,Gastrectomía,K25,Normal,2026-07-11,2027-01-05,Intervenido
+26,Hospital C,Apendicectomía,,Preferente,2026-10-04,2027-01-28,En espera
+27,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2026-06-10,2026-06-17,En espera
+28,Hospital A,Reparación de válvula cardíaca,I33,Normal,2027-04-05,,En espera
+29,Hospital A,Cataratas,H25;H26.2;Q10,Preferente,2026-11-10,2027-02-04,En espera
+30,Hospital C,Corrección de estrabismo,H50,Urgente,2026-01-22,2026-06-04,Intervenido
+31,Hospital B,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Normal,2026-09-10,2027-01-18,Intervenido
+32,Hospital B,Varices,I87,Urgente,2027-07-15,2027-12-11,En espera
+33,Hospital B,Colecistectomía,K80;K81;K83,Normal,2027-04-20,2027-07-08,En espera
+34,Hospital B,Prótesis de hombro,M16;M17;M47;M19,Preferente,2026-02-28,,En espera
+35,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-05-26,,En espera
+36,Hospital A,Cirugía de melanoma,C43;H40,Normal,2027-11-13,2028-03-25,En espera
+37,Hospital C,Apendicectomía,,Urgente,2027-04-21,2027-07-12,En espera
+38,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2027-12-01,2028-05-09,En espera
+39,Hospital B,Mastectomía,C50,Urgente,2026-07-09,2026-11-25,En espera
+40,Hospital A,Meniscectomía,M23,Preferente,2027-11-18,2028-01-09,En espera
+41,Hospital B,Cesárea,O82;A00,Urgente,2027-07-17,2027-11-11,En espera
+42,Hospital C,Amigdalectomía,J03;J35,Normal,2027-07-21,2027-08-24,En espera
+43,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Urgente,2026-09-01,2026-11-22,En espera
+44,Hospital B,Bypass coronario,I25;H34;I21;I63,Preferente,2027-05-20,2027-10-24,Intervenido
+45,Hospital C,Toracotomía,C34;S23,Preferente,2026-05-11,2026-06-01,En espera
+46,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2027-04-30,,En espera
+47,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Preferente,2027-10-09,2028-01-30,Intervenido
+48,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2026-01-21,,En espera
+49,Hospital A,Colecistectomía,K80;K81;K83,Normal,2026-06-16,2026-07-03,Intervenido
+50,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2026-10-01,,En espera
+51,Hospital C,Cirugía de ovarios,O04;N80;Q56,Preferente,2027-01-23,,Cancelado
+52,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2027-08-24,2028-01-01,Intervenido
+53,Hospital C,Vasectomía,Q53,Urgente,2026-11-12,2027-01-11,Intervenido
+54,Hospital B,Meniscectomía,M23,Normal,2026-01-14,2026-03-03,Intervenido
+55,Hospital B,Mastectomía,C50,Preferente,2026-08-30,2026-09-09,En espera
+56,Hospital C,Reparación de ligamento cruzado,M23,Urgente,2026-12-12,,En espera
+57,Hospital B,Cesárea,O82;A00,Normal,2027-07-19,2027-08-09,Intervenido
+58,Hospital C,Bypass coronario,I25;H34;I21;I63,Preferente,2026-12-06,,En espera
+59,Hospital B,Amigdalectomía,J03;J35,Preferente,2026-04-02,2026-05-06,Intervenido
+60,Hospital A,Varices,I87,Normal,2027-01-02,2027-06-28,En espera
+61,Hospital A,Varices,I87,Normal,2027-03-31,,En espera
+62,Hospital C,Próstata,C61,Urgente,2027-03-04,2027-05-31,En espera
+63,Hospital B,Cistectomía,K81;N30;N32,Preferente,2027-05-24,,En espera
+64,Hospital B,Prótesis de rodilla,M17;M23,Preferente,2026-02-04,2026-07-26,En espera
+65,Hospital A,Próstata,C61,Preferente,2026-07-25,,En espera
+66,Hospital A,Prótesis de rodilla,M17;M23,Normal,2026-03-22,,En espera
+67,Hospital C,Toracotomía,C34;S23,Urgente,2027-07-16,2027-10-11,En espera
+68,Hospital A,Septoplastia,Z99.11;J45,Preferente,2027-01-23,,En espera
+69,Hospital C,Reparación de válvula cardíaca,I33,Normal,2026-01-02,2026-04-21,Intervenido
+70,Hospital A,Cirugía de colon,K51;K50,Preferente,2027-01-25,,En espera
+71,Hospital A,Amigdalectomía,J03;J35,Urgente,2027-07-20,2027-08-06,En espera
+72,Hospital B,Varices,I87,Preferente,2026-04-16,,En espera
+73,Hospital A,Reparación de ligamento cruzado,M23,Urgente,2027-04-22,2027-05-13,Intervenido
+74,Hospital A,Reparación de ligamento cruzado,M23,Urgente,2027-12-04,2028-05-11,En espera
+75,Hospital C,Cirugía de columna,M50;M47;M43;M99,Preferente,2027-02-06,2027-05-27,Intervenido
+76,Hospital A,Angioplastia,I25;H34;I21;I63,Preferente,2027-12-31,,Cancelado
+77,Hospital C,Amigdalectomía,J03;J35,Urgente,2027-07-10,,En espera
+78,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2026-06-11,,En espera
+79,Hospital A,Cirugía de glaucoma,H40,Urgente,2026-07-21,,En espera
+80,Hospital C,Prótesis de rodilla,M17;M23,Preferente,2026-09-27,2026-10-02,En espera
+81,Hospital B,Corrección de estrabismo,H50,Preferente,2026-09-28,,En espera
+82,Hospital C,Vasectomía,Q53,Normal,2027-04-01,2027-07-06,Intervenido
+83,Hospital C,Litotricia renal,Q63;N18;E25.0,Urgente,2027-04-07,2027-08-23,En espera
+84,Hospital C,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-12-28,2028-04-18,En espera
+85,Hospital B,Cesárea,O82;A00,Urgente,2026-09-09,,En espera
+86,Hospital A,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2027-12-03,2028-04-17,Intervenido
+87,Hospital C,Vasectomía,Q53,Urgente,2026-10-23,,En espera
+88,Hospital C,Gastrectomía,K25,Normal,2027-12-26,,En espera
+89,Hospital B,Hernias,M50,Preferente,2027-12-21,2028-06-16,Intervenido
+90,Hospital C,Mastectomía,C50,Preferente,2026-12-04,2027-01-22,Intervenido
+91,Hospital A,Cirugía de colon,K51;K50,Urgente,2026-02-22,2026-05-01,En espera
+92,Hospital B,Meniscectomía,M23,Normal,2026-08-05,,En espera
+93,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2026-07-07,2026-12-23,Intervenido
+94,Hospital A,Toracotomía,C34;S23,Preferente,2027-01-15,,En espera
+95,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2027-05-08,2027-08-30,En espera
+96,Hospital C,Hernias,M50,Urgente,2026-02-10,2026-07-24,En espera
+97,Hospital A,Bypass coronario,I25;H34;I21;I63,Normal,2026-06-06,2026-06-08,En espera
+98,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-01-15,2026-05-13,Intervenido
+99,Hospital A,Cirugía de tiroides,E04.9,Normal,2026-03-06,2026-03-19,Intervenido
+100,Hospital A,Cirugía de senos paranasales,K65,Preferente,2027-06-05,,En espera
+101,Hospital B,Artroscopia de rodilla,M23;M17,Normal,2026-12-10,,En espera
+102,Hospital B,Marcapasos,I47;I44;I48,Normal,2026-05-09,,En espera
+103,Hospital A,Bypass coronario,I25;H34;I21;I63,Normal,2027-10-10,,En espera
+104,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-04-17,2027-04-28,Intervenido
+105,Hospital A,Histerectomía,Q38,Urgente,2026-03-04,2026-03-21,En espera
+106,Hospital C,Reparación de ligamento cruzado,M23,Preferente,2026-05-19,,En espera
+107,Hospital A,Miomectomía,Q38,Urgente,2027-05-14,2027-10-14,En espera
+108,Hospital C,Toracotomía,C34;S23,Normal,2027-08-16,2027-11-02,En espera
+109,Hospital A,Cirugía de úlcera gástrica,K25,Normal,2027-01-27,2027-05-21,En espera
+110,Hospital C,Cirugía bariátrica,,Normal,2027-11-06,2027-11-28,Intervenido
+111,Hospital A,Reparación de ligamento cruzado,M23,Normal,2027-02-23,2027-08-14,En espera
+112,Hospital A,Reparación de ligamento cruzado,M23,Normal,2026-10-16,2026-11-17,Intervenido
+113,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2027-01-14,2027-05-07,En espera
+114,Hospital B,Trasplante renal,Q63;N18;E25.0,Urgente,2027-05-05,,En espera
+115,Hospital C,Bypass coronario,I25;H34;I21;I63,Normal,2026-08-19,2026-09-20,En espera
+116,Hospital B,Mastectomía,C50,Preferente,2026-02-10,2026-06-09,Intervenido
+117,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Preferente,2026-01-28,2026-03-08,Intervenido
+118,Hospital C,Próstata,C61,Normal,2026-05-15,,En espera
+119,Hospital C,Cesárea,O82;A00,Urgente,2026-07-20,,En espera
+120,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2026-02-02,2026-02-20,Intervenido
+121,Hospital B,Prótesis de cadera,M16,Preferente,2026-02-17,,En espera
+122,Hospital B,Apendicectomía,,Preferente,2027-05-18,2027-09-21,En espera
+123,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2027-02-11,2027-06-27,Intervenido
+124,Hospital B,Cistectomía,K81;N30;N32,Preferente,2027-07-28,,En espera
+125,Hospital B,Mastectomía,C50,Preferente,2027-12-29,,En espera
+126,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2026-04-09,2026-07-04,En espera
+127,Hospital C,Amigdalectomía,J03;J35,Preferente,2027-11-15,,En espera
+128,Hospital C,Litotricia renal,Q63;N18;E25.0,Urgente,2027-12-27,2028-03-28,En espera
+129,Hospital A,Cirugía bariátrica,,Normal,2027-07-01,2027-07-30,Intervenido
+130,Hospital C,Cistectomía,K81;N30;N32,Normal,2027-09-05,,En espera
+131,Hospital B,Apendicectomía,,Urgente,2027-04-07,2027-05-04,En espera
+132,Hospital A,Bypass coronario,I25;H34;I21;I63,Urgente,2027-10-05,,En espera
+133,Hospital A,Derivación ventricular,,Normal,2026-01-05,2026-06-05,En espera
+134,Hospital A,Gastrectomía,K25,Preferente,2026-08-06,,Cancelado
+135,Hospital C,Cistectomía,K81;N30;N32,Preferente,2027-05-18,,En espera
+136,Hospital A,Gastrectomía,K25,Normal,2027-02-02,,En espera
+137,Hospital A,Cirugía de melanoma,C43;H40,Preferente,2027-01-28,2027-05-05,Intervenido
+138,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-07-26,,En espera
+139,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-01-15,2026-02-03,En espera
+140,Hospital B,Colecistectomía,K80;K81;K83,Preferente,2027-07-08,2027-08-07,En espera
+141,Hospital A,Marcapasos,I47;I44;I48,Preferente,2027-04-06,,En espera
+142,Hospital B,Cataratas,H25;H26.2;Q10,Normal,2027-11-22,,En espera
+143,Hospital C,Cirugía de glaucoma,H40,Urgente,2027-07-29,,En espera
+144,Hospital C,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2026-08-29,2026-12-18,Intervenido
+145,Hospital C,Vasectomía,Q53,Normal,2027-07-18,2027-12-09,En espera
+146,Hospital C,Cirugía de úlcera gástrica,K25,Preferente,2026-04-06,,En espera
+147,Hospital B,Cistectomía,K81;N30;N32,Urgente,2027-04-30,,En espera
+148,Hospital A,Cirugía de senos paranasales,K65,Preferente,2027-02-11,,En espera
+149,Hospital C,Cataratas,H25;H26.2;Q10,Urgente,2026-08-19,2026-12-29,Intervenido
+150,Hospital C,Trasplante renal,Q63;N18;E25.0,Preferente,2027-10-17,2027-12-20,En espera
+151,Hospital B,Artroscopia de rodilla,M23;M17,Urgente,2026-06-20,,En espera
+152,Hospital B,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-06-25,2027-07-05,Intervenido
+153,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Urgente,2026-02-05,,En espera
+154,Hospital A,Cirugía de retina,H34;H31,Preferente,2027-06-09,,En espera
+155,Hospital A,Septoplastia,Z99.11;J45,Preferente,2026-06-09,,En espera
+156,Hospital C,Reparación de válvula cardíaca,I33,Normal,2027-11-30,,En espera
+157,Hospital B,Cataratas,H25;H26.2;Q10,Normal,2026-08-31,2026-12-21,Intervenido
+158,Hospital C,Amigdalectomía,J03;J35,Urgente,2026-03-27,,En espera
+159,Hospital C,Marcapasos,I47;I44;I48,Preferente,2027-08-01,,En espera
+160,Hospital B,Corrección de estrabismo,H50,Urgente,2027-11-13,2028-02-11,En espera
+161,Hospital C,Cirugía de senos paranasales,K65,Normal,2027-07-11,2027-09-07,Intervenido
+162,Hospital C,Toracotomía,C34;S23,Urgente,2027-07-28,2027-08-11,En espera
+163,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2027-10-08,2028-02-06,Intervenido
+164,Hospital B,Reparación de ligamento cruzado,M23,Normal,2026-01-28,,En espera
+165,Hospital A,Reparación de ligamento cruzado,M23,Preferente,2027-09-12,2028-01-11,Intervenido
+166,Hospital A,Miomectomía,Q38,Urgente,2027-07-10,,Cancelado
+167,Hospital B,Corrección de estrabismo,H50,Normal,2026-12-06,2027-04-29,Intervenido
+168,Hospital A,Artroscopia de rodilla,M23;M17,Preferente,2026-11-27,2027-02-05,Intervenido
+169,Hospital C,Derivación ventricular,,Normal,2027-10-02,,En espera
+170,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Urgente,2027-05-21,,En espera
+171,Hospital C,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2026-12-14,2027-04-18,En espera
+172,Hospital A,Cirugía de retina,H34;H31,Preferente,2027-04-18,,En espera
+173,Hospital B,Mastectomía,C50,Normal,2026-08-19,,En espera
+174,Hospital A,Derivación ventricular,,Normal,2026-07-09,2026-12-10,En espera
+175,Hospital A,Vasectomía,Q53,Normal,2026-08-13,2026-10-06,En espera
+176,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-01-20,,En espera
+177,Hospital B,Cirugía de senos paranasales,K65,Preferente,2027-01-12,2027-06-10,Intervenido
+178,Hospital A,Amigdalectomía,J03;J35,Urgente,2026-10-10,2027-04-02,En espera
+179,Hospital B,Litotricia renal,Q63;N18;E25.0,Preferente,2027-09-25,2027-09-29,Intervenido
+180,Hospital C,Gastrectomía,K25,Urgente,2027-09-20,2027-11-16,Intervenido
+181,Hospital A,Gastrectomía,K25,Normal,2026-09-16,,Cancelado
+182,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Normal,2026-12-25,2027-03-06,En espera
+183,Hospital B,Cirugía de úlcera gástrica,K25,Preferente,2027-12-11,2027-12-15,Intervenido
+184,Hospital A,Cirugía de columna,M50;M47;M43;M99,Normal,2027-04-01,,Cancelado
+185,Hospital C,Cirugía de colon,K51;K50,Normal,2027-02-15,2027-02-18,Intervenido
+186,Hospital B,Varices,I87,Preferente,2027-10-11,2027-12-30,En espera
+187,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Urgente,2026-11-14,2027-03-26,En espera
+188,Hospital C,Toracotomía,C34;S23,Preferente,2027-11-08,2027-12-02,En espera
+189,Hospital B,Reparación de ligamento cruzado,M23,Urgente,2026-08-13,,En espera
+190,Hospital B,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2026-08-22,,En espera
+191,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2027-11-15,2028-04-22,Intervenido
+192,Hospital C,Cirugía de retina,H34;H31,Normal,2027-10-26,2027-12-25,Intervenido
+193,Hospital A,Histerectomía,Q38,Preferente,2027-01-09,2027-03-13,En espera
+194,Hospital A,Gastrectomía,K25,Preferente,2027-11-03,2028-02-21,Intervenido
+195,Hospital B,Prótesis de cadera,M16,Urgente,2027-08-31,2028-01-30,En espera
+196,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Normal,2027-04-17,2027-08-04,Intervenido
+197,Hospital C,Colecistectomía,K80;K81;K83,Urgente,2026-08-21,2026-11-05,Intervenido
+198,Hospital C,Mastectomía,C50,Urgente,2027-11-23,,En espera
+199,Hospital B,Próstata,C61,Normal,2026-04-23,,En espera
+200,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2027-05-12,2027-10-18,Intervenido
+201,Hospital C,Cirugía de columna,M50;M47;M43;M99,Normal,2027-03-18,,En espera
+202,Hospital B,Colecistectomía,K80;K81;K83,Preferente,2027-07-18,,En espera
+203,Hospital A,Varices,I87,Normal,2026-09-25,2027-03-17,Intervenido
+204,Hospital A,Próstata,C61,Normal,2027-05-25,2027-09-15,En espera
+205,Hospital B,Prótesis de cadera,M16,Normal,2027-01-21,2027-06-16,Intervenido
+206,Hospital C,Varices,I87,Urgente,2027-01-22,2027-05-15,En espera
+207,Hospital B,Cirugía de túnel carpiano,G54.0;M65,Urgente,2026-04-23,2026-06-09,Intervenido
+208,Hospital A,Meniscectomía,M23,Preferente,2027-09-05,,En espera
+209,Hospital A,Cirugía de colon,K51;K50,Urgente,2027-09-17,,Cancelado
+210,Hospital B,Cirugía de ovarios,O04;N80;Q56,Preferente,2026-03-22,2026-05-06,Intervenido
+211,Hospital B,Derivación ventricular,,Urgente,2027-11-30,2027-12-04,En espera
+212,Hospital A,Cirugía de tiroides,E04.9,Normal,2026-04-23,2026-06-09,En espera
+213,Hospital B,Bypass coronario,I25;H34;I21;I63,Urgente,2026-01-02,2026-02-18,Cancelado
+214,Hospital A,Amigdalectomía,J03;J35,Preferente,2027-10-04,,En espera
+215,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-08-08,2026-12-23,En espera
+216,Hospital B,Craneotomía,S06.0;G55;G44.2;I63;I69,Normal,2027-07-20,,En espera
+217,Hospital B,Cirugía de tiroides,E04.9,Preferente,2026-08-13,2026-10-13,En espera
+218,Hospital A,Cirugía bariátrica,,Normal,2027-01-20,2027-06-07,Intervenido
+219,Hospital B,Colecistectomía,K80;K81;K83,Normal,2027-02-07,2027-05-25,En espera
+220,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2027-09-30,2028-01-26,En espera
+221,Hospital A,Cirugía bariátrica,,Normal,2026-05-10,2026-07-30,En espera
+222,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Normal,2026-02-22,,En espera
+223,Hospital B,Próstata,C61,Urgente,2027-11-15,,En espera
+224,Hospital A,Artroscopia de rodilla,M23;M17,Normal,2027-12-31,2028-02-04,En espera
+225,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-11-03,2027-12-19,Intervenido
+226,Hospital C,Apendicectomía,,Normal,2027-12-11,2028-02-18,En espera
+227,Hospital A,Cirugía de melanoma,C43;H40,Normal,2027-02-20,,En espera
+228,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-09-04,2027-02-16,Intervenido
+229,Hospital C,Cirugía de senos paranasales,K65,Urgente,2027-03-15,2027-08-11,En espera
+230,Hospital C,Corrección de estrabismo,H50,Normal,2026-07-22,2026-10-04,Intervenido
+231,Hospital B,Reparación de ligamento cruzado,M23,Normal,2026-07-03,,En espera
+232,Hospital B,Histerectomía,Q38,Preferente,2026-05-03,,En espera
+233,Hospital A,Reparación de válvula cardíaca,I33,Normal,2027-02-05,,En espera
+234,Hospital C,Meniscectomía,M23,Preferente,2026-10-21,2026-11-29,En espera
+235,Hospital B,Varices,I87,Urgente,2026-10-07,2027-03-19,Intervenido
+236,Hospital B,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2027-09-02,2027-10-29,En espera
+237,Hospital B,Miomectomía,Q38,Normal,2026-07-17,2026-08-27,En espera
+238,Hospital B,Cataratas,H25;H26.2;Q10,Normal,2027-05-26,2027-07-25,En espera
+239,Hospital B,Trasplante renal,Q63;N18;E25.0,Normal,2026-05-24,2026-07-20,En espera
+240,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2027-09-01,2027-10-02,Intervenido
+241,Hospital C,Corrección de estrabismo,H50,Normal,2026-07-20,,En espera
+242,Hospital C,Vasectomía,Q53,Normal,2026-05-04,2026-10-09,En espera
+243,Hospital C,Histerectomía,Q38,Urgente,2026-07-06,2026-10-20,En espera
+244,Hospital A,Angioplastia,I25;H34;I21;I63,Normal,2026-11-22,2027-04-06,En espera
+245,Hospital C,Toracotomía,C34;S23,Urgente,2027-04-09,2027-09-19,Intervenido
+246,Hospital B,Cesárea,O82;A00,Normal,2026-12-15,2026-12-29,En espera
+247,Hospital C,Septoplastia,Z99.11;J45,Urgente,2027-10-22,2028-02-19,Intervenido
+248,Hospital A,Prótesis de rodilla,M17;M23,Normal,2027-02-07,,En espera
+249,Hospital B,Histerectomía,Q38,Urgente,2026-12-12,2027-03-28,En espera
+250,Hospital C,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2027-05-26,,Cancelado
+251,Hospital C,Cataratas,H25;H26.2;Q10,Urgente,2026-05-27,2026-08-08,En espera
+252,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2026-05-28,2026-09-12,En espera
+253,Hospital B,Hernias,M50,Urgente,2027-12-12,2028-03-05,Intervenido
+254,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Normal,2027-05-04,,En espera
+255,Hospital A,Cirugía de glaucoma,H40,Normal,2027-10-02,2028-01-17,Intervenido
+256,Hospital B,Colecistectomía,K80;K81;K83,Normal,2027-07-05,2027-12-30,En espera
+257,Hospital B,Prótesis de rodilla,M17;M23,Preferente,2026-12-04,2027-05-14,Intervenido
+258,Hospital C,Histerectomía,Q38,Preferente,2027-10-03,2027-10-10,Intervenido
+259,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-04-18,2027-09-08,En espera
+260,Hospital C,Prótesis de rodilla,M17;M23,Preferente,2026-05-31,2026-11-07,Intervenido
+261,Hospital C,Miomectomía,Q38,Urgente,2027-02-19,,En espera
+262,Hospital B,Reparación de válvula cardíaca,I33,Urgente,2026-10-25,,Cancelado
+263,Hospital A,Marcapasos,I47;I44;I48,Urgente,2027-09-03,,En espera
+264,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-09-20,,En espera
+265,Hospital B,Corrección de estrabismo,H50,Normal,2026-05-24,2026-09-21,En espera
+266,Hospital A,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2026-12-12,2027-02-07,En espera
+267,Hospital C,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2027-09-16,2027-10-07,En espera
+268,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2027-07-26,2027-10-16,Intervenido
+269,Hospital B,Trasplante renal,Q63;N18;E25.0,Preferente,2026-01-02,2026-03-12,Intervenido
+270,Hospital A,Septoplastia,Z99.11;J45,Urgente,2026-10-31,,Cancelado
+271,Hospital A,Cirugía de úlcera gástrica,K25,Urgente,2026-09-11,2026-10-30,En espera
+272,Hospital C,Vasectomía,Q53,Preferente,2027-10-14,2028-01-11,En espera
+273,Hospital B,Hernias,M50,Preferente,2027-03-29,,En espera
+274,Hospital A,Corrección de estrabismo,H50,Preferente,2026-02-06,,En espera
+275,Hospital B,Cirugía de úlcera gástrica,K25,Urgente,2026-06-09,2026-11-17,En espera
+276,Hospital A,Meniscectomía,M23,Urgente,2026-01-09,2026-05-16,En espera
+277,Hospital C,Cirugía de úlcera gástrica,K25,Normal,2026-08-21,2026-10-31,Intervenido
+278,Hospital C,Cirugía de melanoma,C43;H40,Normal,2026-04-09,,En espera
+279,Hospital B,Cirugía de melanoma,C43;H40,Preferente,2027-10-21,,En espera
+280,Hospital C,Artroscopia de rodilla,M23;M17,Normal,2026-07-27,,En espera
+281,Hospital A,Cesárea,O82;A00,Urgente,2026-05-11,2026-06-08,En espera
+282,Hospital C,Prótesis de cadera,M16,Normal,2027-02-08,,En espera
+283,Hospital B,Cistectomía,K81;N30;N32,Urgente,2026-06-01,2026-08-26,Cancelado
+284,Hospital B,Prótesis de rodilla,M17;M23,Preferente,2026-02-23,,En espera
+285,Hospital B,Gastrectomía,K25,Preferente,2026-04-30,,En espera
+286,Hospital A,Cesárea,O82;A00,Urgente,2027-11-04,2028-02-10,En espera
+287,Hospital A,Hernias,M50,Normal,2027-09-20,2027-11-24,Intervenido
+288,Hospital A,Cirugía de colon,K51;K50,Preferente,2027-08-10,,Cancelado
+289,Hospital A,Gastrectomía,K25,Preferente,2027-09-17,2027-09-22,Intervenido
+290,Hospital A,Cirugía de senos paranasales,K65,Normal,2027-02-24,,En espera
+291,Hospital C,Varices,I87,Normal,2027-02-26,,En espera
+292,Hospital A,Marcapasos,I47;I44;I48,Urgente,2026-04-14,,En espera
+293,Hospital A,Cirugía bariátrica,,Normal,2026-09-11,,Cancelado
+294,Hospital C,Marcapasos,I47;I44;I48,Normal,2026-08-15,2026-12-05,Intervenido
+295,Hospital A,Cirugía bariátrica,,Normal,2026-04-22,2026-10-06,En espera
+296,Hospital B,Cesárea,O82;A00,Urgente,2027-05-25,2027-08-19,Intervenido
+297,Hospital A,Gastrectomía,K25,Urgente,2027-04-18,2027-07-03,Intervenido
+298,Hospital A,Histerectomía,Q38,Preferente,2026-04-09,2026-09-24,En espera
+299,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2026-06-02,2026-07-31,Cancelado
+300,Hospital B,Cirugía de columna,M50;M47;M43;M99,Preferente,2026-12-04,2027-04-21,Intervenido
+301,Hospital B,Derivación ventricular,,Normal,2027-12-07,,En espera
+302,Hospital B,Cirugía de melanoma,C43;H40,Preferente,2026-06-12,,En espera
+303,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-12-21,2028-01-22,En espera
+304,Hospital B,Trasplante renal,Q63;N18;E25.0,Normal,2027-11-12,2027-12-02,En espera
+305,Hospital B,Cirugía de úlcera gástrica,K25,Preferente,2026-06-10,,En espera
+306,Hospital C,Meniscectomía,M23,Urgente,2027-08-03,,En espera
+307,Hospital B,Miomectomía,Q38,Urgente,2027-02-02,,Cancelado
+308,Hospital B,Apendicectomía,,Urgente,2026-10-04,2026-12-22,En espera
+309,Hospital C,Gastrectomía,K25,Urgente,2027-05-19,,En espera
+310,Hospital C,Próstata,C61,Preferente,2027-01-27,,En espera
+311,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-05-15,2026-10-30,En espera
+312,Hospital C,Cirugía de colon,K51;K50,Normal,2026-07-14,2026-09-10,Intervenido
+313,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Preferente,2027-02-05,,En espera
+314,Hospital C,Cirugía de úlcera gástrica,K25,Preferente,2027-10-02,,En espera
+315,Hospital C,Prótesis de rodilla,M17;M23,Preferente,2026-02-02,,En espera
+316,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Normal,2027-11-19,2028-03-29,Intervenido
+317,Hospital C,Cirugía de glaucoma,H40,Urgente,2027-04-05,2027-05-19,Intervenido
+318,Hospital A,Cesárea,O82;A00,Preferente,2027-04-15,,En espera
+319,Hospital C,Reparación de ligamento cruzado,M23,Normal,2027-01-10,2027-01-16,En espera
+320,Hospital B,Cirugía de retina,H34;H31,Normal,2026-01-22,2026-02-14,En espera
+321,Hospital C,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2027-11-01,,En espera
+322,Hospital A,Toracotomía,C34;S23,Urgente,2026-02-07,2026-07-04,En espera
+323,Hospital C,Cirugía de túnel carpiano,G54.0;M65,Preferente,2026-08-18,2026-08-29,En espera
+324,Hospital A,Toracotomía,C34;S23,Normal,2026-12-31,2027-03-15,En espera
+325,Hospital A,Varices,I87,Urgente,2027-07-17,2027-08-27,En espera
+326,Hospital B,Litotricia renal,Q63;N18;E25.0,Normal,2027-03-14,2027-08-25,Intervenido
+327,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2026-10-10,2026-12-21,En espera
+328,Hospital A,Cataratas,H25;H26.2;Q10,Normal,2026-01-27,,En espera
+329,Hospital C,Cirugía de melanoma,C43;H40,Normal,2026-08-14,2027-02-06,En espera
+330,Hospital A,Prótesis de cadera,M16,Normal,2026-10-04,,En espera
+331,Hospital A,Artroscopia de rodilla,M23;M17,Urgente,2027-09-01,2027-10-13,Intervenido
+332,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-10-11,2026-10-23,En espera
+333,Hospital C,Cistectomía,K81;N30;N32,Preferente,2027-04-26,2027-07-15,En espera
+334,Hospital C,Cirugía de retina,H34;H31,Preferente,2027-03-29,2027-08-07,Intervenido
+335,Hospital C,Próstata,C61,Preferente,2027-10-21,2027-11-17,En espera
+336,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2027-05-31,2027-07-10,En espera
+337,Hospital A,Corrección de estrabismo,H50,Urgente,2027-07-01,2027-12-09,Intervenido
+338,Hospital B,Mastectomía,C50,Urgente,2026-07-11,,En espera
+339,Hospital A,Cirugía de ovarios,O04;N80;Q56,Normal,2026-02-18,2026-02-26,En espera
+340,Hospital C,Bypass coronario,I25;H34;I21;I63,Normal,2027-05-27,,Cancelado
+341,Hospital B,Reparación de ligamento cruzado,M23,Normal,2026-01-17,,En espera
+342,Hospital C,Próstata,C61,Preferente,2026-06-21,2026-06-25,En espera
+343,Hospital A,Cistectomía,K81;N30;N32,Normal,2026-08-08,,En espera
+344,Hospital B,Cataratas,H25;H26.2;Q10,Preferente,2026-06-07,2026-09-25,Intervenido
+345,Hospital C,Mastectomía,C50,Normal,2027-04-22,2027-05-24,En espera
+346,Hospital B,Vasectomía,Q53,Preferente,2026-02-15,2026-07-04,En espera
+347,Hospital B,Gastrectomía,K25,Normal,2027-01-08,,En espera
+348,Hospital A,Trasplante renal,Q63;N18;E25.0,Normal,2027-06-02,,En espera
+349,Hospital C,Septoplastia,Z99.11;J45,Urgente,2026-04-09,2026-08-06,En espera
+350,Hospital B,Vasectomía,Q53,Normal,2026-02-06,2026-07-14,En espera
+351,Hospital B,Cesárea,O82;A00,Normal,2026-10-07,,En espera
+352,Hospital C,Corrección de estrabismo,H50,Urgente,2026-12-15,2027-03-27,En espera
+353,Hospital B,Artroscopia de rodilla,M23;M17,Preferente,2027-05-12,,En espera
+354,Hospital B,Cirugía de colon,K51;K50,Urgente,2026-10-29,,En espera
+355,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Urgente,2026-06-30,2026-09-07,En espera
+356,Hospital C,Cirugía de túnel carpiano,G54.0;M65,Preferente,2027-08-30,,En espera
+357,Hospital C,Trasplante renal,Q63;N18;E25.0,Normal,2026-04-09,2026-07-15,Intervenido
+358,Hospital C,Artroscopia de rodilla,M23;M17,Preferente,2027-12-01,2028-04-27,En espera
+359,Hospital C,Artroscopia de rodilla,M23;M17,Normal,2026-04-26,,En espera
+360,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2026-07-10,2026-11-20,En espera
+361,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2026-09-10,2026-09-19,Intervenido
+362,Hospital C,Gastrectomía,K25,Urgente,2026-06-10,2026-10-04,Intervenido
+363,Hospital B,Marcapasos,I47;I44;I48,Preferente,2026-09-13,,En espera
+364,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2026-11-19,2027-01-18,En espera
+365,Hospital A,Cirugía de colon,K51;K50,Preferente,2026-05-08,2026-10-27,Intervenido
+366,Hospital C,Varices,I87,Preferente,2026-01-18,,En espera
+367,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-07-20,,En espera
+368,Hospital B,Toracotomía,C34;S23,Urgente,2027-07-24,,En espera
+369,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2026-11-19,2027-03-30,En espera
+370,Hospital B,Reparación de ligamento cruzado,M23,Normal,2027-11-17,,Cancelado
+371,Hospital B,Trasplante renal,Q63;N18;E25.0,Normal,2027-09-18,2027-10-18,Intervenido
+372,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2026-10-15,2026-11-05,En espera
+373,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2027-10-25,2028-04-03,En espera
+374,Hospital A,Cirugía de ovarios,O04;N80;Q56,Preferente,2027-10-01,,Cancelado
+375,Hospital B,Bypass coronario,I25;H34;I21;I63,Urgente,2026-06-04,2026-07-08,Intervenido
+376,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2027-05-05,2027-10-27,En espera
+377,Hospital A,Varices,I87,Urgente,2027-01-21,2027-04-13,Intervenido
+378,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2026-04-14,,Cancelado
+379,Hospital A,Cirugía de melanoma,C43;H40,Preferente,2027-01-28,2027-02-20,Intervenido
+380,Hospital A,Angioplastia,I25;H34;I21;I63,Normal,2026-09-03,,En espera
+381,Hospital B,Toracotomía,C34;S23,Normal,2026-06-25,2026-09-02,En espera
+382,Hospital A,Cirugía de columna,M50;M47;M43;M99,Normal,2026-02-08,2026-05-27,Intervenido
+383,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-04-22,2027-05-07,En espera
+384,Hospital B,Cirugía bariátrica,,Normal,2027-11-13,2028-02-12,Intervenido
+385,Hospital C,Angioplastia,I25;H34;I21;I63,Normal,2027-06-22,,En espera
+386,Hospital A,Trasplante renal,Q63;N18;E25.0,Preferente,2027-02-12,2027-02-28,En espera
+387,Hospital B,Reparación de ligamento cruzado,M23,Urgente,2027-06-09,2027-11-24,En espera
+388,Hospital A,Marcapasos,I47;I44;I48,Normal,2027-05-21,2027-07-07,En espera
+389,Hospital B,Miomectomía,Q38,Preferente,2026-02-05,2026-07-03,Cancelado
+390,Hospital C,Bypass coronario,I25;H34;I21;I63,Normal,2027-11-16,2028-03-19,Intervenido
+391,Hospital C,Vasectomía,Q53,Normal,2026-01-20,2026-01-21,Intervenido
+392,Hospital B,Cirugía de oído medio,H65;H92;H99;H66;H60,Urgente,2026-11-17,,En espera
+393,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2027-05-27,2027-08-02,En espera
+394,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-02-04,,En espera
+395,Hospital C,Cirugía de colon,K51;K50,Normal,2027-10-16,,En espera
+396,Hospital A,Cirugía de úlcera gástrica,K25,Normal,2027-04-16,2027-05-07,En espera
+397,Hospital C,Cesárea,O82;A00,Normal,2026-05-23,2026-09-17,En espera
+398,Hospital B,Septoplastia,Z99.11;J45,Urgente,2026-04-02,2026-08-22,En espera
+399,Hospital B,Cirugía de ovarios,O04;N80;Q56,Preferente,2026-12-20,,En espera
+400,Hospital C,Trasplante renal,Q63;N18;E25.0,Normal,2027-12-28,,Cancelado
+401,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2026-02-20,2026-07-07,Intervenido
+402,Hospital C,Cirugía de ovarios,O04;N80;Q56,Normal,2027-10-27,,En espera
+403,Hospital B,Hernias,M50,Preferente,2027-11-29,,En espera
+404,Hospital A,Cirugía de columna,M50;M47;M43;M99,Normal,2027-07-29,2027-11-21,Intervenido
+405,Hospital A,Cirugía de columna,M50;M47;M43;M99,Preferente,2026-07-09,,En espera
+406,Hospital B,Apendicectomía,,Normal,2026-05-05,2026-10-03,Intervenido
+407,Hospital C,Meniscectomía,M23,Preferente,2026-05-30,2026-08-29,Intervenido
+408,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2026-11-10,2026-12-26,En espera
+409,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2027-07-24,2027-11-01,En espera
+410,Hospital B,Angioplastia,I25;H34;I21;I63,Urgente,2026-12-08,2027-01-12,En espera
+411,Hospital C,Bypass coronario,I25;H34;I21;I63,Urgente,2026-11-01,2027-01-18,En espera
+412,Hospital A,Prótesis de hombro,M16;M17;M47;M19,Urgente,2027-11-23,2028-03-15,En espera
+413,Hospital C,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Normal,2027-11-13,2027-12-08,Intervenido
+414,Hospital C,Marcapasos,I47;I44;I48,Urgente,2026-02-23,2026-03-09,En espera
+415,Hospital B,Colecistectomía,K80;K81;K83,Preferente,2027-03-20,,En espera
+416,Hospital B,Derivación ventricular,,Urgente,2027-09-05,2028-02-02,Intervenido
+417,Hospital B,Trasplante renal,Q63;N18;E25.0,Urgente,2026-09-21,2027-03-16,Intervenido
+418,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2026-02-22,,En espera
+419,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-07-26,,En espera
+420,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2027-09-12,,En espera
+421,Hospital B,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-01-05,,En espera
+422,Hospital A,Colecistectomía,K80;K81;K83,Urgente,2026-04-13,,En espera
+423,Hospital A,Hernias,M50,Urgente,2026-07-15,,En espera
+424,Hospital A,Cirugía de tiroides,E04.9,Urgente,2026-12-16,,Cancelado
+425,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-02-16,,En espera
+426,Hospital B,Amigdalectomía,J03;J35,Urgente,2027-10-18,2028-02-19,Intervenido
+427,Hospital A,Cirugía de melanoma,C43;H40,Preferente,2026-09-26,,Cancelado
+428,Hospital B,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-01-05,2027-06-29,En espera
+429,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Urgente,2027-09-28,2028-02-17,Intervenido
+430,Hospital C,Histerectomía,Q38,Preferente,2026-04-16,2026-06-16,En espera
+431,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2027-11-01,2028-04-13,Intervenido
+432,Hospital C,Prótesis de hombro,M16;M17;M47;M19,Urgente,2027-10-21,2027-11-20,En espera
+433,Hospital C,Derivación ventricular,,Urgente,2027-10-19,2028-03-28,En espera
+434,Hospital C,Artroscopia de rodilla,M23;M17,Preferente,2026-04-30,2026-07-28,En espera
+435,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2027-08-27,2028-01-16,Intervenido
+436,Hospital A,Amigdalectomía,J03;J35,Urgente,2026-02-27,2026-04-21,Intervenido
+437,Hospital C,Cirugía de tiroides,E04.9,Normal,2026-12-12,2027-02-28,En espera
+438,Hospital B,Bypass coronario,I25;H34;I21;I63,Preferente,2027-04-19,2027-05-30,Intervenido
+439,Hospital C,Cirugía de columna,M50;M47;M43;M99,Preferente,2026-04-27,2026-07-04,En espera
+440,Hospital A,Angioplastia,I25;H34;I21;I63,Normal,2026-05-07,,En espera
+441,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Normal,2027-01-28,,En espera
+442,Hospital A,Cirugía de melanoma,C43;H40,Urgente,2027-10-03,2027-12-28,En espera
+443,Hospital C,Marcapasos,I47;I44;I48,Normal,2026-02-27,,En espera
+444,Hospital B,Trasplante renal,Q63;N18;E25.0,Urgente,2027-09-26,2028-01-31,Intervenido
+445,Hospital A,Meniscectomía,M23,Normal,2027-05-28,,En espera
+446,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-04-06,,En espera
+447,Hospital C,Reparación de válvula cardíaca,I33,Urgente,2027-09-30,,En espera
+448,Hospital B,Próstata,C61,Urgente,2026-04-28,2026-10-21,Intervenido
+449,Hospital C,Reparación de válvula cardíaca,I33,Urgente,2027-07-14,2027-08-18,Cancelado
+450,Hospital A,Meniscectomía,M23,Normal,2027-08-24,2027-10-13,En espera
+451,Hospital B,Toracotomía,C34;S23,Preferente,2027-05-03,2027-09-29,Intervenido
+452,Hospital B,Cirugía de ovarios,O04;N80;Q56,Urgente,2026-08-25,2026-09-14,En espera
+453,Hospital A,Próstata,C61,Urgente,2026-09-29,2027-01-08,Intervenido
+454,Hospital B,Amigdalectomía,J03;J35,Urgente,2026-07-08,,En espera
+455,Hospital B,Toracotomía,C34;S23,Urgente,2027-12-05,2028-05-14,Intervenido
+456,Hospital C,Prótesis de cadera,M16,Preferente,2027-03-23,,En espera
+457,Hospital A,Vasectomía,Q53,Normal,2027-08-04,,En espera
+458,Hospital A,Prótesis de rodilla,M17;M23,Preferente,2026-09-04,2027-01-19,Intervenido
+459,Hospital A,Reparación de ligamento cruzado,M23,Urgente,2026-03-17,,En espera
+460,Hospital A,Histerectomía,Q38,Preferente,2026-06-03,,En espera
+461,Hospital A,Marcapasos,I47;I44;I48,Urgente,2027-10-18,,En espera
+462,Hospital B,Derivación ventricular,,Normal,2027-03-11,,En espera
+463,Hospital C,Vasectomía,Q53,Normal,2026-03-27,,En espera
+464,Hospital A,Cataratas,H25;H26.2;Q10,Normal,2027-11-28,2028-02-12,En espera
+465,Hospital C,Mastectomía,C50,Urgente,2026-10-12,,En espera
+466,Hospital C,Toracotomía,C34;S23,Preferente,2026-08-08,2026-08-23,En espera
+467,Hospital B,Prótesis de cadera,M16,Normal,2026-03-10,2026-06-23,Intervenido
+468,Hospital A,Reparación de ligamento cruzado,M23,Urgente,2026-02-16,2026-04-09,En espera
+469,Hospital B,Prótesis de hombro,M16;M17;M47;M19,Urgente,2026-04-04,2026-04-25,En espera
+470,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-03-29,,En espera
+471,Hospital B,Mastectomía,C50,Normal,2026-07-23,,En espera
+472,Hospital C,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2026-08-06,2027-01-10,Intervenido
+473,Hospital A,Reparación de válvula cardíaca,I33,Preferente,2027-04-19,,En espera
+474,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-03-08,,En espera
+475,Hospital C,Cistectomía,K81;N30;N32,Preferente,2026-12-07,2027-03-09,Intervenido
+476,Hospital B,Cirugía de glaucoma,H40,Preferente,2027-07-05,2027-08-02,Intervenido
+477,Hospital A,Varices,I87,Urgente,2027-09-04,2027-11-19,En espera
+478,Hospital C,Apendicectomía,,Urgente,2026-10-16,2027-04-07,Intervenido
+479,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2026-09-11,2026-11-17,Intervenido
+480,Hospital A,Litotricia renal,Q63;N18;E25.0,Preferente,2026-12-23,,En espera
+481,Hospital A,Mastectomía,C50,Urgente,2026-01-23,2026-07-04,Intervenido
+482,Hospital C,Septoplastia,Z99.11;J45,Preferente,2027-06-06,2027-09-05,Intervenido
+483,Hospital A,Derivación ventricular,,Preferente,2026-04-10,,En espera
+484,Hospital C,Toracotomía,C34;S23,Urgente,2026-06-29,,En espera
+485,Hospital A,Cirugía de úlcera gástrica,K25,Normal,2026-08-11,,En espera
+486,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2027-10-21,2027-10-27,Intervenido
+487,Hospital C,Cistectomía,K81;N30;N32,Normal,2027-03-18,,Cancelado
+488,Hospital C,Cirugía de columna,M50;M47;M43;M99,Preferente,2027-08-31,2027-10-31,En espera
+489,Hospital A,Cirugía bariátrica,,Preferente,2026-11-21,2026-12-18,En espera
+490,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-05-31,2027-10-02,En espera
+491,Hospital C,Meniscectomía,M23,Urgente,2026-01-16,2026-04-19,En espera
+492,Hospital A,Litotricia renal,Q63;N18;E25.0,Preferente,2026-12-02,2027-03-11,En espera
+493,Hospital B,Cirugía de úlcera gástrica,K25,Urgente,2026-09-15,2026-10-20,En espera
+494,Hospital A,Cirugía de columna,M50;M47;M43;M99,Urgente,2027-05-12,2027-11-04,Intervenido
+495,Hospital B,Amigdalectomía,J03;J35,Normal,2026-06-09,2026-08-04,En espera
+496,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-04-20,2027-10-14,Intervenido
+497,Hospital B,Apendicectomía,,Normal,2027-10-26,,En espera
+498,Hospital B,Marcapasos,I47;I44;I48,Urgente,2027-11-21,2028-01-06,En espera
+499,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Urgente,2027-11-06,2028-03-21,En espera
+500,Hospital A,Amigdalectomía,J03;J35,Urgente,2027-01-15,2027-05-19,En espera
+501,Hospital B,Cataratas,H25;H26.2;Q10,Preferente,2027-06-29,2027-10-04,Intervenido
+502,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Urgente,2027-11-22,2028-02-15,En espera
+503,Hospital B,Cirugía de glaucoma,H40,Normal,2027-03-03,2027-08-27,Intervenido
+504,Hospital C,Hernias,M50,Normal,2027-09-05,2027-12-20,En espera
+505,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2026-09-25,2027-01-10,Intervenido
+506,Hospital C,Cirugía de melanoma,C43;H40,Urgente,2027-07-31,2027-08-09,En espera
+507,Hospital B,Prótesis de rodilla,M17;M23,Normal,2027-02-21,2027-05-20,Intervenido
+508,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2026-06-17,2026-07-24,Intervenido
+509,Hospital B,Cirugía de retina,H34;H31,Normal,2026-02-12,2026-03-01,En espera
+510,Hospital C,Derivación ventricular,,Preferente,2027-07-10,2027-08-30,En espera
+511,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2026-10-12,2026-12-10,Intervenido
+512,Hospital B,Amigdalectomía,J03;J35,Preferente,2027-02-01,,Cancelado
+513,Hospital A,Meniscectomía,M23,Urgente,2026-01-12,,En espera
+514,Hospital B,Meniscectomía,M23,Urgente,2027-08-30,2028-01-18,Intervenido
+515,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2026-10-29,2026-11-09,Intervenido
+516,Hospital B,Craneotomía,S06.0;G55;G44.2;I63;I69,Urgente,2026-09-10,2027-02-04,Intervenido
+517,Hospital C,Colecistectomía,K80;K81;K83,Preferente,2027-05-14,,Cancelado
+518,Hospital C,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2026-02-04,2026-06-11,Intervenido
+519,Hospital C,Amigdalectomía,J03;J35,Normal,2027-12-28,2027-12-29,En espera
+520,Hospital B,Cirugía de colon,K51;K50,Urgente,2026-03-31,2026-04-19,En espera
+521,Hospital C,Cirugía de columna,M50;M47;M43;M99,Normal,2027-08-28,2027-12-15,En espera
+522,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-08-25,2027-09-06,Intervenido
+523,Hospital B,Cirugía de colon,K51;K50,Preferente,2027-02-22,2027-08-02,Intervenido
+524,Hospital C,Artroscopia de rodilla,M23;M17,Urgente,2026-04-25,,En espera
+525,Hospital B,Hernias,M50,Preferente,2027-09-09,2027-12-21,Intervenido
+526,Hospital C,Cirugía de colon,K51;K50,Urgente,2026-07-15,2026-07-23,Intervenido
+527,Hospital A,Cirugía de melanoma,C43;H40,Normal,2027-05-16,,En espera
+528,Hospital A,Cirugía de retina,H34;H31,Normal,2027-09-18,2028-02-23,En espera
+529,Hospital C,Bypass coronario,I25;H34;I21;I63,Urgente,2027-05-08,2027-11-01,En espera
+530,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2026-03-16,,En espera
+531,Hospital B,Prótesis de rodilla,M17;M23,Preferente,2027-02-17,,En espera
+532,Hospital A,Cataratas,H25;H26.2;Q10,Urgente,2027-01-11,2027-06-21,En espera
+533,Hospital C,Corrección de estrabismo,H50,Urgente,2027-02-24,2027-05-17,En espera
+534,Hospital C,Cirugía de úlcera gástrica,K25,Urgente,2027-12-30,2028-06-03,En espera
+535,Hospital B,Angioplastia,I25;H34;I21;I63,Preferente,2026-10-04,,En espera
+536,Hospital C,Cirugía de senos paranasales,K65,Urgente,2027-11-07,,En espera
+537,Hospital B,Apendicectomía,,Normal,2027-01-29,2027-04-15,Intervenido
+538,Hospital A,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2027-04-02,2027-08-23,En espera
+539,Hospital A,Cataratas,H25;H26.2;Q10,Preferente,2026-07-11,2026-08-21,Intervenido
+540,Hospital B,Cirugía de úlcera gástrica,K25,Normal,2027-11-20,,Cancelado
+541,Hospital B,Cirugía de glaucoma,H40,Normal,2026-04-09,,En espera
+542,Hospital C,Colecistectomía,K80;K81;K83,Normal,2027-07-02,,En espera
+543,Hospital A,Trasplante renal,Q63;N18;E25.0,Urgente,2026-04-06,2026-06-20,En espera
+544,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2027-10-26,,En espera
+545,Hospital A,Trasplante renal,Q63;N18;E25.0,Urgente,2027-10-25,,En espera
+546,Hospital B,Cirugía de úlcera gástrica,K25,Preferente,2026-07-09,2026-11-07,En espera
+547,Hospital A,Cistectomía,K81;N30;N32,Preferente,2026-02-06,2026-02-09,En espera
+548,Hospital C,Cesárea,O82;A00,Normal,2027-01-04,,En espera
+549,Hospital A,Próstata,C61,Urgente,2027-11-26,2027-11-28,En espera
+550,Hospital A,Septoplastia,Z99.11;J45,Normal,2027-06-09,,En espera
+551,Hospital A,Toracotomía,C34;S23,Normal,2026-10-06,,En espera
+552,Hospital A,Cirugía de melanoma,C43;H40,Urgente,2026-08-05,,En espera
+553,Hospital A,Trasplante renal,Q63;N18;E25.0,Normal,2026-09-30,,En espera
+554,Hospital C,Cesárea,O82;A00,Preferente,2026-03-03,,Cancelado
+555,Hospital B,Cirugía de glaucoma,H40,Normal,2027-08-19,,En espera
+556,Hospital A,Angioplastia,I25;H34;I21;I63,Urgente,2027-12-30,2028-02-23,En espera
+557,Hospital C,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2026-12-08,,En espera
+558,Hospital A,Cirugía bariátrica,,Preferente,2027-02-01,2027-04-04,En espera
+559,Hospital A,Cistectomía,K81;N30;N32,Urgente,2027-11-30,,Cancelado
+560,Hospital B,Craneotomía,S06.0;G55;G44.2;I63;I69,Urgente,2026-01-19,2026-06-21,Intervenido
+561,Hospital A,Cesárea,O82;A00,Preferente,2026-06-26,,En espera
+562,Hospital C,Angioplastia,I25;H34;I21;I63,Normal,2027-09-04,2027-10-12,Intervenido
+563,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2027-01-31,,Cancelado
+564,Hospital B,Cirugía de melanoma,C43;H40,Normal,2027-03-21,2027-07-06,Intervenido
+565,Hospital A,Septoplastia,Z99.11;J45,Preferente,2026-08-21,2027-01-14,Intervenido
+566,Hospital C,Cirugía de glaucoma,H40,Normal,2026-03-17,2026-08-28,Intervenido
+567,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-09-22,,En espera
+568,Hospital A,Cirugía de retina,H34;H31,Normal,2027-03-31,2027-07-31,En espera
+569,Hospital A,Cirugía de retina,H34;H31,Preferente,2027-12-19,,En espera
+570,Hospital B,Gastrectomía,K25,Normal,2027-01-19,2027-02-20,En espera
+571,Hospital A,Gastrectomía,K25,Preferente,2027-07-18,,En espera
+572,Hospital C,Cirugía de colon,K51;K50,Urgente,2027-05-21,,En espera
+573,Hospital A,Toracotomía,C34;S23,Normal,2027-01-02,,En espera
+574,Hospital C,Prótesis de hombro,M16;M17;M47;M19,Preferente,2026-05-24,2026-07-26,Intervenido
+575,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2026-03-10,2026-04-02,Intervenido
+576,Hospital C,Prótesis de cadera,M16,Normal,2026-04-09,2026-05-27,En espera
+577,Hospital C,Corrección de estrabismo,H50,Preferente,2027-01-31,2027-03-29,En espera
+578,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2026-01-25,2026-05-23,Intervenido
+579,Hospital A,Apendicectomía,,Preferente,2027-04-14,,En espera
+580,Hospital C,Cirugía de retina,H34;H31,Urgente,2027-04-29,2027-10-07,Intervenido
+581,Hospital B,Reparación de válvula cardíaca,I33,Normal,2027-07-19,,En espera
+582,Hospital A,Apendicectomía,,Urgente,2026-05-31,,En espera
+583,Hospital B,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2026-05-24,2026-05-31,Cancelado
+584,Hospital A,Cirugía de ovarios,O04;N80;Q56,Normal,2027-07-23,2027-09-17,En espera
+585,Hospital A,Reparación de válvula cardíaca,I33,Normal,2026-02-08,,En espera
+586,Hospital A,Cirugía de columna,M50;M47;M43;M99,Preferente,2026-04-19,2026-06-05,Intervenido
+587,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2027-11-24,2028-04-29,En espera
+588,Hospital B,Derivación ventricular,,Normal,2026-02-11,,En espera
+589,Hospital A,Trasplante renal,Q63;N18;E25.0,Preferente,2026-07-05,,Cancelado
+590,Hospital C,Trasplante renal,Q63;N18;E25.0,Normal,2027-02-02,2027-06-08,En espera
+591,Hospital C,Cirugía de melanoma,C43;H40,Preferente,2026-08-11,2026-12-28,Intervenido
+592,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-09-26,2027-11-03,En espera
+593,Hospital A,Corrección de estrabismo,H50,Urgente,2026-05-13,,En espera
+594,Hospital C,Bypass coronario,I25;H34;I21;I63,Urgente,2026-06-12,,En espera
+595,Hospital B,Meniscectomía,M23,Normal,2026-08-03,,En espera
+596,Hospital A,Mastectomía,C50,Preferente,2026-08-23,2026-10-27,Intervenido
+597,Hospital C,Prótesis de cadera,M16,Normal,2027-10-20,2027-11-20,Intervenido
+598,Hospital C,Cirugía de ovarios,O04;N80;Q56,Preferente,2027-08-11,,En espera
+599,Hospital B,Miomectomía,Q38,Normal,2026-01-09,2026-04-28,Intervenido
+600,Hospital A,Miomectomía,Q38,Preferente,2026-03-15,,En espera
+601,Hospital A,Marcapasos,I47;I44;I48,Urgente,2027-05-07,2027-08-03,En espera
+602,Hospital C,Reparación de ligamento cruzado,M23,Normal,2026-09-10,,En espera
+603,Hospital C,Prótesis de hombro,M16;M17;M47;M19,Urgente,2026-08-18,,En espera
+604,Hospital C,Trasplante renal,Q63;N18;E25.0,Urgente,2027-06-03,2027-11-05,En espera
+605,Hospital A,Cirugía bariátrica,,Normal,2026-06-23,2026-12-14,Intervenido
+606,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Normal,2027-10-15,2027-12-05,En espera
+607,Hospital B,Corrección de estrabismo,H50,Preferente,2026-06-17,2026-08-15,En espera
+608,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2026-06-19,2026-07-19,En espera
+609,Hospital B,Derivación ventricular,,Urgente,2027-01-28,2027-05-30,En espera
+610,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-09-26,2028-01-29,Intervenido
+611,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2026-07-13,2026-11-14,En espera
+612,Hospital B,Cirugía de tiroides,E04.9,Normal,2027-06-01,2027-08-27,En espera
+613,Hospital B,Gastrectomía,K25,Preferente,2026-01-29,2026-02-16,En espera
+614,Hospital C,Reparación de ligamento cruzado,M23,Urgente,2026-06-14,,En espera
+615,Hospital A,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Preferente,2027-02-26,,En espera
+616,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2026-12-05,2027-05-29,En espera
+617,Hospital A,Reparación de válvula cardíaca,I33,Normal,2027-10-10,2028-02-13,Intervenido
+618,Hospital A,Cirugía de tiroides,E04.9,Urgente,2027-05-11,2027-10-03,Intervenido
+619,Hospital A,Próstata,C61,Preferente,2026-12-31,2027-01-22,En espera
+620,Hospital B,Litotricia renal,Q63;N18;E25.0,Normal,2026-12-08,,En espera
+621,Hospital B,Trasplante renal,Q63;N18;E25.0,Preferente,2027-05-15,2027-07-03,En espera
+622,Hospital A,Corrección de estrabismo,H50,Normal,2027-10-19,,En espera
+623,Hospital A,Cirugía de túnel carpiano,G54.0;M65,Normal,2027-05-26,2027-07-18,En espera
+624,Hospital B,Cistectomía,K81;N30;N32,Preferente,2026-11-23,,En espera
+625,Hospital C,Cirugía de úlcera gástrica,K25,Preferente,2026-08-05,2026-09-16,En espera
+626,Hospital A,Reparación de válvula cardíaca,I33,Normal,2026-10-28,,En espera
+627,Hospital C,Angioplastia,I25;H34;I21;I63,Normal,2026-05-12,,En espera
+628,Hospital B,Cirugía de glaucoma,H40,Preferente,2026-03-11,2026-06-04,En espera
+629,Hospital A,Prótesis de hombro,M16;M17;M47;M19,Urgente,2026-09-09,2026-09-30,En espera
+630,Hospital C,Toracotomía,C34;S23,Preferente,2027-02-19,,En espera
+631,Hospital C,Cirugía de túnel carpiano,G54.0;M65,Normal,2027-03-21,,En espera
+632,Hospital C,Litotricia renal,Q63;N18;E25.0,Preferente,2026-07-01,2026-11-07,Intervenido
+633,Hospital B,Prótesis de rodilla,M17;M23,Urgente,2026-06-16,,En espera
+634,Hospital B,Marcapasos,I47;I44;I48,Preferente,2026-04-01,2026-08-20,Cancelado
+635,Hospital C,Cirugía de tiroides,E04.9,Normal,2027-12-15,,En espera
+636,Hospital C,Trasplante renal,Q63;N18;E25.0,Preferente,2027-06-15,2027-11-01,Intervenido
+637,Hospital B,Cirugía bariátrica,,Normal,2026-02-08,2026-02-25,En espera
+638,Hospital C,Colecistectomía,K80;K81;K83,Normal,2026-05-06,2026-08-13,Intervenido
+639,Hospital C,Bypass coronario,I25;H34;I21;I63,Preferente,2027-03-27,2027-06-17,Intervenido
+640,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2026-06-22,,En espera
+641,Hospital C,Gastrectomía,K25,Normal,2027-10-15,,En espera
+642,Hospital C,Cirugía de túnel carpiano,G54.0;M65,Urgente,2026-08-08,,En espera
+643,Hospital C,Miomectomía,Q38,Urgente,2027-09-30,2027-12-24,En espera
+644,Hospital B,Litotricia renal,Q63;N18;E25.0,Urgente,2026-02-27,2026-03-04,En espera
+645,Hospital C,Hernias,M50,Urgente,2027-10-22,2028-04-03,En espera
+646,Hospital B,Cesárea,O82;A00,Normal,2027-04-21,,En espera
+647,Hospital B,Cirugía de columna,M50;M47;M43;M99,Preferente,2027-04-01,2027-07-01,En espera
+648,Hospital A,Cirugía de tiroides,E04.9,Normal,2026-12-27,2027-04-23,Intervenido
+649,Hospital A,Prótesis de cadera,M16,Normal,2026-01-01,,En espera
+650,Hospital C,Cirugía de colon,K51;K50,Normal,2027-01-22,,Cancelado
+651,Hospital B,Amigdalectomía,J03;J35,Preferente,2026-12-14,2027-05-12,En espera
+652,Hospital A,Reparación de válvula cardíaca,I33,Urgente,2026-07-09,,En espera
+653,Hospital C,Apendicectomía,,Normal,2027-05-20,,En espera
+654,Hospital A,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2026-07-10,2026-07-30,En espera
+655,Hospital A,Cirugía de tiroides,E04.9,Urgente,2027-05-23,2027-11-08,Intervenido
+656,Hospital B,Cistectomía,K81;N30;N32,Normal,2027-01-04,,En espera
+657,Hospital B,Toracotomía,C34;S23,Preferente,2027-02-13,2027-02-25,Intervenido
+658,Hospital A,Colecistectomía,K80;K81;K83,Normal,2026-04-27,,En espera
+659,Hospital A,Cirugía de úlcera gástrica,K25,Normal,2026-05-14,,En espera
+660,Hospital B,Septoplastia,Z99.11;J45,Urgente,2026-02-27,,En espera
+661,Hospital C,Bypass coronario,I25;H34;I21;I63,Normal,2027-07-10,2027-08-31,En espera
+662,Hospital B,Derivación ventricular,,Normal,2027-11-16,,En espera
+663,Hospital A,Litotricia renal,Q63;N18;E25.0,Preferente,2027-11-03,,En espera
+664,Hospital C,Cirugía de tiroides,E04.9,Urgente,2026-06-22,2026-10-02,En espera
+665,Hospital A,Cirugía de colon,K51;K50,Urgente,2026-05-29,,En espera
+666,Hospital C,Trasplante renal,Q63;N18;E25.0,Preferente,2026-03-21,,En espera
+667,Hospital A,Cirugía de tiroides,E04.9,Normal,2026-08-01,2027-01-03,En espera
+668,Hospital C,Cataratas,H25;H26.2;Q10,Urgente,2026-07-22,,En espera
+669,Hospital C,Mastectomía,C50,Urgente,2026-08-17,2027-02-12,En espera
+670,Hospital A,Colecistectomía,K80;K81;K83,Normal,2027-11-07,,En espera
+671,Hospital C,Varices,I87,Normal,2026-08-15,2026-11-15,En espera
+672,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2027-10-21,,En espera
+673,Hospital A,Trasplante renal,Q63;N18;E25.0,Normal,2027-06-16,,En espera
+674,Hospital B,Marcapasos,I47;I44;I48,Urgente,2027-03-17,,En espera
+675,Hospital A,Hernias,M50,Normal,2027-02-06,2027-05-26,Intervenido
+676,Hospital C,Cataratas,H25;H26.2;Q10,Normal,2026-02-16,2026-04-30,En espera
+677,Hospital C,Amigdalectomía,J03;J35,Preferente,2026-08-21,2027-02-10,En espera
+678,Hospital C,Meniscectomía,M23,Normal,2026-11-01,2027-02-22,En espera
+679,Hospital A,Apendicectomía,,Preferente,2027-06-10,2027-08-21,En espera
+680,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Normal,2026-05-23,2026-06-30,En espera
+681,Hospital B,Hernias,M50,Urgente,2027-02-19,2027-04-29,En espera
+682,Hospital A,Cirugía de úlcera gástrica,K25,Urgente,2027-05-28,2027-06-10,Intervenido
+683,Hospital A,Cirugía de retina,H34;H31,Normal,2027-01-08,,En espera
+684,Hospital B,Cirugía de túnel carpiano,G54.0;M65,Normal,2027-07-20,2027-11-11,En espera
+685,Hospital B,Cirugía de colon,K51;K50,Urgente,2026-09-16,2026-12-18,En espera
+686,Hospital B,Meniscectomía,M23,Normal,2027-10-18,2027-12-24,En espera
+687,Hospital B,Litotricia renal,Q63;N18;E25.0,Preferente,2027-04-16,,En espera
+688,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2026-01-12,2026-05-18,En espera
+689,Hospital A,Septoplastia,Z99.11;J45,Preferente,2026-11-26,,En espera
+690,Hospital C,Bypass coronario,I25;H34;I21;I63,Preferente,2026-12-24,2027-06-11,Intervenido
+691,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2027-02-12,2027-03-14,En espera
+692,Hospital C,Cataratas,H25;H26.2;Q10,Normal,2027-10-30,,En espera
+693,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-01-08,2027-01-27,En espera
+694,Hospital A,Vasectomía,Q53,Preferente,2026-01-08,2026-02-03,En espera
+695,Hospital C,Prótesis de hombro,M16;M17;M47;M19,Normal,2026-05-02,,En espera
+696,Hospital B,Meniscectomía,M23,Normal,2026-12-14,2027-04-28,En espera
+697,Hospital B,Colecistectomía,K80;K81;K83,Preferente,2027-11-07,2028-01-13,Intervenido
+698,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2026-03-31,2026-06-04,Intervenido
+699,Hospital B,Cistectomía,K81;N30;N32,Normal,2027-10-10,2027-11-16,En espera
+700,Hospital C,Vasectomía,Q53,Normal,2027-11-29,2027-11-30,Intervenido
+701,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-11-12,2027-04-02,En espera
+702,Hospital A,Gastrectomía,K25,Normal,2026-06-27,,En espera
+703,Hospital B,Vasectomía,Q53,Urgente,2027-06-24,,En espera
+704,Hospital B,Colecistectomía,K80;K81;K83,Urgente,2026-02-10,,Cancelado
+705,Hospital B,Vasectomía,Q53,Preferente,2027-12-05,,En espera
+706,Hospital C,Amigdalectomía,J03;J35,Urgente,2027-05-17,,En espera
+707,Hospital B,Prótesis de cadera,M16,Preferente,2026-05-25,,En espera
+708,Hospital C,Cirugía de glaucoma,H40,Urgente,2026-07-20,2026-07-29,En espera
+709,Hospital B,Prótesis de cadera,M16,Urgente,2027-12-25,,En espera
+710,Hospital B,Prótesis de cadera,M16,Urgente,2027-04-06,2027-04-10,En espera
+711,Hospital A,Histerectomía,Q38,Preferente,2027-07-12,2027-10-22,En espera
+712,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-07-01,2027-09-11,En espera
+713,Hospital B,Amigdalectomía,J03;J35,Normal,2026-09-10,2027-03-02,En espera
+714,Hospital A,Reparación de válvula cardíaca,I33,Preferente,2027-01-25,,En espera
+715,Hospital C,Reparación de válvula cardíaca,I33,Urgente,2027-08-17,2027-11-08,En espera
+716,Hospital C,Cirugía bariátrica,,Urgente,2026-09-13,,En espera
+717,Hospital B,Mastectomía,C50,Preferente,2027-12-10,2028-05-26,En espera
+718,Hospital C,Vasectomía,Q53,Preferente,2027-03-26,2027-09-04,En espera
+719,Hospital B,Derivación ventricular,,Preferente,2026-01-10,,En espera
+720,Hospital A,Histerectomía,Q38,Normal,2026-08-30,,Cancelado
+721,Hospital A,Artroscopia de rodilla,M23;M17,Urgente,2026-09-08,2026-09-21,En espera
+722,Hospital B,Cirugía de retina,H34;H31,Normal,2026-01-05,,En espera
+723,Hospital A,Gastrectomía,K25,Normal,2026-04-29,2026-06-02,En espera
+724,Hospital A,Meniscectomía,M23,Urgente,2027-01-09,2027-05-25,En espera
+725,Hospital B,Prótesis de hombro,M16;M17;M47;M19,Urgente,2026-03-06,2026-07-04,En espera
+726,Hospital B,Cirugía de ovarios,O04;N80;Q56,Preferente,2026-05-26,2026-06-22,En espera
+727,Hospital A,Trasplante renal,Q63;N18;E25.0,Preferente,2026-08-12,2026-10-04,En espera
+728,Hospital C,Corrección de estrabismo,H50,Normal,2026-08-27,,En espera
+729,Hospital C,Vasectomía,Q53,Preferente,2026-06-26,2026-11-18,Intervenido
+730,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2026-10-09,2027-03-16,Intervenido
+731,Hospital B,Cirugía de senos paranasales,K65,Urgente,2026-03-04,,En espera
+732,Hospital C,Cirugía de retina,H34;H31,Urgente,2026-08-05,,En espera
+733,Hospital A,Próstata,C61,Preferente,2027-11-20,2028-01-12,Intervenido
+734,Hospital C,Amigdalectomía,J03;J35,Urgente,2027-04-06,2027-05-01,En espera
+735,Hospital C,Artroscopia de rodilla,M23;M17,Preferente,2027-09-02,2027-11-22,En espera
+736,Hospital C,Trasplante renal,Q63;N18;E25.0,Urgente,2026-04-15,,Cancelado
+737,Hospital C,Próstata,C61,Urgente,2026-04-09,,En espera
+738,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2027-05-26,2027-07-19,En espera
+739,Hospital B,Prótesis de hombro,M16;M17;M47;M19,Urgente,2027-01-20,2027-06-29,Cancelado
+740,Hospital A,Prótesis de cadera,M16,Preferente,2027-02-09,,En espera
+741,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-06-02,2027-09-20,En espera
+742,Hospital A,Histerectomía,Q38,Urgente,2027-04-21,,En espera
+743,Hospital A,Meniscectomía,M23,Preferente,2027-12-10,2028-05-10,Intervenido
+744,Hospital C,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-10-07,2027-12-25,Intervenido
+745,Hospital B,Colecistectomía,K80;K81;K83,Urgente,2027-03-13,2027-04-04,Intervenido
+746,Hospital B,Cirugía de ovarios,O04;N80;Q56,Normal,2026-01-23,,En espera
+747,Hospital A,Cirugía de retina,H34;H31,Urgente,2027-07-19,2027-07-23,Intervenido
+748,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Preferente,2027-11-08,2028-01-06,Intervenido
+749,Hospital C,Derivación ventricular,,Normal,2027-12-15,,En espera
+750,Hospital C,Cirugía de retina,H34;H31,Preferente,2027-04-03,2027-04-15,Intervenido
+751,Hospital A,Toracotomía,C34;S23,Urgente,2026-03-24,2026-07-21,Intervenido
+752,Hospital B,Prótesis de rodilla,M17;M23,Normal,2026-05-25,2026-06-28,En espera
+753,Hospital B,Corrección de estrabismo,H50,Preferente,2026-03-26,2026-07-02,En espera
+754,Hospital B,Prótesis de rodilla,M17;M23,Preferente,2026-03-19,,En espera
+755,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2027-04-02,2027-05-21,En espera
+756,Hospital B,Miomectomía,Q38,Urgente,2026-01-01,2026-04-04,En espera
+757,Hospital C,Prótesis de cadera,M16,Normal,2026-02-20,2026-05-27,En espera
+758,Hospital C,Reparación de válvula cardíaca,I33,Urgente,2027-11-16,2027-12-24,Intervenido
+759,Hospital A,Prótesis de cadera,M16,Urgente,2027-12-18,,Cancelado
+760,Hospital C,Cistectomía,K81;N30;N32,Urgente,2027-03-22,2027-06-18,Intervenido
+761,Hospital A,Hernias,M50,Normal,2027-03-25,,En espera
+762,Hospital B,Varices,I87,Urgente,2027-05-03,2027-07-11,En espera
+763,Hospital B,Próstata,C61,Urgente,2026-02-03,,En espera
+764,Hospital B,Cesárea,O82;A00,Urgente,2026-12-14,2027-05-19,En espera
+765,Hospital C,Amigdalectomía,J03;J35,Urgente,2026-04-05,2026-08-22,Intervenido
+766,Hospital A,Cirugía de glaucoma,H40,Preferente,2026-03-13,2026-07-12,Intervenido
+767,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Urgente,2027-07-05,2027-11-29,En espera
+768,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-06-03,2026-10-18,Intervenido
+769,Hospital B,Cirugía de senos paranasales,K65,Urgente,2026-09-07,2027-02-09,Intervenido
+770,Hospital C,Bypass coronario,I25;H34;I21;I63,Normal,2027-11-05,,En espera
+771,Hospital C,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2027-03-14,2027-06-22,Intervenido
+772,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2026-04-28,,En espera
+773,Hospital C,Trasplante renal,Q63;N18;E25.0,Preferente,2026-11-02,,En espera
+774,Hospital C,Cirugía de túnel carpiano,G54.0;M65,Preferente,2026-09-25,2027-01-15,En espera
+775,Hospital A,Reparación de válvula cardíaca,I33,Normal,2026-02-23,,En espera
+776,Hospital B,Toracotomía,C34;S23,Urgente,2026-08-24,,En espera
+777,Hospital C,Cirugía de colon,K51;K50,Preferente,2027-01-24,2027-06-30,En espera
+778,Hospital A,Hernias,M50,Normal,2027-02-05,2027-06-05,En espera
+779,Hospital C,Derivación ventricular,,Preferente,2027-09-16,,En espera
+780,Hospital C,Miomectomía,Q38,Urgente,2026-10-30,2027-03-28,En espera
+781,Hospital C,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2026-07-26,,En espera
+782,Hospital C,Reparación de válvula cardíaca,I33,Normal,2026-08-17,2026-09-10,En espera
+783,Hospital A,Septoplastia,Z99.11;J45,Urgente,2027-08-01,,En espera
+784,Hospital A,Amigdalectomía,J03;J35,Normal,2026-03-16,,En espera
+785,Hospital A,Cirugía de ovarios,O04;N80;Q56,Urgente,2027-03-11,,En espera
+786,Hospital C,Cesárea,O82;A00,Urgente,2026-04-13,2026-05-04,En espera
+787,Hospital C,Prótesis de cadera,M16,Urgente,2027-02-26,2027-07-16,En espera
+788,Hospital C,Corrección de estrabismo,H50,Preferente,2027-12-05,2028-01-11,Intervenido
+789,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Normal,2026-11-02,2027-02-11,En espera
+790,Hospital C,Cataratas,H25;H26.2;Q10,Normal,2026-04-08,2026-07-20,En espera
+791,Hospital B,Corrección de estrabismo,H50,Normal,2026-12-01,,Cancelado
+792,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2027-03-11,2027-04-21,Intervenido
+793,Hospital B,Cataratas,H25;H26.2;Q10,Preferente,2027-03-23,2027-06-30,Intervenido
+794,Hospital C,Cirugía de glaucoma,H40,Urgente,2026-11-04,2026-12-21,Intervenido
+795,Hospital A,Amigdalectomía,J03;J35,Normal,2026-09-06,2026-12-20,En espera
+796,Hospital C,Septoplastia,Z99.11;J45,Preferente,2026-06-15,2026-06-28,En espera
+797,Hospital B,Cirugía de melanoma,C43;H40,Preferente,2027-04-26,2027-09-14,En espera
+798,Hospital B,Hernias,M50,Preferente,2026-12-01,2027-04-10,En espera
+799,Hospital C,Mastectomía,C50,Normal,2027-06-26,2027-09-07,En espera
+800,Hospital B,Prótesis de cadera,M16,Preferente,2026-04-16,,En espera
+801,Hospital B,Artroscopia de rodilla,M23;M17,Preferente,2027-07-17,,En espera
+802,Hospital A,Cirugía de tiroides,E04.9,Urgente,2026-03-22,2026-06-30,Intervenido
+803,Hospital C,Histerectomía,Q38,Urgente,2026-05-13,2026-08-30,Intervenido
+804,Hospital C,Miomectomía,Q38,Preferente,2026-05-18,,En espera
+805,Hospital C,Prótesis de cadera,M16,Preferente,2026-07-03,2026-12-12,Intervenido
+806,Hospital B,Vasectomía,Q53,Urgente,2027-02-05,2027-02-13,En espera
+807,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2026-11-26,2026-12-03,Intervenido
+808,Hospital C,Prótesis de cadera,M16,Urgente,2027-05-23,2027-05-26,En espera
+809,Hospital A,Litotricia renal,Q63;N18;E25.0,Normal,2026-03-10,,Cancelado
+810,Hospital A,Marcapasos,I47;I44;I48,Normal,2027-06-30,,En espera
+811,Hospital A,Corrección de estrabismo,H50,Urgente,2026-02-22,2026-04-17,En espera
+812,Hospital B,Cirugía de túnel carpiano,G54.0;M65,Preferente,2027-03-26,2027-07-04,En espera
+813,Hospital C,Próstata,C61,Urgente,2026-07-24,2026-08-06,En espera
+814,Hospital A,Hernias,M50,Normal,2026-05-06,2026-09-01,En espera
+815,Hospital A,Mastectomía,C50,Preferente,2026-02-12,,En espera
+816,Hospital A,Histerectomía,Q38,Normal,2026-04-21,,En espera
+817,Hospital C,Gastrectomía,K25,Preferente,2027-10-25,2028-01-07,En espera
+818,Hospital C,Cirugía de glaucoma,H40,Normal,2026-07-02,2026-12-14,En espera
+819,Hospital C,Cirugía bariátrica,,Preferente,2026-04-05,2026-07-16,Intervenido
+820,Hospital B,Angioplastia,I25;H34;I21;I63,Preferente,2027-01-09,2027-03-31,En espera
+821,Hospital B,Cirugía de túnel carpiano,G54.0;M65,Preferente,2027-06-04,2027-10-20,En espera
+822,Hospital A,Apendicectomía,,Preferente,2026-12-26,2027-05-06,En espera
+823,Hospital C,Histerectomía,Q38,Normal,2027-11-27,2028-03-17,Intervenido
+824,Hospital A,Angioplastia,I25;H34;I21;I63,Normal,2026-10-08,2026-10-20,En espera
+825,Hospital C,Septoplastia,Z99.11;J45,Preferente,2026-07-14,,Cancelado
+826,Hospital C,Corrección de estrabismo,H50,Preferente,2026-07-14,2026-08-07,Intervenido
+827,Hospital C,Cirugía de colon,K51;K50,Normal,2027-10-29,,En espera
+828,Hospital B,Cirugía de columna,M50;M47;M43;M99,Preferente,2026-04-03,,En espera
+829,Hospital B,Cirugía de tiroides,E04.9,Preferente,2027-11-03,2028-03-04,Intervenido
+830,Hospital C,Toracotomía,C34;S23,Preferente,2026-03-02,2026-05-31,Intervenido
+831,Hospital A,Cirugía de tiroides,E04.9,Urgente,2027-09-26,,En espera
+832,Hospital C,Cirugía de colon,K51;K50,Preferente,2026-02-20,2026-07-26,En espera
+833,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2027-02-07,2027-02-23,Intervenido
+834,Hospital A,Reparación de válvula cardíaca,I33,Preferente,2026-01-05,,En espera
+835,Hospital C,Cirugía de tiroides,E04.9,Normal,2027-04-11,2027-07-24,Intervenido
+836,Hospital A,Cesárea,O82;A00,Urgente,2027-08-27,2027-09-23,En espera
+837,Hospital B,Amigdalectomía,J03;J35,Urgente,2027-11-13,,En espera
+838,Hospital B,Cirugía de senos paranasales,K65,Preferente,2027-06-18,2027-12-05,Intervenido
+839,Hospital A,Toracotomía,C34;S23,Preferente,2027-02-09,,En espera
+840,Hospital B,Cirugía de tiroides,E04.9,Urgente,2027-05-28,,En espera
+841,Hospital B,Hernias,M50,Normal,2027-10-07,2028-02-18,En espera
+842,Hospital A,Apendicectomía,,Normal,2026-08-21,2027-01-21,En espera
+843,Hospital B,Varices,I87,Preferente,2027-06-08,,En espera
+844,Hospital C,Prótesis de rodilla,M17;M23,Normal,2026-12-12,,En espera
+845,Hospital C,Cirugía de úlcera gástrica,K25,Normal,2026-02-15,2026-06-21,En espera
+846,Hospital A,Amigdalectomía,J03;J35,Preferente,2027-06-30,2027-07-12,Intervenido
+847,Hospital B,Toracotomía,C34;S23,Normal,2026-03-19,2026-05-01,En espera
+848,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2027-12-31,,En espera
+849,Hospital C,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2026-03-14,,En espera
+850,Hospital B,Meniscectomía,M23,Preferente,2026-09-06,2026-12-26,Intervenido
+851,Hospital B,Gastrectomía,K25,Urgente,2026-02-16,2026-04-08,Intervenido
+852,Hospital C,Biopsia de mama,C50;Z85;C44;D10,Urgente,2026-05-01,2026-07-15,En espera
+853,Hospital C,Angioplastia,I25;H34;I21;I63,Normal,2026-08-02,,En espera
+854,Hospital A,Mastectomía,C50,Normal,2026-08-27,,En espera
+855,Hospital A,Vasectomía,Q53,Normal,2026-02-25,2026-04-11,Intervenido
+856,Hospital C,Angioplastia,I25;H34;I21;I63,Preferente,2026-12-16,2027-02-13,Intervenido
+857,Hospital A,Cirugía de columna,M50;M47;M43;M99,Normal,2026-04-17,2026-09-21,En espera
+858,Hospital C,Corrección de estrabismo,H50,Urgente,2026-02-17,2026-07-24,Intervenido
+859,Hospital C,Reparación de válvula cardíaca,I33,Normal,2027-07-27,2027-11-02,Intervenido
+860,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Normal,2026-12-03,,En espera
+861,Hospital A,Toracotomía,C34;S23,Preferente,2026-01-26,2026-05-30,En espera
+862,Hospital B,Cirugía de úlcera gástrica,K25,Preferente,2026-09-14,2026-09-18,En espera
+863,Hospital B,Angioplastia,I25;H34;I21;I63,Urgente,2026-01-08,,En espera
+864,Hospital B,Prótesis de hombro,M16;M17;M47;M19,Preferente,2027-09-17,2028-02-01,Intervenido
+865,Hospital C,Cirugía bariátrica,,Normal,2026-09-10,2026-11-05,En espera
+866,Hospital A,Amigdalectomía,J03;J35,Preferente,2027-11-23,,En espera
+867,Hospital C,Marcapasos,I47;I44;I48,Urgente,2027-12-20,,En espera
+868,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Normal,2026-10-30,,En espera
+869,Hospital C,Cirugía de aneurisma,I69;F01;I27;I99,Urgente,2027-10-01,2027-10-18,En espera
+870,Hospital B,Craneotomía,S06.0;G55;G44.2;I63;I69,Preferente,2026-02-25,2026-06-11,En espera
+871,Hospital B,Trasplante renal,Q63;N18;E25.0,Preferente,2027-12-27,,En espera
+872,Hospital B,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Urgente,2027-06-10,,En espera
+873,Hospital C,Septoplastia,Z99.11;J45,Normal,2027-04-19,2027-07-11,En espera
+874,Hospital A,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Preferente,2026-01-28,2026-05-12,En espera
+875,Hospital A,Toracotomía,C34;S23,Preferente,2026-03-19,,En espera
+876,Hospital B,Miomectomía,Q38,Normal,2026-08-04,2026-10-08,En espera
+877,Hospital B,Cirugía de úlcera gástrica,K25,Preferente,2027-01-21,2027-03-14,En espera
+878,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Urgente,2026-12-31,2027-02-26,En espera
+879,Hospital B,Angioplastia,I25;H34;I21;I63,Preferente,2027-10-28,,En espera
+880,Hospital A,Marcapasos,I47;I44;I48,Preferente,2027-06-10,,En espera
+881,Hospital C,Derivación ventricular,,Normal,2027-11-30,2027-12-26,Intervenido
+882,Hospital C,Cirugía de senos paranasales,K65,Urgente,2026-11-08,2026-11-13,En espera
+883,Hospital C,Vasectomía,Q53,Normal,2026-01-07,2026-04-22,En espera
+884,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2026-01-03,2026-02-26,Intervenido
+885,Hospital B,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-09-15,2028-02-28,En espera
+886,Hospital B,Próstata,C61,Normal,2026-12-29,,En espera
+887,Hospital B,Colecistectomía,K80;K81;K83,Normal,2027-05-23,2027-06-07,Intervenido
+888,Hospital C,Cirugía bariátrica,,Normal,2026-10-01,2026-12-01,Intervenido
+889,Hospital B,Cirugía de úlcera gástrica,K25,Urgente,2027-05-21,,En espera
+890,Hospital B,Amigdalectomía,J03;J35,Preferente,2026-01-15,,En espera
+891,Hospital A,Biopsia de mama,C50;Z85;C44;D10,Normal,2026-07-11,,En espera
+892,Hospital A,Bypass coronario,I25;H34;I21;I63,Preferente,2027-09-23,,En espera
+893,Hospital B,Hernias,M50,Urgente,2027-04-30,,En espera
+894,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Urgente,2026-01-28,,En espera
+895,Hospital A,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-12-15,2027-12-18,En espera
+896,Hospital B,Cataratas,H25;H26.2;Q10,Urgente,2026-02-08,2026-05-12,En espera
+897,Hospital B,Litotricia renal,Q63;N18;E25.0,Preferente,2026-09-30,2026-10-08,Intervenido
+898,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2026-08-19,2026-12-05,En espera
+899,Hospital B,Cesárea,O82;A00,Urgente,2026-03-27,,En espera
+900,Hospital C,Vasectomía,Q53,Normal,2027-04-19,,En espera
+901,Hospital C,Cirugía de colon,K51;K50,Urgente,2026-05-06,,En espera
+902,Hospital B,Prótesis de cadera,M16,Normal,2027-06-21,,En espera
+903,Hospital A,Toracotomía,C34;S23,Urgente,2026-05-25,2026-08-03,En espera
+904,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-06-09,2027-08-16,En espera
+905,Hospital B,Miomectomía,Q38,Normal,2026-07-31,,En espera
+906,Hospital A,Cesárea,O82;A00,Urgente,2026-01-25,,En espera
+907,Hospital C,Reparación de ligamento cruzado,M23,Preferente,2027-08-03,,En espera
+908,Hospital B,Artroscopia de rodilla,M23;M17,Preferente,2027-01-29,,En espera
+909,Hospital B,Hernias,M50,Urgente,2026-03-08,,En espera
+910,Hospital C,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2026-08-21,,Cancelado
+911,Hospital C,Cirugía de úlcera gástrica,K25,Normal,2026-04-19,2026-05-08,En espera
+912,Hospital A,Amigdalectomía,J03;J35,Urgente,2026-05-26,2026-09-05,En espera
+913,Hospital C,Cirugía de retina,H34;H31,Urgente,2026-04-21,,En espera
+914,Hospital C,Mastectomía,C50,Normal,2026-08-16,,En espera
+915,Hospital C,Trasplante renal,Q63;N18;E25.0,Normal,2026-04-21,2026-08-14,Cancelado
+916,Hospital A,Histerectomía,Q38,Normal,2027-04-15,,En espera
+917,Hospital C,Cirugía de retina,H34;H31,Urgente,2026-02-03,2026-06-08,Intervenido
+918,Hospital C,Litotricia renal,Q63;N18;E25.0,Normal,2027-09-15,,En espera
+919,Hospital A,Cirugía de ovarios,O04;N80;Q56,Normal,2027-01-04,,En espera
+920,Hospital C,Reparación de válvula cardíaca,I33,Preferente,2027-08-18,,En espera
+921,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Preferente,2027-07-08,2027-12-17,Intervenido
+922,Hospital A,Hernias,M50,Urgente,2027-03-01,,En espera
+923,Hospital B,Cirugía bariátrica,,Preferente,2027-09-05,2027-09-13,En espera
+924,Hospital A,Prótesis de rodilla,M17;M23,Preferente,2027-06-02,,Cancelado
+925,Hospital C,Artroscopia de rodilla,M23;M17,Normal,2027-11-23,2028-02-25,En espera
+926,Hospital C,Trasplante renal,Q63;N18;E25.0,Normal,2026-10-09,,En espera
+927,Hospital C,Artroscopia de rodilla,M23;M17,Preferente,2026-11-16,,En espera
+928,Hospital A,Cirugía de aneurisma,I69;F01;I27;I99,Preferente,2027-03-19,2027-06-15,Cancelado
+929,Hospital C,Prótesis de cadera,M16,Preferente,2026-11-11,,En espera
+930,Hospital C,Litotricia renal,Q63;N18;E25.0,Urgente,2027-01-12,2027-04-15,Intervenido
+931,Hospital A,Hernias,M50,Urgente,2026-10-16,2027-01-10,Intervenido
+932,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2027-03-13,,En espera
+933,Hospital B,Reparación de ligamento cruzado,M23,Preferente,2027-10-24,,En espera
+934,Hospital C,Litotricia renal,Q63;N18;E25.0,Preferente,2026-10-04,,En espera
+935,Hospital A,Cirugía de melanoma,C43;H40,Urgente,2027-12-11,2028-05-15,En espera
+936,Hospital C,Cirugía de senos paranasales,K65,Urgente,2027-08-05,2028-01-22,Intervenido
+937,Hospital A,Prótesis de rodilla,M17;M23,Preferente,2027-05-18,2027-11-05,Intervenido
+938,Hospital A,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-09-16,2028-03-04,En espera
+939,Hospital B,Fijación de fracturas,M80;S23;S52;S62;S72;S82;S93;W88,Urgente,2027-05-31,2027-08-05,En espera
+940,Hospital B,Miomectomía,Q38,Preferente,2026-12-16,,En espera
+941,Hospital A,Cirugía de pulmón,C34;Z08;B40.0;J85.1;I27;J99;C15;C61;C80,Preferente,2027-03-22,,En espera
+942,Hospital C,Corrección de estrabismo,H50,Normal,2026-12-16,2027-05-20,En espera
+943,Hospital B,Hernias,M50,Preferente,2027-08-30,2027-12-16,En espera
+944,Hospital C,Toracotomía,C34;S23,Preferente,2027-10-26,,En espera
+945,Hospital B,Hernias,M50,Urgente,2026-05-17,2026-05-26,En espera
+946,Hospital B,Cataratas,H25;H26.2;Q10,Urgente,2026-08-31,2027-02-02,En espera
+947,Hospital C,Mastectomía,C50,Normal,2027-06-27,,En espera
+948,Hospital B,Meniscectomía,M23,Normal,2026-02-09,2026-05-09,En espera
+949,Hospital B,Colecistectomía,K80;K81;K83,Preferente,2026-08-17,2026-11-18,Intervenido
+950,Hospital C,Varices,I87,Urgente,2027-07-02,2027-09-07,En espera
+951,Hospital B,Miomectomía,Q38,Normal,2026-08-11,2027-01-06,Intervenido
+952,Hospital B,Toracotomía,C34;S23,Normal,2026-01-06,2026-05-03,Intervenido
+953,Hospital B,Derivación ventricular,,Normal,2026-11-18,2027-02-25,En espera
+954,Hospital C,Bypass coronario,I25;H34;I21;I63,Preferente,2027-04-13,2027-08-04,Intervenido
+955,Hospital A,Bypass coronario,I25;H34;I21;I63,Urgente,2026-03-16,2026-06-14,En espera
+956,Hospital C,Cirugía de colon,K51;K50,Normal,2026-01-04,2026-01-22,En espera
+957,Hospital A,Próstata,C61,Urgente,2027-10-08,,En espera
+958,Hospital B,Trasplante renal,Q63;N18;E25.0,Normal,2026-04-28,2026-07-28,En espera
+959,Hospital A,Toracotomía,C34;S23,Normal,2027-08-29,2027-12-21,En espera
+960,Hospital C,Cirugía de colon,K51;K50,Urgente,2027-05-19,,En espera
+961,Hospital C,Derivación ventricular,,Urgente,2027-07-28,,En espera
+962,Hospital B,Colecistectomía,K80;K81;K83,Urgente,2027-03-17,,En espera
+963,Hospital A,Reparación de ligamento cruzado,M23,Preferente,2026-07-13,2026-09-10,En espera
+964,Hospital B,Reparación de ligamento cruzado,M23,Normal,2027-12-16,2028-01-26,Intervenido
+965,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2027-01-27,2027-05-29,En espera
+966,Hospital C,Cirugía de ovarios,O04;N80;Q56,Urgente,2026-01-26,,En espera
+967,Hospital A,Cirugía de melanoma,C43;H40,Normal,2027-03-11,2027-04-02,Intervenido
+968,Hospital A,Cirugía de ovarios,O04;N80;Q56,Preferente,2026-06-22,,En espera
+969,Hospital A,Cirugía de úlcera gástrica,K25,Normal,2026-10-27,2027-01-03,En espera
+970,Hospital A,Derivación ventricular,,Preferente,2027-10-07,,En espera
+971,Hospital B,Bypass coronario,I25;H34;I21;I63,Urgente,2026-11-22,2027-05-20,En espera
+972,Hospital B,Próstata,C61,Preferente,2027-02-14,,Cancelado
+973,Hospital C,Cataratas,H25;H26.2;Q10,Normal,2026-04-28,2026-08-21,En espera
+974,Hospital B,Hernias,M50,Normal,2027-12-25,2028-05-20,Intervenido
+975,Hospital B,Colecistectomía,K80;K81;K83,Normal,2026-08-13,2026-09-29,En espera
+976,Hospital C,Cirugía de melanoma,C43;H40,Normal,2027-06-16,,En espera
+977,Hospital C,Mastectomía,C50,Urgente,2026-04-23,,En espera
+978,Hospital C,Corrección de estrabismo,H50,Preferente,2026-05-20,2026-09-29,En espera
+979,Hospital B,Marcapasos,I47;I44;I48,Urgente,2027-07-13,,En espera
+980,Hospital B,Vasectomía,Q53,Urgente,2026-01-01,2026-03-26,Intervenido
+981,Hospital C,Angioplastia,I25;H34;I21;I63,Urgente,2026-03-31,2026-08-21,Intervenido
+982,Hospital C,Cirugía de retina,H34;H31,Normal,2027-10-16,,En espera
+983,Hospital C,Cirugía de ovarios,O04;N80;Q56,Normal,2026-11-16,,Cancelado
+984,Hospital B,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Normal,2027-07-04,2027-11-17,Intervenido
+985,Hospital B,Miomectomía,Q38,Preferente,2026-05-19,2026-10-13,En espera
+986,Hospital A,Cirugía de retina,H34;H31,Normal,2027-05-26,,En espera
+987,Hospital B,Varices,I87,Preferente,2026-09-16,2026-11-23,En espera
+988,Hospital B,Septoplastia,Z99.11;J45,Normal,2027-11-04,2028-04-17,En espera
+989,Hospital B,Derivación ventricular,,Normal,2027-11-21,2028-03-11,En espera
+990,Hospital C,Colecistectomía,K80;K81;K83,Urgente,2026-01-10,,En espera
+991,Hospital B,Cirugía de columna,M50;M47;M43;M99,Urgente,2026-09-18,2026-10-28,Intervenido
+992,Hospital C,Cirugía bariátrica,,Urgente,2027-10-12,2028-03-24,En espera
+993,Hospital A,Varices,I87,Preferente,2026-06-21,,En espera
+994,Hospital A,Cirugía de hernia discal,M50;M43.24;M54.17;S34,Preferente,2026-01-13,2026-02-06,Intervenido
+995,Hospital C,Próstata,C61,Normal,2026-06-17,2026-07-11,Intervenido
+996,Hospital C,Artroscopia de rodilla,M23;M17,Preferente,2027-10-04,,En espera
+997,Hospital C,Cirugía de oído medio,H65;H92;H99;H66;H60,Normal,2027-08-19,2027-10-25,Intervenido
+998,Hospital B,Biopsia de mama,C50;Z85;C44;D10,Preferente,2026-11-17,,En espera
+999,Hospital A,Reparación de ligamento cruzado,M23,Preferente,2026-11-15,2027-03-11,En espera
+1000,Hospital C,Trasplante renal,Q63;N18;E25.0,Preferente,2027-09-05,2027-11-13,En espera

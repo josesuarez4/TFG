@@ -1,0 +1,397 @@
+Código,Descripción
+A00,Cólera
+A06.5,Absceso amebiano
+A15.6,Pleuritis tuberculosa
+A15.7,Tuberculosis respiratoria primaria
+A18.0,Tuberculosis de huesos y articulaciones
+A30.9,Enfermedad de Hansen (leproma)
+A33,Tétanos
+A40,Sepsis estreptocócica
+A41.01,Sepsis debida a Staphylococcus aureus sensible a meticilina
+A41.81,Sepsis por Enterococcus
+A41.9,Sepsis, microorganismo no especificado
+A48.1,Enfermedad de los Legionarios
+A49.02,Infección por Staphylococcus aureus resistente a meticilina
+A52.19,Otras neurosífilis sintomáticas
+A69.21,Meningitis por Borrelia sensu lato
+A84.81,Enfermedad por virus Powassan
+B00.2,Erisipela neonatal
+B00.52,Queratitis por herpesvirus
+B02.0,Encefalitis debida a herpes zóster
+B03,Viruela
+B09,Infecciones virales caracterizadas por lesiones de piel y mucosas
+B10,Otros herpesvirus humanos
+B19,Hepatitis viral
+B20,Enfermedad por virus de la inmunodeficiencia humana [VIH]
+B25-B34,Otras enfermedades virales (no listadas en códigos individuales)
+B35,Tiña de la cabeza y cuello
+B37.0,Estomatitis candidiásica
+B37.81,Esofagitis por cándidas
+B37.9,Micosis de ubicación no especificada
+B40.0,Blastomicosis pulmonar
+B41,Criptococosis
+B45,Histoplasmosis
+B48.2,Otras micosis no especificadas
+B50,Ploa (únicamente, malaria por Plasmodium falciparum)
+B51,Ploa (únicamente, malaria por Plasmodium vivax)
+B60,Lepra tuberculoide (aún activa)
+B65,Bilharziasis
+B85,Pediculosis
+B90,Secuelas de enfermedades infecciosas y parasitarias
+B95,Bacterias en enfermedades transmisibles (gérmenes)
+B96,Virus en enfermedades transmisibles
+B97,Otros agentes virales
+B99,Otras enfermedades infecciosas
+C15,Cáncer esofágico
+C34,Cáncer de tráquea, bronquios o pulmón
+C43,Melanoma maligno de la piel
+C44,Otras neoplasias malignas de piel
+C50,Cáncer de mama
+C61,Cáncer de próstata
+C80,Cáncer no especificado
+C86.0,Lincomatosis (enfermedad de Kikuchi)
+C88.6,Mastocitosis (no especificada)
+C91.10,Leucemia linfoblástica aguda
+C92.0,Leucemia mieloide crónica
+C92.9,Leucemia mieloide crónica, no especificada
+D00,Dermis carcinoma in situ
+D10,Neoplasia benigna de glándulas salivales
+D17,Lipoma
+D22,Nevus intradérmico
+D50,Anemia ferropénica
+D63.0,Anemia por infección crónica
+D64.9,Anemia, no especificada
+D69.5,Púrpura trombocitopénica
+D70,Agranulocitosis
+D71,Eritremia
+D72,Otras alteraciones de leucocitos y linfocitos
+D75.9,Trastorno de leucocitos, no especificado
+D77,Trastornos del almacenamiento de lípidos
+D80,Inmunodeficiencia primaria, no especificada
+D89.9,Trastorno del sistema linfático, no especificado
+E00,Enfermedad de Hashimoto
+E04.9,Enfermedad tiroidea, no especificada (Hipotiroidismo)
+E10,Diabetes mellitus tipo 1
+E11,Diabetes mellitus tipo 2
+E13,Diabetes no especificada
+E15,Coma hipoglucémico
+E25.0,Hiperplasia suprarrenal congénita (21-hidroxilasa)
+E40,Kwashiorkor (desnutrición proteica)
+E41,Marasmo nutricional (desnutrición calórica)
+E42,Kwashiorkor marasmático (desnutrición calórico-proteica mixta)
+E43,Desnutrición severa (desnutrición malnutrición severa)
+E44,E45,E46 (Desnutrición moderada o leve, no disponible)
+E51,Deficiencia de tiamina (vitamina B1)
+E53,Deficiencia de niacina (vitamina B3)
+E55,Deficiencia de vitamina D
+E64,Cansancio y decaimiento
+E70,E71,E72,Trastornos de metabolismos de aminoácidos
+E74,Trastornos del metabolismo de carbohidratos
+E83,Trastornos del metabolismo mineral
+E86,Deshidratación
+F01,Demencia vascular
+F06.4,Trastorno de ansiedad debido a enfermedad médica general
+F10,Trastornos relacionados con el alcohol
+F11,Trastornos relacionados con los opiáceos, etc.
+F20,Esquizofrenia
+F31,Trastorno bipolar
+F32,Depresión unipolar
+F33,Trastorno depresivo recurrente
+F41.1,Trastorno de ansiedad generalizada
+F45.1,Trastorno de somatización
+F50.9,Trastorno de la alimentación
+F51.0,Insomnio no orgánico
+F54,Trastorno psicológico, no especificado
+F70,Retraso mental leve
+F71,Retraso mental moderado
+F99,Trastorno mental, no especificado
+G00,Meningitis aguda bacteriana
+G43.0,Migraña con aura
+G44.2,Trastorno vasomotor craneal
+G45,Accidente isquémico transitorio
+G50.0,Neuralgia del trigémino
+G51.0,Bell – parálisis facial (idiopática)
+G53.0,Parálisis del nervio glosofaríngeo
+G54.0,Síndrome del túnel carpiano
+G55,Cansancio craneal
+G60,Neuropatía hereditaria (varios tipos)
+G62,Otras polineuropatías
+G70.0,Miastenia gravis
+G81.0,Hemiplejía (parálisis facial)
+G89,Neuralgia, dolor crónico
+H00,Orzuelo
+H04,Queratis
+H10.0,Conjuntivitis aguda hemorrágica
+H10.9,Conjuntivitis, no especificada
+H15,Hemorragia subconjuntival
+H16,Querato-conjuntivitis
+H17,Cicatriz corneal
+H18,Opacidad corneal
+H25,Catarata senil
+H26.2,Catarata complicada
+H27,Trastorno de cristalino
+H28,Lentes intraoculares
+H30,Coriorretinitis
+H31,enfermedad distrófica coroidoretinal
+H34,Infarto retiniano
+H40,Glaucoma
+H42,Neuritis óptica
+H47,Otros trastornos del nervio óptico
+H49,Parálisis motora del ojo
+H50,Strabismus
+H52,Errores de refracción
+H54,Ceguera y deficiencia visual
+H60,Otitis externa
+H65,Otitis media serosa
+H66,Otitis media supurativa crónica
+H70,Tímpanos perfurados
+H80,Sordera por ototoxicidad
+H81,Trastornos vestibulares (mareos)
+H90,Sordera neurosensorial
+H91,Pérdida auditiva
+H92,Otras enfermedades del oído
+H99,Enfermedad del oído, no especificada
+I10,Hipertensión esencial
+I20,Angina de pecho
+I21,Infarto de miocardio agudo
+I25,Coronariopatía crónica
+I27,Enfermedad pulmonar vascular
+I30,Pericarditis
+I33,Endocarditis bacteriana
+I40,Miocarditis
+I44,Trastornos de conducción cardiaca
+I47,Taquicardia paroxística
+I48,Fibrilación auricular
+I50,Insuficiencia cardíaca
+I60,Hemorragia subaracnoidea
+I63,Infarto cerebral isquémico
+I69,Secuelas de enfermedad vascular cerebral
+I73,Pies diabético (transtornos arteriales)
+I87,Venas varicosas, flebitis
+I95,Hipotensión idiopática
+I99,Enfermedad vascular periférica, no especificada
+J00,Resfriado común
+J02,Faringitis aguda
+J03,Amigdalitis aguda
+J04,Laringitis aguda
+J05,Traqueítis aguda
+J06,Infección respiratoria aguda, no especificada
+J10,Gripe con virus identificado
+J11,Gripe sin virus identificado
+J13,Neumonía por Streptococcus pneumoniae
+J15.212,Neumonía por Staph. aureus resistente a meticilina
+J17,Neumonía en enfermedades clasificadas bajo otra sección
+J18.9,Neumonía, microorganismo no especificado
+J20,Bronquitis aguda
+J30,Rinitis alérgica
+J35,Amigdalitis crónica
+J37,Laringitis crónica
+J40,Bronquitis, no especificada
+J44,Enfisema
+J45,Asma
+J47,Bronquitis crónica
+J85.1,Absceso pulmonar con neumonía
+J99,Enfermedad pulmonar por agentes externos
+K00,Trastornos dentales
+K02,Caries dental
+K25,Úlcera gástrica
+K29,Gastritis crónica
+K50,Enfermedad de Crohn (enteritis regional)
+K51,Colitis ulcerosa
+K55,Meses intestinales no inflamatorias
+K65,Peritonitis
+K70,Enfermedad hepática alcohólica
+K71,Hepatitis tóxica (por fármacos)
+K73,Hepatitis crónica no viral
+K75,Otras enfermedades hepáticas
+K80,Colelitiasis
+K81, Colecistitis
+K83,Trastornos biliares
+K90,Malabsorción intestinal
+K91,Secuelas de cirugía digestiva
+L00,Impetigo
+L02,Furúnculo
+L08,Infección cutánea localizada
+L10,Eritema multiforme
+L20,Dermatitis atópica
+L30,Otros eczemas
+L40,Psoriasis
+L50,Angioedema
+L50.0,Angioedema histamínico
+L51,Urticaria
+L60,Trastorno de las uñas
+L70,Acné
+L72,Quiste epidérmico
+L80,Vitiligo
+L90,Eritema disergásico de tejido conectivo
+L92,Granuloma de anfiteatro
+L98,Otras enfermedades de la piel, no especificada
+L99,Trastornos de la piel, no especificado
+M00,Artritis séptica
+M05,Artritis reumatoide con factor reumatoide
+M10,Gota
+M13,Otras artritis especificadas
+M16,Coxartrosis
+M17,Gonartrosis
+M19,Artrosis en otras articulaciones
+M23,Lesiones meniscales de rodilla
+M25,Otros trastornos articulares especificados
+M40,Espondilitis anquilosante
+M42,Cifoescoliosis
+M43,Otras deformidades de columna
+M43.24,Escoliosis lumbar idiopática
+M47,Osteoartrosis de la columna
+M50,Hernia de disco cervical
+M54,Dolor de espalda (lumbalgia)
+M54.17,Sciática lumbar
+M54.5,Dolor de espalda
+M60,Miopatías inflamatorias
+M65,Síndrome del túnel carpiano
+M70,Trigémino peribucal (Temporomandibular)
+M80,Osteoporosis con fracturas patológicas
+M81,Osteoporosis
+M83,Osteoporosis por hipovitaminosis D (rachitis)
+M90,Osteocondrosis (enfermedad de Sever)
+M93,Osteocondritis disecante
+M94,Otras enfermedades del cartílago, no especificadas
+M95,Enfermedades de huesos en desarrollo
+M96,Complicaciones de intervención ortopédica
+M99,Anomalías segmentarias de la columna
+N00,Glomerulonefritis aguda
+N18,Enfermedad renal crónica (ERC)
+N30,Cistitis
+N32,Disfunción de pared vesical
+N34,Uretritis
+N39,Trastornos del tracto urinario bajo
+N80,Endometriosis
+N84,Uterine polyp
+N92,Trastornos de la menstruación
+N95,Fallas menopáusicas y otra menopausia
+N98,Queilitis (incluye fisuras de cripta)
+N99,Trastornos (que no figuran en otro lugar especificados)
+O00,Embarazo ectópico
+O04,Ovarios desprendidos
+O20,Hemorragia durante el embarazo
+O25,Fibras musculares uterinas
+O30,Embarazo múltiple
+O36,Ocasión... (no especifica? omitted)
+O43,Desprendimiento prematuro de placenta
+O60.2,Parto a término con trabajo de parto prematuro
+O60.20,Parto a término con trabajo de parto prematuro, trimestre no especificado
+O60.22,Parto a término con trabajo de parto prematuro, segundo trimestre
+O60.23,Parto a término con trabajo de parto prematuro, tercer trimestre
+O80,Parto a término
+O82,Cesárea
+O83,Parto instrumentado (fórceps)
+O84,Hemorragia puerperal
+O85,Infección del tracto genital en el puerperio
+O86,Otras complicaciones del parto
+O87,Trombosis venosa del periodo puerperal
+O88,Mujer con factor Rh positivo, incongruencia
+O89,Mujer con factor Rh negativo, incongruencia
+P00,Intracraneopatía (enfermedad neonatal)
+P05,Prematurez extrema (infierno en prematuro)
+P10,Trastornos transitorios sangunos del neonato
+P35,Infecciones perinatales debidas a virus
+P37,Bacteriemias neonatales
+P51,Otras infecciones neonatales
+P70.Síndrome de trastorno en alimentación neonatal
+P72,Hiperbilirrubinemia neonatal
+P77,Trastornos del almidón neonatales
+P90,Convulsiones neonatales
+P96,Secuelas de afecciones originadas en el periodo perinatal
+Q00,Anecefalia
+Q01,Encefalocele
+Q02,Microcefalia
+Q05,Mielomeningocele
+Q10,Catarata congénita
+Q21,Agujero cardíaco
+Q25,Coartación de aorta
+Q35,Labio leporino sin paladar hendido
+Q38,Anomalías del útero
+Q40,Cadernodización de frente
+Q53,Testículos no descendidos
+Q56,Ovarios y uteros no descendidos
+Q60,Ren duplicada
+Q63,Displasia renal
+Q87.1,Síndrome de Aarskog-Scott
+Q90.Síndrome de Down
+Q92.Síndrome XXY (Klinefelter)
+Q95.Otras anomalías autosómicas (ej. Mosaicismo)
+Q99.9,Anomalía cromosómica, no especificada
+R00,Pulso cardiaco normal
+R07,Dolor de garganta y de pecho
+R10,Dolor abdominal
+R19,Síntomas digestivos (vómitos)
+R29,Muerte (estado de)
+R42,Mareo
+R53,Fatiga
+R56.9,Crisis epilépticas, no especificadas
+R62.0,Retraso infantil en crecimiento y desarrollo
+R62.9,Desarrollo lento (no especificado)
+R65,Síndrome de respuesta inflamatoria sistémica
+R73.03,Prediabetes
+R73.9,Hiperglucemia no especificada
+R79.4,Hiperproteinemia
+R82.99,Anomalías urinarias (ej. proteinuria transitoria)
+R90.8,Hallazgos anormales en estudios de imágenes
+R94,Anormalidades de laboratorio
+R99,Muerte sin precisar causa
+R99,Muerte sin precisar causa
+S06.0,Traumatismo intracraneal
+S13,Esguince de cuello
+S23,Hemorragia torácica (EPOC con fractura)
+S34,Lesión de la médula espinal lumbar
+S52,Fractura del cúbito y radio
+S62,Fractura muñeca
+S72,Fractura de fémur
+S82,Fractura de tibia y peroné
+S92,Traumatismo del pie o del tobillo
+S93,Otras fracturas de tobillo y pie
+S99,Trauma de miembro, no especificado
+T14,Lesion (traumática), sin localizar
+T20,Tercio superior de cuero cabelludo
+T21,Quema de cara
+T25,Quema de pie 
+T30,Quema de todo el cuerpo
+T40,Envenenamiento farmacológico por opiáceos
+T50,Envenenamiento farmacológico, no especificado
+T62,Toxicidad por ingesta de metales
+T67,Efectos de la radiación
+T79.Fractura irradiada (shock posanft.)
+T90.Esguince cervic.
+V03.44,Atropello de peatones (autos)
+V04.Presión en ovino
+W18,Síndrome convulsivo
+W22,Salida de vía vehículo
+W88,Explosión por fractura no mencionada
+W90,Golpe de toronja en bicicleta
+Y06,Homicidio
+Y49.Incidencia (falta)
+Y83,Cirugía, no especificada
+Y90.9,Nivel alcoholemia
+Z01,Examen médico general
+Z08,Seguimiento cáncer
+Z09,Chequeo subsecuente
+Z00,Examen ginecológico
+Z00.6,Examen de pecho (mamografía)
+Z11,Examen médico de enfermedades transmisibles
+Z30,Consulta anticonceptiva
+Z34,Asistencia ante parto normal
+Z35,Supervisión embarazo de alto riesgo
+Z38,Nacimiento vivo especificado
+Z42,Repercusión herida quirúrgica
+Z51,Quimioterapia antineoplásica
+Z55,Problemas socioeconómicos
+Z65,Dificultades psicosociales
+Z72,Factores de riesgo dietéticos
+Z73,Dificultades psicológicas
+Z79,Empleo de medicación (excepto drogas ilícitas)
+Z82,Antecedentes familiares de enfermedades
+Z85,Historia de neoplasias malignas
+Z87,Antecedentes personales
+Z91,Historia de alergia
+Z98,Historia de trasplante
+Z99,Limitación (por dependencias médicas)
+Z99.11,Uso de sonda de alimentación nasal en hogar
+Z99.12,Uso de sonda de alimentación enteral en hogar
