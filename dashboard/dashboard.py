@@ -15,6 +15,7 @@ from huecos import save_gap, load_gaps, find_candidates, remove_gap
 from quirofanos_pm import PM_ROOMS, load_pm_assignment, save_pm_assignment
 from planificador import service_planning, find_free_slots, compute_pm_impact
 from streamlit_extras.metric_cards import style_metric_cards
+import streamlit.components.v1 as components
 from restricciones import (
     load_closed_days_df, save_closed_days_for_rooms, load_closed_days,
     load_unavailable_specs_df, save_unavailable_specs_for_ids, load_unavailable_specs,
@@ -42,7 +43,7 @@ def _show_patient_dialog(patient: pd.Series) -> None:
         st.write(str(patient.get("Fecha_Ingreso", "—"))[:10])
     with col_b:
         st.markdown("**Diagnóstico**")
-        st.write(f"{patient.get('Codigo_Diagnostico_1','—')} — {patient.get('Descripcion_Diagnostico_1','')}")
+        st.write(f"{patient.get('Codigo_Diagnostico','—')} — {patient.get('Descripcion_Diagnostico','')}")
         st.markdown("**Procedimiento**")
         st.write(f"{patient.get('Codigo_Procedimiento','—')} — {patient.get('Descripcion_Procedimiento','')}")
 
@@ -70,6 +71,27 @@ df.loc[_sched_all, "Dias_Espera"] = (_interv_dt[_sched_all] - _ingreso_dt[_sched
 
 st.title("Dashboard")
 
+with open(Path(__file__).parent / "style.css") as _f:
+    st.markdown(f"<style>{_f.read()}</style>", unsafe_allow_html=True)
+
+components.html("""
+<script>
+const doc = window.parent.document;
+function styleCards() {
+    doc.querySelectorAll('[data-testid="stVerticalBlock"]').forEach(el => {
+        const b = window.parent.getComputedStyle(el).borderTopWidth;
+        if (b && b !== '0px') {
+            el.style.setProperty('background-color', '#c8ddf5', 'important');
+        }
+    });
+}
+styleCards();
+new MutationObserver(styleCards).observe(doc.body, {childList: true, subtree: true});
+</script>
+""", height=0, scrolling=False)
+
+
+
 _TRAMO_BINS = {
     "< 30 d":   (0,   30),
     "30–60 d":  (30,  60),
@@ -78,7 +100,7 @@ _TRAMO_BINS = {
     "> 180 d":  (180, 99_999),
 }
 
-# KPIs generales (Tab 1 — dataset completo, sin filtros)
+# KPIs generales 
 _sched_g     = df["Fecha_Intervencion"].notna()
 _n_espera_g  = int((~_sched_g).sum())
 _dem_media_g = df["Dias_Espera"].mean()
@@ -126,7 +148,7 @@ with tab1:
             color="Media", color_continuous_scale="Oranges",
         )
         fig.update_traces(textposition="outside")
-        fig.update_layout(coloraxis_showscale=False, margin={"l": 220})
+        fig.update_layout(coloraxis_showscale=False, margin={"t": 40, "b": 10, "l": 220, "r": 20}, height=520)
         st.plotly_chart(fig, use_container_width=True)
 
     with g2:
@@ -134,7 +156,7 @@ with tab1:
         count.columns = ["Servicio", "Pacientes"]
         fig = px.bar(count, x="Servicio", y="Pacientes", title="Pacientes por servicio",
                      color="Pacientes", color_continuous_scale="Blues")
-        fig.update_layout(showlegend=False, coloraxis_showscale=False, xaxis_tickangle=-35)
+        fig.update_layout(showlegend=False, coloraxis_showscale=False, xaxis_tickangle=-35, height=520, margin={"t": 40, "b": 60, "l": 20, "r": 20})
         st.plotly_chart(fig, use_container_width=True)
 
     with g3:
@@ -142,7 +164,7 @@ with tab1:
                            title="Distribución de prioridad",
                            labels={"Prioridad": "Prioridad (%)"},
                            color_discrete_sequence=["#e74c3c"])
-        fig.update_layout(bargap=0.05, xaxis_range=[0, 100])
+        fig.update_layout(bargap=0.05, xaxis_range=[0, 100], height=520, margin={"t": 40, "b": 40, "l": 20, "r": 20})
         st.plotly_chart(fig, use_container_width=True)
 
     st.divider()
@@ -183,7 +205,7 @@ with tab1:
                     "Horas programadas: %{customdata[0]:.1f} h<extra></extra>"
                 ),
             )
-            fig_occ.update_layout(coloraxis_showscale=False, margin={"l": 220}, xaxis_range=[0, 110])
+            fig_occ.update_layout(coloraxis_showscale=False, margin={"t": 40, "b": 10, "l": 220, "r": 60}, xaxis_range=[0, 110], height=520)
             st.plotly_chart(fig_occ, use_container_width=True)
         else:
             st.info("Sin intervenciones planificadas — planifica un servicio para ver la ocupación.")
@@ -204,7 +226,7 @@ with tab1:
             color_discrete_map={"Con cita": "#2ecc71", "Sin cita": "#e74c3c"},
             barmode="stack",
         )
-        fig_ratio.update_layout(xaxis_tickangle=-35, legend_title_text="")
+        fig_ratio.update_layout(xaxis_tickangle=-35, legend_title_text="", height=520, margin={"t": 40, "b": 60, "l": 20, "r": 20})
         st.plotly_chart(fig_ratio, use_container_width=True)
 
     st.divider()
@@ -216,7 +238,7 @@ with tab1:
         color="Servicio",
         points="outliers",
     )
-    fig_box.update_layout(showlegend=False, xaxis_tickangle=-35)
+    fig_box.update_layout(showlegend=False, xaxis_tickangle=-35, height=480, margin={"t": 40, "b": 60, "l": 20, "r": 20})
     st.plotly_chart(fig_box, use_container_width=True)
 
 # ── TAB 2: ANÁLISIS ──────────────────────────────────────────────────────────
@@ -277,15 +299,13 @@ def _tab2_fn():
     r1c1, r1c2, r1c3 = st.columns(3)
 
     with r1c1:
-        scatter_threshold = st.number_input(
-            "Umbral alta prioridad (%)", min_value=0, max_value=100, value=70, step=5, key="scatter_threshold",
-        )
+        scatter_threshold = st.session_state.get("scatter_threshold", 70)
         if df_view is not None:
             fig_scatter = px.scatter(
                 df_view, x="Dias_Espera", y="Prioridad",
                 title="Prioridad vs. días de espera",
                 labels={"Dias_Espera": "Días en espera", "Prioridad": "Prioridad (%)"},
-                hover_data=["ID_Paciente", "Descripcion_Diagnostico_1"],
+                hover_data=["ID_Paciente", "Descripcion_Diagnostico"],
                 opacity=0.6,
                 color_discrete_sequence=["#3788d8"],
             )
@@ -293,9 +313,13 @@ def _tab2_fn():
                 y=scatter_threshold, line_dash="dash", line_color="red",
                 annotation_text=f"Alta prioridad ({scatter_threshold})", annotation_position="top right",
             )
+            fig_scatter.update_layout(height=450, margin={"t": 40, "b": 40, "l": 40, "r": 20})
             st.plotly_chart(fig_scatter, use_container_width=True)
         else:
             st.info("Sin datos para este filtro.")
+        st.number_input(
+            "Umbral alta prioridad (%)", min_value=0, max_value=100, value=scatter_threshold, step=5, key="scatter_threshold",
+        )
 
     with r1c2:
         if df_view is not None:
@@ -314,7 +338,7 @@ def _tab2_fn():
                 color_discrete_sequence=px.colors.sequential.Oranges[2:],
             )
             fig_tramos.update_traces(textposition="outside")
-            fig_tramos.update_layout(showlegend=False)
+            fig_tramos.update_layout(showlegend=False, height=450, margin={"t": 40, "b": 40, "l": 20, "r": 20})
             st.plotly_chart(fig_tramos, use_container_width=True)
         else:
             st.info("Sin datos para este filtro.")
@@ -334,6 +358,7 @@ def _tab2_fn():
                 markers=True,
                 color_discrete_sequence=["#3788d8"],
             )
+            fig_wk.update_layout(height=450, margin={"t": 40, "b": 40, "l": 40, "r": 20})
             st.plotly_chart(fig_wk, use_container_width=True)
         else:
             st.info("Sin intervenciones planificadas.")
@@ -352,7 +377,7 @@ def _tab2_fn():
                 opacity=0.8,
                 color_discrete_sequence=["#3788d8"],
             )
-            fig_age.update_layout(bargap=0.05, showlegend=False)
+            fig_age.update_layout(bargap=0.05, showlegend=False, height=450, margin={"t": 40, "b": 40, "l": 40, "r": 20})
             st.plotly_chart(fig_age, use_container_width=True)
         else:
             st.info("Sin datos para este filtro.")
@@ -374,15 +399,13 @@ def _tab2_fn():
                 color_discrete_map={"Con cita": "#2ecc71", "Sin cita": "#e74c3c"},
                 barmode="stack",
             )
-            fig_tipo.update_layout(xaxis_tickangle=-25, legend_title_text="")
+            fig_tipo.update_layout(xaxis_tickangle=-25, legend_title_text="", height=450, margin={"t": 40, "b": 60, "l": 20, "r": 20})
             st.plotly_chart(fig_tipo, use_container_width=True)
         else:
             st.info("Sin datos para este filtro.")
 
     with r2c3:
-        hp_threshold = st.number_input(
-            "Prioridad mínima (%)", min_value=0, max_value=100, value=60, step=5, key="hp_threshold",
-        )
+        hp_threshold = st.session_state.get("hp_threshold", 60)
         if df_view is not None:
             hp_sin = df_view[(df_view["Prioridad"] >= hp_threshold) & df_view["Fecha_Intervencion"].isna()].copy()
             if not hp_sin.empty:
@@ -400,12 +423,15 @@ def _tab2_fn():
                     color_discrete_sequence=px.colors.sequential.Reds[2:],
                 )
                 fig_hp.update_traces(textposition="outside")
-                fig_hp.update_layout(showlegend=False)
+                fig_hp.update_layout(showlegend=False, height=450, margin={"t": 40, "b": 40, "l": 20, "r": 20})
                 st.plotly_chart(fig_hp, use_container_width=True)
             else:
                 st.info(f"No hay pacientes con prioridad ≥{hp_threshold}% sin cita.")
         else:
             st.info("Sin datos para este filtro.")
+        st.number_input(
+            "Prioridad mínima (%)", min_value=0, max_value=100, value=hp_threshold, step=5, key="hp_threshold",
+        )
 
     st.divider()
 
@@ -432,7 +458,7 @@ def _tab2_fn():
                 text_auto=".1f",
                 aspect="auto",
             )
-            fig_heat.update_layout(xaxis_title="", yaxis_title="")
+            fig_heat.update_layout(xaxis_title="", yaxis_title="", height=480, margin={"t": 40, "b": 20, "l": 100, "r": 20})
             st.plotly_chart(fig_heat, use_container_width=True)
         else:
             st.info("Sin datos suficientes para el heatmap.")
@@ -473,7 +499,7 @@ def _tab3_fn():
                 elif len(matches) > 1:
                     st.info(f"{len(matches)} coincidencias. Escribe más caracteres para filtrar.")
                     st.dataframe(
-                        matches[["ID_Paciente", "Descripcion_Diagnostico_1", "Quirofano", "Fecha_Intervencion"]],
+                        matches[["ID_Paciente", "Descripcion_Diagnostico", "Quirofano", "Fecha_Intervencion"]],
                         use_container_width=True, hide_index=True,
                     )
                 elif len(matches) == 1:
@@ -532,7 +558,7 @@ def _tab3_fn():
             elif len(man_matches) > 1:
                 st.info(f"{len(man_matches)} coincidencias. Escribe más caracteres para filtrar.")
                 st.dataframe(
-                    man_matches[["ID_Paciente", "Servicio", "Descripcion_Diagnostico_1", "Prioridad"]],
+                    man_matches[["ID_Paciente", "Servicio", "Descripcion_Diagnostico", "Prioridad"]],
                     use_container_width=True, hide_index=True,
                 )
             elif len(man_matches) == 1:
@@ -591,131 +617,132 @@ def _tab3_fn():
                         st.rerun(scope="app")
 
     st.divider()
-    st.subheader("Huecos disponibles", divider="blue")
+    with st.container(border=True):
+        st.subheader("Huecos disponibles", divider="blue")
 
-    gaps_df = load_gaps()
-    if gaps_df.empty:
-        st.info("No hay huecos disponibles actualmente.")
-    else:
-        gap_services = sorted(gaps_df["servicio"].dropna().unique())
-        selected_gap_svc = st.selectbox(
-            "Filtrar por servicio",
-            options=["Todos"] + gap_services,
-            key="gaps_svc_filter",
-        )
-        if selected_gap_svc != "Todos":
-            gaps_df = gaps_df[gaps_df["servicio"] == selected_gap_svc]
-
+        gaps_df = load_gaps()
         if gaps_df.empty:
-            st.info(f"No hay huecos disponibles para {selected_gap_svc}.")
-        for _, gap in gaps_df.iterrows():
-            label = f"{gap['servicio']} · {gap['quirofano']} · {gap['fecha_intervencion']} · {gap['duracion_horas']}h"
-            with st.expander(label):
-                # ── Paciente que canceló ──────────────────────────────────────
-                cancelled_id   = str(gap.get("id_paciente_cancelado", ""))
-                cancelled_rows = df[df["ID_Paciente"] == cancelled_id]
-                st.markdown("**Paciente que liberó el hueco**")
-                if not cancelled_rows.empty:
-                    cp = cancelled_rows.iloc[0]
-                    ci1, ci2, ci3, ci4 = st.columns([2, 1, 1, 2])
-                    ci1.markdown(f"**ID:** {cancelled_id}")
-                    ci2.markdown(f"**Edad:** {int(cp['Edad'])} años")
-                    ci3.markdown(f"**Prioridad:** {float(cp['Prioridad']):.1f}%")
-                    ci4.markdown(f"**Motivo:** {gap.get('motivo_cancelacion', '—')}")
-                    st.caption(
-                        f"{cp.get('Codigo_Procedimiento','—')} — "
-                        f"{str(cp.get('Descripcion_Procedimiento',''))[:90]}"
-                    )
-                    if st.button("Ver ficha completa", key=f"show_cancelled_{gap['id_gap']}"):
-                        _show_patient_dialog(cp)
-                else:
-                    st.caption(f"ID: {cancelled_id}  ·  Motivo: {gap.get('motivo_cancelacion', '—')}")
-
-                st.divider()
-
-                # ── Candidatos con carga bajo demanda ────────────────────────
-                page_size    = 3
-                off_key = f"cand_offset_{gap['id_gap']}"
-                if off_key not in st.session_state:
-                    st.session_state[off_key] = 0
-                offset = st.session_state[off_key]
-
-                # find_candidates devuelve PAGE+1 filas: la extra indica si hay más
-                candidates = find_candidates(df, gap.to_dict(), n=page_size, offset=offset)
-                has_more   = len(candidates) > page_size
-                page_cands = candidates.head(page_size)
-
-                if page_cands.empty:
-                    st.warning("No hay candidatos disponibles para este hueco.")
-                    if st.button("Descartar hueco", key=f"disc_{gap['id_gap']}"):
-                        remove_gap(str(gap["id_gap"]))
-                        st.rerun(scope="app")
-                else:
-                    sel_key = f"sel_{gap['id_gap']}"
-                    if sel_key not in st.session_state:
-                        st.session_state[sel_key] = page_cands["ID_Paciente"].iloc[0]
-                    selected_candidate = st.session_state[sel_key]
-
-                    hdr = st.columns([3, 4, 1, 1, 1, 1])
-                    hdr[0].markdown("**ID Paciente**")
-                    hdr[1].markdown("**Procedimiento**")
-                    hdr[2].markdown("**Prioridad**")
-                    hdr[3].markdown("**Similitud**")
-                    hdr[4].markdown("**Puntuación**")
-                    hdr[5].markdown("**Selección**")
-
-                    for _, cand in page_cands.iterrows():
-                        pid      = cand["ID_Paciente"]
-                        is_sel   = pid == selected_candidate
-                        row_cols = st.columns([3, 4, 1, 1, 1, 1])
-                        with row_cols[0]:
-                            if st.button(pid, key=f"pid_{gap['id_gap']}_{pid}", use_container_width=True):
-                                _show_patient_dialog(df[df["ID_Paciente"] == pid].iloc[0])
-                        row_cols[1].write(str(cand["Descripcion_Procedimiento"])[:65])
-                        row_cols[2].write(f"{cand['Prioridad']:.1f}%")
-                        row_cols[3].write(f"{cand['Similitud']:.2f}")
-                        row_cols[4].write(f"{cand['Puntuacion']:.3f}")
-                        with row_cols[5]:
-                            if is_sel:
-                                st.success("Elegido")
-                            elif st.button("Elegir", key=f"elegir_{gap['id_gap']}_{pid}", use_container_width=True):
-                                st.session_state[sel_key] = pid
-                                st.rerun()
-
-                    btn_cols = st.columns([2, 2, 6])
-                    with btn_cols[0]:
-                        if has_more:
-                            if st.button("Otros candidatos", key=f"more_cand_{gap['id_gap']}"):
-                                st.session_state[off_key] = offset + page_size
-                                st.rerun()
-                    with btn_cols[1]:
-                        if offset > 0:
-                            if st.button("Candidatos originales", key=f"reset_cand_{gap['id_gap']}"):
-                                st.session_state[off_key] = 0
-                                st.rerun()
-
-                    st.markdown("")
-                    btn_a, btn_b = st.columns([1, 4])
-                    with btn_a:
-                        if st.button("Asignar", type="primary", key=f"assign_{gap['id_gap']}"):
-                            idx = df[df["ID_Paciente"] == selected_candidate].index[0]
-                            df.loc[idx, "Fecha_Intervencion"] = gap["fecha_intervencion"]
-                            df.loc[idx, "Quirofano"]          = gap["quirofano"]
-                            df.loc[idx, "Prioridad"]          = calculate_priority(
-                                int(df.loc[idx, "Edad"]),
-                                str(df.loc[idx, "Tipo_Cirugia"]),
-                                str(df.loc[idx, "Fecha_Ingreso"]),
-                                str(gap["fecha_intervencion"]),
-                            )
-                            df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
-                            remove_gap(str(gap["id_gap"]))
-                            load_data.clear()
-                            st.success(f"Paciente {selected_candidate[:8]}… asignado al hueco.")
-                            st.rerun(scope="app")
-                    with btn_b:
+            st.info("No hay huecos disponibles actualmente.")
+        else:
+            gap_services = sorted(gaps_df["servicio"].dropna().unique())
+            selected_gap_svc = st.selectbox(
+                "Filtrar por servicio",
+                options=["Todos"] + gap_services,
+                key="gaps_svc_filter",
+            )
+            if selected_gap_svc != "Todos":
+                gaps_df = gaps_df[gaps_df["servicio"] == selected_gap_svc]
+    
+            if gaps_df.empty:
+                st.info(f"No hay huecos disponibles para {selected_gap_svc}.")
+            for _, gap in gaps_df.iterrows():
+                label = f"{gap['servicio']} · {gap['quirofano']} · {gap['fecha_intervencion']} · {gap['duracion_horas']}h"
+                with st.expander(label):
+                    # ── Paciente que canceló ──────────────────────────────────────
+                    cancelled_id   = str(gap.get("id_paciente_cancelado", ""))
+                    cancelled_rows = df[df["ID_Paciente"] == cancelled_id]
+                    st.markdown("**Paciente que liberó el hueco**")
+                    if not cancelled_rows.empty:
+                        cp = cancelled_rows.iloc[0]
+                        ci1, ci2, ci3, ci4 = st.columns([2, 1, 1, 2])
+                        ci1.markdown(f"**ID:** {cancelled_id}")
+                        ci2.markdown(f"**Edad:** {int(cp['Edad'])} años")
+                        ci3.markdown(f"**Prioridad:** {float(cp['Prioridad']):.1f}%")
+                        ci4.markdown(f"**Motivo:** {gap.get('motivo_cancelacion', '—')}")
+                        st.caption(
+                            f"{cp.get('Codigo_Procedimiento','—')} — "
+                            f"{str(cp.get('Descripcion_Procedimiento',''))[:90]}"
+                        )
+                        if st.button("Ver ficha completa", key=f"show_cancelled_{gap['id_gap']}"):
+                            _show_patient_dialog(cp)
+                    else:
+                        st.caption(f"ID: {cancelled_id}  ·  Motivo: {gap.get('motivo_cancelacion', '—')}")
+    
+                    st.divider()
+    
+                    # ── Candidatos con carga bajo demanda ────────────────────────
+                    page_size    = 3
+                    off_key = f"cand_offset_{gap['id_gap']}"
+                    if off_key not in st.session_state:
+                        st.session_state[off_key] = 0
+                    offset = st.session_state[off_key]
+    
+                    # find_candidates devuelve PAGE+1 filas: la extra indica si hay más
+                    candidates = find_candidates(df, gap.to_dict(), n=page_size, offset=offset)
+                    has_more   = len(candidates) > page_size
+                    page_cands = candidates.head(page_size)
+    
+                    if page_cands.empty:
+                        st.warning("No hay candidatos disponibles para este hueco.")
                         if st.button("Descartar hueco", key=f"disc_{gap['id_gap']}"):
                             remove_gap(str(gap["id_gap"]))
                             st.rerun(scope="app")
+                    else:
+                        sel_key = f"sel_{gap['id_gap']}"
+                        if sel_key not in st.session_state:
+                            st.session_state[sel_key] = page_cands["ID_Paciente"].iloc[0]
+                        selected_candidate = st.session_state[sel_key]
+    
+                        hdr = st.columns([3, 4, 1, 1, 1, 1])
+                        hdr[0].markdown("**ID Paciente**")
+                        hdr[1].markdown("**Procedimiento**")
+                        hdr[2].markdown("**Prioridad**")
+                        hdr[3].markdown("**Similitud**")
+                        hdr[4].markdown("**Puntuación**")
+                        hdr[5].markdown("**Selección**")
+    
+                        for _, cand in page_cands.iterrows():
+                            pid      = cand["ID_Paciente"]
+                            is_sel   = pid == selected_candidate
+                            row_cols = st.columns([3, 4, 1, 1, 1, 1])
+                            with row_cols[0]:
+                                if st.button(pid, key=f"pid_{gap['id_gap']}_{pid}", use_container_width=True):
+                                    _show_patient_dialog(df[df["ID_Paciente"] == pid].iloc[0])
+                            row_cols[1].write(str(cand["Descripcion_Procedimiento"])[:65])
+                            row_cols[2].write(f"{cand['Prioridad']:.1f}%")
+                            row_cols[3].write(f"{cand['Similitud']:.2f}")
+                            row_cols[4].write(f"{cand['Puntuacion']:.3f}")
+                            with row_cols[5]:
+                                if is_sel:
+                                    st.success("Elegido")
+                                elif st.button("Elegir", key=f"elegir_{gap['id_gap']}_{pid}", use_container_width=True):
+                                    st.session_state[sel_key] = pid
+                                    st.rerun()
+    
+                        btn_cols = st.columns([2, 2, 6])
+                        with btn_cols[0]:
+                            if has_more:
+                                if st.button("Otros candidatos", key=f"more_cand_{gap['id_gap']}"):
+                                    st.session_state[off_key] = offset + page_size
+                                    st.rerun()
+                        with btn_cols[1]:
+                            if offset > 0:
+                                if st.button("Candidatos originales", key=f"reset_cand_{gap['id_gap']}"):
+                                    st.session_state[off_key] = 0
+                                    st.rerun()
+    
+                        st.markdown("")
+                        btn_a, btn_b = st.columns([1, 4])
+                        with btn_a:
+                            if st.button("Asignar", type="primary", key=f"assign_{gap['id_gap']}"):
+                                idx = df[df["ID_Paciente"] == selected_candidate].index[0]
+                                df.loc[idx, "Fecha_Intervencion"] = gap["fecha_intervencion"]
+                                df.loc[idx, "Quirofano"]          = gap["quirofano"]
+                                df.loc[idx, "Prioridad"]          = calculate_priority(
+                                    int(df.loc[idx, "Edad"]),
+                                    str(df.loc[idx, "Tipo_Cirugia"]),
+                                    str(df.loc[idx, "Fecha_Ingreso"]),
+                                    str(gap["fecha_intervencion"]),
+                                )
+                                df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
+                                remove_gap(str(gap["id_gap"]))
+                                load_data.clear()
+                                st.success(f"Paciente {selected_candidate[:8]}… asignado al hueco.")
+                                st.rerun(scope="app")
+                        with btn_b:
+                            if st.button("Descartar hueco", key=f"disc_{gap['id_gap']}"):
+                                remove_gap(str(gap["id_gap"]))
+                                st.rerun(scope="app")
 
     st.divider()
     st.subheader("Tabla de pacientes", divider="blue")
@@ -735,7 +762,7 @@ def _tab3_fn():
     table_cols = [
         "ID_Paciente", "Edad", "Sexo", "Servicio", "Prioridad",
         "Fecha_Ingreso", "Fecha_Intervencion", "Quirofano", "Duracion_Horas",
-        "Codigo_Diagnostico_1", "Descripcion_Diagnostico_1",
+        "Codigo_Diagnostico", "Descripcion_Diagnostico",
         "Codigo_Procedimiento", "Descripcion_Procedimiento",
         "Comorbilidades",
     ]
@@ -754,17 +781,22 @@ def _tab3_fn():
             help="Score 0–100: espera (40 %) + edad (30 %) + invasividad cirugía (30 %)",
             min_value=0, max_value=100, format="%.1f%%",
         ),
-        "Fecha_Ingreso":     st.column_config.DateColumn("Fecha ingreso",      format="DD/MM/YYYY"),
-        "Fecha_Intervencion": st.column_config.DatetimeColumn("Fecha intervención", format="DD/MM/YYYY HH:mm"),
-        "Duracion_Horas":    st.column_config.NumberColumn("Duración (h)", min_value=0.5, step=0.5, format="%.1f h"),
-        "Comorbilidades":    st.column_config.TextColumn("Comorbilidades"),
+        "Fecha_Ingreso":      st.column_config.DateColumn("Fecha ingreso",    format="DD/MM/YYYY"),
+        "Fecha_Intervencion": st.column_config.DatetimeColumn("Intervención",  format="DD/MM/YYYY HH:mm"),
+        "Quirofano":          st.column_config.TextColumn("Quirófano"),
+        "Duracion_Horas":     st.column_config.NumberColumn("Duración (h)",   min_value=0.5, step=0.5, format="%.1f h"),
+        "Codigo_Diagnostico": st.column_config.TextColumn("Cód. diagnóstico"),
+        "Descripcion_Diagnostico": st.column_config.TextColumn("Diagnóstico"),
+        "Codigo_Procedimiento":    st.column_config.TextColumn("Cód. procedimiento"),
+        "Descripcion_Procedimiento": st.column_config.TextColumn("Procedimiento"),
+        "Comorbilidades":     st.column_config.TextColumn("Comorbilidades"),
     }
 
     if st.toggle("Habilitar edición", key="toggle_edit_table"):
         edited = st.data_editor(
             table, column_config=col_config,
             disabled=disabled_cols,
-            use_container_width=True, height=400,
+            use_container_width=True, height=500,
         )
         if st.button("Guardar cambios", key="btn_save_table"):
             df_updated = df.set_index("ID_Paciente").copy()
@@ -779,7 +811,7 @@ def _tab3_fn():
             st.success("Cambios guardados.")
             st.rerun(scope="app")
     else:
-        st.dataframe(table, column_config=col_config, use_container_width=True, height=400)
+        st.dataframe(table, column_config=col_config, use_container_width=True, height=500)
 
 with tab3:
     _tab3_fn()
@@ -1009,132 +1041,135 @@ def _tab4_fn():
                         st.rerun()
 
     st.divider()
-    st.subheader("Quirófanos de tarde", divider="blue")
-    st.caption(
-        "Asigna cada quirófano de tarde (TARDE-Q1, TARDE-Q2) al servicio que más impacto tendrá. "
-        "La asignación se guarda y se usa al planificar intervenciones."
-    )
-
-    if st.button("Calcular impacto", key="btn_recalc_impact"):
-        with st.spinner("Calculando impacto de quirófanos de tarde..."):
-            st.session_state["pm_impact"] = compute_pm_impact(df)
-
-    # Cargar asignación persistida
-    pm_assignment = load_pm_assignment()
-    svc_list = sorted(df["Servicio"].dropna().unique())
-
-    col1, col2 = st.columns(2)
-    new_assignment: dict[str, str] = {}
-    for i, pm_room_name in enumerate(PM_ROOMS):
-        col = col1 if i == 0 else col2
-        with col:
-            st.markdown(f"**{pm_room_name}**")
-            # Mostrar tabla de impacto si ya se calculó
-            if "pm_impact" in st.session_state:
-                impact = st.session_state["pm_impact"]
-                st.dataframe(
-                    impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
-                    use_container_width=True,
-                    hide_index=True,
-                    height=220,
+    with st.container(border=True):
+        st.subheader("Quirófanos de tarde", divider="blue")
+        st.caption(
+            "Asigna cada quirófano de tarde (TARDE-Q1, TARDE-Q2) al servicio que más impacto tendrá. "
+            "La asignación se guarda y se usa al planificar intervenciones."
+        )
+    
+        if st.button("Calcular impacto", key="btn_recalc_impact"):
+            with st.spinner("Calculando impacto de quirófanos de tarde..."):
+                st.session_state["pm_impact"] = compute_pm_impact(df)
+    
+        # Cargar asignación persistida
+        pm_assignment = load_pm_assignment()
+        svc_list = sorted(df["Servicio"].dropna().unique())
+    
+        col1, col2 = st.columns(2)
+        new_assignment: dict[str, str] = {}
+        for i, pm_room_name in enumerate(PM_ROOMS):
+            col = col1 if i == 0 else col2
+            with col:
+                st.markdown(f"**{pm_room_name}**")
+                # Mostrar tabla de impacto si ya se calculó
+                if "pm_impact" in st.session_state:
+                    impact = st.session_state["pm_impact"]
+                    st.dataframe(
+                        impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
+                        use_container_width=True,
+                        hide_index=True,
+                        height=220,
+                    )
+                    options = ["(ninguno)"] + list(impact["Servicio"])
+                else:
+                    st.info("Pulsa **Calcular impacto** para ver la tabla de referencia.")
+                    options = ["(ninguno)"] + svc_list
+                # Servicio actualmente asignado (si existe)
+                current_svc = pm_assignment.get(pm_room_name)
+                default_idx  = options.index(current_svc) if current_svc in options else 0
+                selected_svc = st.selectbox(
+                    f"Asignar {pm_room_name} a",
+                    options=options,
+                    index=default_idx,
+                    key=f"pm_assign_{pm_room_name}",
                 )
-                options = ["(ninguno)"] + list(impact["Servicio"])
+                new_assignment[pm_room_name] = selected_svc if selected_svc != "(ninguno)" else ""
+    
+        if st.button("Guardar asignación de quirófanos de tarde", key="btn_save_pm"):
+            clean = {k: v for k, v in new_assignment.items() if v}
+            # Validar que cada quirófano se asigne a un servicio distinto
+            assigned_svcs = list(clean.values())
+            if len(assigned_svcs) != len(set(assigned_svcs)):
+                st.error("Cada quirófano de tarde debe asignarse a un servicio diferente.")
             else:
-                st.info("Pulsa **Calcular impacto** para ver la tabla de referencia.")
-                options = ["(ninguno)"] + svc_list
-            # Servicio actualmente asignado (si existe)
-            current_svc = pm_assignment.get(pm_room_name)
-            default_idx  = options.index(current_svc) if current_svc in options else 0
-            selected_svc = st.selectbox(
-                f"Asignar {pm_room_name} a",
-                options=options,
-                index=default_idx,
-                key=f"pm_assign_{pm_room_name}",
+                save_pm_assignment(clean)
+                st.success("Asignación guardada.")
+                st.rerun(scope="app")
+
+    st.divider()
+    with st.container(border=True):
+        st.subheader("Exportar planificación en PDF", divider="blue")
+    
+        ex1, ex2, ex3 = st.columns([3, 2, 2])
+        with ex1:
+            export_service = st.selectbox(
+                "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="export_svc",
             )
-            new_assignment[pm_room_name] = selected_svc if selected_svc != "(ninguno)" else ""
-
-    if st.button("Guardar asignación de quirófanos de tarde", key="btn_save_pm"):
-        clean = {k: v for k, v in new_assignment.items() if v}
-        # Validar que cada quirófano se asigne a un servicio distinto
-        assigned_svcs = list(clean.values())
-        if len(assigned_svcs) != len(set(assigned_svcs)):
-            st.error("Cada quirófano de tarde debe asignarse a un servicio diferente.")
-        else:
-            save_pm_assignment(clean)
-            st.success("Asignación guardada.")
-            st.rerun(scope="app")
-
-    st.divider()
-    st.subheader("Exportar planificación en PDF", divider="blue")
-
-    ex1, ex2, ex3 = st.columns([3, 2, 2])
-    with ex1:
-        export_service = st.selectbox(
-            "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="export_svc",
-        )
-    with ex2:
-        export_start = st.date_input("Desde", value=date.today(), key="export_start")
-    with ex3:
-        export_end = st.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="export_end")
-
-    if st.button("Generar PDF", type="primary", key="btn_pdf"):
-        if export_start > export_end:
-            st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
-        else:
-            from pdf_export import build_pdf
-            st.session_state["pdf_bytes"]    = build_pdf(df, export_service, export_start, export_end)
-            st.session_state["pdf_filename"] = f"planificacion_{export_service.replace(' ', '_')}_{export_start}.pdf"
-
-    if st.session_state.get("pdf_bytes"):
-        st.download_button(
-            label="Descargar PDF",
-            data=st.session_state["pdf_bytes"],
-            file_name=st.session_state["pdf_filename"],
-            mime="application/pdf",
-            key="download_pdf",
-        )
+        with ex2:
+            export_start = st.date_input("Desde", value=date.today(), key="export_start")
+        with ex3:
+            export_end = st.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="export_end")
+    
+        if st.button("Generar PDF", type="primary", key="btn_pdf"):
+            if export_start > export_end:
+                st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
+            else:
+                from pdf_export import build_pdf
+                st.session_state["pdf_bytes"]    = build_pdf(df, export_service, export_start, export_end)
+                st.session_state["pdf_filename"] = f"planificacion_{export_service.replace(' ', '_')}_{export_start}.pdf"
+    
+        if st.session_state.get("pdf_bytes"):
+            st.download_button(
+                label="Descargar PDF",
+                data=st.session_state["pdf_bytes"],
+                file_name=st.session_state["pdf_filename"],
+                mime="application/pdf",
+                key="download_pdf",
+            )
 
     st.divider()
-    st.subheader("Calendario de quirófanos", divider="blue")
-
-    cc1, cc2 = st.columns(2)
-    with cc1:
-        cal_service = st.selectbox(
-            "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="cal_service",
-        )
-    pm_cal    = next((r for r, s in load_pm_assignment().items() if s == cal_service), None)
-    cal_rooms = ROOMS_BY_SERVICE.get(cal_service, []) + ([pm_cal] if pm_cal else [])
-    with cc2:
-        cal_room = st.selectbox("Quirófano", options=cal_rooms, key="cal_room") if cal_rooms else None
-
-    if not cal_rooms:
-        st.info("No hay quirófanos definidos para este servicio.")
-    else:
-        ROOM_COLORS = ["#3788d8", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c", "#e67e22", "#34495e"]
-        room_color  = {r: ROOM_COLORS[i % len(ROOM_COLORS)] for i, r in enumerate(cal_rooms)}
-
-        df_events = df[df["Quirofano"].notna() & df["Fecha_Intervencion"].notna()].copy()
-        df_events = df_events[df_events["Servicio"] == cal_service]
-        df_events = df_events[df_events["Quirofano"] == cal_room]
-
-        events = []
-        for _, row in df_events.iterrows():
-            start_dt = pd.to_datetime(row["Fecha_Intervencion"])
-            end_dt   = start_dt + pd.Timedelta(hours=float(row.get("Duracion_Horas", 1.0) or 1.0))
-            events.append({
-                "title": f"{row['Quirofano']} · {row['ID_Paciente'][:8]}",
-                "start": start_dt.strftime("%Y-%m-%dT%H:%M:%S"),
-                "end":   end_dt.strftime("%Y-%m-%dT%H:%M:%S"),
-                "color": room_color.get(row["Quirofano"], "#3788d8"),
-                "extendedProps": {"servicio": row["Servicio"], "diagnostico": row["Descripcion_Diagnostico_1"]},
+    with st.container(border=True):
+        st.subheader("Calendario de quirófanos", divider="blue")
+    
+        cc1, cc2 = st.columns(2)
+        with cc1:
+            cal_service = st.selectbox(
+                "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="cal_service",
+            )
+        pm_cal    = next((r for r, s in load_pm_assignment().items() if s == cal_service), None)
+        cal_rooms = ROOMS_BY_SERVICE.get(cal_service, []) + ([pm_cal] if pm_cal else [])
+        with cc2:
+            cal_room = st.selectbox("Quirófano", options=cal_rooms, key="cal_room") if cal_rooms else None
+    
+        if not cal_rooms:
+            st.info("No hay quirófanos definidos para este servicio.")
+        else:
+            ROOM_COLORS = ["#3788d8", "#e74c3c", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c", "#e67e22", "#34495e"]
+            room_color  = {r: ROOM_COLORS[i % len(ROOM_COLORS)] for i, r in enumerate(cal_rooms)}
+    
+            df_events = df[df["Quirofano"].notna() & df["Fecha_Intervencion"].notna()].copy()
+            df_events = df_events[df_events["Servicio"] == cal_service]
+            df_events = df_events[df_events["Quirofano"] == cal_room]
+    
+            events = []
+            for _, row in df_events.iterrows():
+                start_dt = pd.to_datetime(row["Fecha_Intervencion"])
+                end_dt   = start_dt + pd.Timedelta(hours=float(row.get("Duracion_Horas", 1.0) or 1.0))
+                events.append({
+                    "title": f"{row['Quirofano']} · {row['ID_Paciente'][:8]}",
+                    "start": start_dt.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "end":   end_dt.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "color": room_color.get(row["Quirofano"], "#3788d8"),
+                    "extendedProps": {"servicio": row["Servicio"], "diagnostico": row["Descripcion_Diagnostico"]},
+                })
+    
+            st_calendar(events=events, options={
+                "initialView": "timeGridWeek",
+                "headerToolbar": {"left": "prev,next today", "center": "title", "right": "dayGridMonth,timeGridWeek,timeGridDay"},
+                "slotMinTime": "08:00:00", "slotMaxTime": "22:00:00",
+                "locale": "es", "height": 500,
             })
-
-        st_calendar(events=events, options={
-            "initialView": "timeGridWeek",
-            "headerToolbar": {"left": "prev,next today", "center": "title", "right": "dayGridMonth,timeGridWeek,timeGridDay"},
-            "slotMinTime": "08:00:00", "slotMaxTime": "22:00:00",
-            "locale": "es", "height": 500,
-        })
 
 with tab4:
     _tab4_fn()

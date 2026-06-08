@@ -580,8 +580,8 @@ def generate_patient() -> dict:
         "Edad":                      age,
         "Sexo":                      sex,
         "Prioridad":                 priority,
-        "Codigo_Diagnostico_1":      d1["Código"],
-        "Descripcion_Diagnostico_1": d1["Descripción"],
+        "Codigo_Diagnostico":      d1["Código"],
+        "Descripcion_Diagnostico": d1["Descripción"],
         "Codigo_Procedimiento":      proc["Código"],
         "Descripcion_Procedimiento": proc["Descripción"],
         "Tipo_Cirugia":              surgery_type,
@@ -617,7 +617,7 @@ PATIENT_COLUMNS = [
 
 WAITLIST_COLUMNS = [
     "ID_Paciente", "Edad", "Sexo", "Prioridad",
-    "Codigo_Diagnostico_1", "Descripcion_Diagnostico_1",
+    "Codigo_Diagnostico", "Descripcion_Diagnostico",
     "Codigo_Procedimiento", "Descripcion_Procedimiento",
     "Tipo_Cirugia", "Servicio", "Lateralidad", "Observaciones", "Curso_Clinico",
     "Intervenciones_Previas", "Otros_Parametros_Clinicos", "Comorbilidades",
@@ -647,5 +647,5 @@ if __name__ == "__main__":
     print(f"  Total: {len(df)}  |  Edad media: {df['Edad'].mean():.1f}  |  "
           f"H/M: {(df['Sexo']=='Hombre').sum()}/{(df['Sexo']=='Mujer').sum()}")
     for _, row in df.head(3).iterrows():
-        print(f"  [{row['Codigo_Diagnostico_1']}] {row['Descripcion_Diagnostico_1'][:50]}")
+        print(f"  [{row['Codigo_Diagnostico']}] {row['Descripcion_Diagnostico'][:50]}")
         print(f"    → [{row['Codigo_Procedimiento']}] {row['Descripcion_Procedimiento'][:50]}")

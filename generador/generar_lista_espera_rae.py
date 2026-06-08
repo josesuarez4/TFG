@@ -122,8 +122,8 @@ def _fetch_patient_clinical(_: int) -> dict:
         "Medico_Peticionario":       _doctor(),
         "Edad":                      age,
         "Sexo":                      sex,
-        "Codigo_Diagnostico_1":      d1["Código"],
-        "Descripcion_Diagnostico_1": d1["Descripción"],
+        "Codigo_Diagnostico":      d1["Código"],
+        "Descripcion_Diagnostico": d1["Descripción"],
         "Codigo_Procedimiento":      proc["Código"],
         "Descripcion_Procedimiento": proc["Descripción"],
         "Tipo_Cirugia":              surgery_type,
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     print(f"  Prioridad media : {df['Prioridad'].mean():.1f}")
     print(f"\n  Muestra:")
     for _, row in df.head(3).iterrows():
-        print(f"    [{row['Codigo_Diagnostico_1']}] {row['Descripcion_Diagnostico_1'][:55]}")
+        print(f"    [{row['Codigo_Diagnostico']}] {row['Descripcion_Diagnostico'][:55]}")
         print(f"      -> [{row['Codigo_Procedimiento']}] {row['Descripcion_Procedimiento'][:55]}")
         print(f"         Servicio: {row['Servicio']}  |  Prioridad: {row['Prioridad']}")
         print()
