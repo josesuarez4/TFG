@@ -1,0 +1,22 @@
+# Entorno Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Variables de entorno (claves API)
+.env
+
+# Datos generados (reproducibles con el generador)
+datos_generados/*
+!datos_generados/.gitkeep
+!datos_generados/lista_espera_quirurgica.csv
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Sistema
+.DS_Store
+Thumbs.db

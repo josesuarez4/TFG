@@ -1,0 +1,16 @@
+ROOMS_BY_SERVICE: dict[str, list[str]] = {
+    "Traumatología y Cirugía Ortopédica":   ["TRAU-Q1", "TRAU-Q2", "TRAU-Q3", "TRAU-Q4"],
+    "Cirugía General y Aparato Digestivo":  ["CGAD-Q1", "CGAD-Q2", "CGAD-Q3"],
+    "Urología":                             ["UROL-Q1", "UROL-Q2"],
+    "Neurocirugía":                         ["NEUR-Q1", "NEUR-Q2"],
+    "Cirugía Cardiovascular":               ["CCAR-Q1", "CCAR-Q2"],
+    "Angiología y Cirugía Vascular":        ["ANGI-Q1"],
+    "Oftalmología":                         ["OFTA-Q1", "OFTA-Q2"],
+    "Otorrinolaringología":                 ["OTOR-Q1"],
+    "Cirugía Torácica":                     ["CTOR-Q1"],
+    "Cirugía Maxilofacial":                 ["CMXF-Q1"],
+    "Dermatología":                         ["DERM-Q1"],
+    "Cirugía Plástica":                     ["CPLA-Q1"],
+    "Ginecología y Obstetricia":            ["GINE-Q1", "GINE-Q2"],
+    "Cirugía Pediátrica":                   ["CPED-Q1"],
+}
