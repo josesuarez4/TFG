@@ -83,7 +83,7 @@ def service_planning(
     start_date: date | None = None,
     closed_days: dict[str, list[date]] | None = None,
     unavailable_specs: dict[str, list[tuple[datetime, datetime]]] | None = None,
-    tarde_room: str | None = None,
+    pm_room: str | None = None,
 ) -> tuple[pd.DataFrame, int]:
     """Planifica pacientes de un servicio dentro de una ventana de fechas.
 
@@ -105,8 +105,8 @@ def service_planning(
 
     service_mask = df["Servicio"] == service
 
-    # Añadir quirófano de tarde al listado del servicio si está asignado
-    _rooms_override = ROOMS_BY_SERVICE.get(service, []) + ([tarde_room] if tarde_room else [])
+    # Poner PM primero: sus slots (15:00+) se asignan antes que los de mañana para ese turno
+    _rooms_override = ([pm_room] if pm_room else []) + ROOMS_BY_SERVICE.get(service, [])
 
     # Reconstruir used_slots con todos los slots existentes (todos los servicios)
     used_slots: dict[str, list[tuple[datetime, datetime]]] = {}
@@ -162,3 +162,109 @@ def service_planning(
             n_assigned += 1
 
     return df, n_assigned
+
+
+def find_free_slots(
+    rooms: list[str],
+    from_date: date,
+    duration: float,
+    df_current: pd.DataFrame,
+    n: int = 3,
+    closed_days: dict[str, list[date]] | None = None,
+    unavailable_specs: dict[str, list[tuple[datetime, datetime]]] | None = None,
+) -> list[tuple[datetime, str]]:
+    """Devuelve los n slots libres más próximos a from_date entre todos los quirófanos dados,
+    respetando días cerrados y franjas de especialistas no disponibles."""
+    closed_days       = closed_days or {}
+    unavailable_specs = unavailable_specs or {}
+
+    # Precomputar slots ocupados por quirófano
+    occupied_by_room: dict[str, list[tuple[datetime, datetime]]] = {}
+    for room in rooms:
+        room_rows = df_current[df_current["Quirofano"] == room].copy()
+        room_rows["_s"] = pd.to_datetime(room_rows["Fecha_Intervencion"], errors="coerce")
+        room_rows["_e"] = room_rows["_s"] + pd.to_timedelta(
+            room_rows["Duracion_Horas"].fillna(1), unit="h"
+        ) + timedelta(minutes=_TURNOVER_MINUTES)
+        occupied_by_room[room] = [
+            (r["_s"].to_pydatetime(), r["_e"].to_pydatetime())
+            for _, r in room_rows[room_rows["_s"].notna()].iterrows()
+        ]
+
+    slots: list[tuple[datetime, str]] = []
+    day = from_date
+    for _ in range(365):
+        if len(slots) == n:
+            break
+        day_candidates: list[tuple[datetime, str]] = []
+        for room in rooms:
+            # Saltar si el quirófano está cerrado ese día
+            if day in closed_days.get(room, []):
+                continue
+            specs = SPECIALISTS_BY_ROOM.get(room, [])
+            if not specs:
+                continue
+            spec = specs[0]
+            if day.weekday() not in set(spec["days"]):
+                continue
+
+            spec_id      = spec.get("id", "")
+            spec_unavail = unavailable_specs.get(spec_id, [])
+            t       = datetime(day.year, day.month, day.day, spec["start_hour"], 0)
+            day_end = datetime(day.year, day.month, day.day, spec["end_hour"],    0)
+            occupied = occupied_by_room[room]
+            while t + timedelta(hours=duration) <= day_end:
+                slot_end = t + timedelta(hours=duration) + timedelta(minutes=_TURNOVER_MINUTES)
+                # Comprobar solapamiento con citas existentes y con no disponibilidad del especialista
+                if (
+                    not any(s < slot_end and e > t for s, e in occupied)
+                    and not any(s < t + timedelta(hours=duration) and e > t for s, e in spec_unavail)
+                ):
+                    day_candidates.append((t, room))
+                    break
+                t += timedelta(minutes=30)
+
+        for candidate in sorted(day_candidates, key=lambda x: x[0]):
+            if len(slots) < n:
+                slots.append(candidate)
+
+        day += timedelta(days=1)
+    return slots
+
+
+def compute_pm_impact(df: pd.DataFrame) -> pd.DataFrame:
+    """Simula 4 semanas de planificación de mañana por servicio (pizarra en blanco).
+    Recibe el DataFrame actual y devuelve una tabla de impacto por servicio."""
+    base = df.copy()
+    base["Fecha_Intervencion"] = None
+    base["Quirofano"]          = None
+
+    today  = date.today()
+    end    = today + timedelta(weeks=4)
+    end_ts = pd.Timestamp(end)
+    rows   = []
+    for svc in sorted(base["Servicio"].dropna().unique()):
+        svc_mask      = base["Servicio"] == svc
+        n_unscheduled = int(svc_mask.sum())
+        mean_duration = round(float(base.loc[svc_mask, "Duracion_Horas"].fillna(1).mean()), 2)
+
+        df_sim, n_assigned = service_planning(base, svc, end, today, pm_room=None)
+
+        uncovered_ratio = (n_unscheduled - n_assigned) / n_unscheduled if n_unscheduled > 0 else 0.0
+        capacity_impact = round(uncovered_ratio * mean_duration, 3)
+
+        svc_sim   = df_sim[df_sim["Servicio"] == svc].copy()
+        _ingreso  = pd.to_datetime(svc_sim["Fecha_Ingreso"], errors="coerce")
+        _interv   = pd.to_datetime(svc_sim["Fecha_Intervencion"], errors="coerce")
+        wait_days = _interv.sub(_ingreso).dt.days.where(_interv.notna(), (end_ts - _ingreso).dt.days)
+        mean_wait = round(float(wait_days.mean()), 1) if n_unscheduled > 0 else 0.0
+
+        rows.append({
+            "Servicio":        svc,
+            "Sin cita":        n_unscheduled,
+            "Asignados (M)":   n_assigned,
+            "Dur. media (h)":  mean_duration,
+            "Impacto cap.":    capacity_impact,
+            "Espera sim. (d)": mean_wait,
+        })
+    return pd.DataFrame(rows).sort_values("Espera sim. (d)", ascending=False)
