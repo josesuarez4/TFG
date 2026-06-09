@@ -3,11 +3,6 @@
     background-color: #eef4fb;
 }
 
-/* Ocultar el iframe del inyector JS (height=0) */
-[data-testid="stCustomComponentV1"] {
-    display: none !important;
-}
-
 /* Tarjetas de gráficas */
 [data-testid="stPlotlyChart"] {
     border: 2px solid #2563eb;

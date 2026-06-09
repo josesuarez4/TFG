@@ -18,7 +18,7 @@ _PEDIATRIC_THRESHOLD: float = 14.0
 
 
 def _age_pct(age: int) -> float:
-    """Curva en U: 100 % en neonatos, mínimo en adolescentes, sube con la vejez."""
+    """Curva en U: 100 % en neonatos, mínimo en adolescentes, sube con los años."""
     young_pct = max(0.0, 100.0 * (1.0 - age / _PEDIATRIC_THRESHOLD))
     old_pct   = min(age / 90.0 * 100.0, 100.0)
     return max(young_pct, old_pct)
@@ -28,13 +28,23 @@ def calculate_priority(
     age: int,
     surgery_type: str,
     admission_date: str,
-    intervention_date: "str | None" = None,  # no se usa; se conserva por compatibilidad
+    intervention_date: "str | None" = None,
+    reference_date: "date | None" = None,
 ) -> float:
-    """Score 0–100: espera (40 %) + edad curva-U (30 %) + invasividad (30 %)."""
+    """Score 0–100: espera (40 %) + edad (30 %) + invasividad (30 %).
+
+    reference_date: fecha hasta la que se calcula la espera. Si no se indica se
+    usa el día de hoy. Para pacientes sin cita en servicios ya planificados se utiliza 
+    la fecha de la última planificación como referencia, lo que evita que su prioridad 
+    se dispare al día siguiente de la planificación.
+    """
     d_start = date.fromisoformat(admission_date)
-    # Usar siempre hoy: la espera refleja el tiempo real transcurrido desde el ingreso,
-    # independientemente de si el paciente tiene cita asignada o no.
-    days    = max(0, (date.today() - d_start).days)
+    d_ref   = (
+        date.fromisoformat(intervention_date[:10]) if intervention_date is not None
+        else reference_date if reference_date is not None
+        else date.today()
+    )
+    days    = max(0, (d_ref - d_start).days)
 
     wait_pct = min(days / 365.0 * 100.0, 100.0)
     surg_pct = _SURGERY_TYPE_PCT.get(surgery_type, 0.0)
