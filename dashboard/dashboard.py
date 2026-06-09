@@ -48,15 +48,16 @@ new MutationObserver(styleCards).observe(doc.body, {childList: true, subtree: tr
 
 @st.dialog("Información del paciente", width="large")
 def _show_patient_dialog(patient: pd.Series) -> None:
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric("ID",             str(patient["ID_Paciente"])[:12])
-    c2.metric("Edad",           f"{int(patient['Edad'])} años")
-    c3.metric("Sexo",           str(patient.get("Sexo", "—")))
-    c4.metric("Prioridad",      f"{float(patient['Prioridad']):.1f}%")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Edad",      f"{int(patient['Edad'])} años")
+    c2.metric("Sexo",      str(patient.get("Sexo", "—")))
+    c3.metric("Prioridad", f"{float(patient['Prioridad']):.1f}%")
 
     st.divider()
     col_a, col_b = st.columns(2)
     with col_a:
+        st.markdown("**ID**")
+        st.write(str(patient["ID_Paciente"]))
         st.markdown("**Servicio**")
         st.write(patient.get("Servicio", "—"))
         st.markdown("**Tipo de cirugía**")
@@ -119,7 +120,7 @@ _df_g        = df.copy()
 
 tab1, tab2, tab3, tab4 = st.tabs(["Resumen", "Análisis", "Pacientes", "Planificación"])
 
-# ── TAB 1: RESUMEN ────────────────────────────────────────────────────────────
+# TAB 1: RESUMEN 
 with tab1:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Pacientes",      len(df))
@@ -250,7 +251,7 @@ with tab1:
     fig_box.update_layout(showlegend=False, xaxis_tickangle=-35, height=360, margin={"t": 40, "b": 60, "l": 20, "r": 20})
     st.plotly_chart(fig_box, use_container_width=True)
 
-# ── TAB 2: ANÁLISIS ──────────────────────────────────────────────────────────
+# TAB 2: ANÁLISIS 
 @st.fragment
 def _tab2_fn():
     # Selector de servicio + KPIs (no dependen de los demás filtros)
@@ -304,7 +305,7 @@ def _tab2_fn():
 
     st.divider()
 
-    # ── Fila 1: scatter · tramos · horas semanales ────────────────────────────
+    # Fila 1: scatter · tramos · horas semanales 
     r1c1, r1c2, r1c3 = st.columns(3)
 
     with r1c1:
@@ -374,7 +375,7 @@ def _tab2_fn():
 
     st.divider()
 
-    # ── Fila 2: edad · tipo cirugía · alta prioridad sin cita ─────────────────
+    # Fila 2: edad · tipo cirugía · alta prioridad sin cita 
     r2c1, r2c2, r2c3 = st.columns(3)
 
     with r2c1:
@@ -478,7 +479,7 @@ def _tab2_fn():
 with tab2:
     _tab2_fn()
 
-# ── TAB 3: PACIENTES ──────────────────────────────────────────────────────────
+# TAB 3: PACIENTES 
 @st.fragment
 def _tab3_fn():
     # Contadores para forzar reset de los inputs tras confirmar acción
@@ -494,7 +495,7 @@ def _tab3_fn():
 
     MOTIVOS_CANCEL = ["Decisión del paciente", "No presentación", "Causa del hospital"]
 
-    # ── Mitad izquierda: cancelar cita ────────────────────────────────────────
+    # Cancelar cita 
     with cancel_col:
         with st.container(border=True):
             st.subheader("Cancelar cita de intervención", divider="blue")
@@ -619,7 +620,7 @@ def _tab3_fn():
                                 st.session_state["tab3_success"] = f"Cita cancelada. Prioridad: {patient['Prioridad']:.1f}% → {new_priority:.1f}%"
                             st.rerun(scope="app")
 
-    # ── Mitad derecha: asignar cita manualmente ───────────────────────────────
+    # Asignar cita manualmente 
     with assign_col:
         with st.container(border=True):
             st.subheader("Asignar cita manualmente", divider="blue")
@@ -917,7 +918,7 @@ with tab3:
 def _tab4_fn():
     plan_col, delete_col = st.columns(2)
 
-    # ── Mitad izquierda: planificar ───────────────────────────────────────────
+    # Planificar intervenciones
     with plan_col:
         with st.container(border=True):
             st.subheader("Planificar intervenciones", divider="blue")
@@ -925,11 +926,12 @@ def _tab4_fn():
             plan_service = st.selectbox(
                 "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="plan_svc",
             )
+            plan_default_start = get_reference_date(plan_service)
             pd1, pd2 = st.columns(2)
             with pd1:
-                plan_start = st.date_input("Desde", value=date.today(), key="plan_start")
+                plan_start = st.date_input("Desde", value=plan_default_start, key="plan_start")
             with pd2:
-                plan_end = st.date_input("Hasta", value=date.today() + timedelta(weeks=2), key="plan_end")
+                plan_end = st.date_input("Hasta", value=plan_default_start + timedelta(weeks=2), key="plan_end")
 
             svc_mask = df["Servicio"] == plan_service
             n_total  = int(svc_mask.sum())
@@ -1101,7 +1103,7 @@ def _tab4_fn():
                     )
                     st.rerun(scope="app")
 
-    # ── Mitad derecha: borrar ─────────────────────────────────────────────────
+    # Borrar planificación
     with delete_col:
         with st.container(border=True):
             st.subheader("Borrar planificación", divider="blue")
@@ -1162,6 +1164,37 @@ def _tab4_fn():
                         st.session_state.pop("confirm_delete_plan", None)
                         st.rerun()
 
+        st.divider()
+        with st.container(border=True):
+            st.subheader("Exportar planificación en PDF", divider="blue")
+
+            ex1, ex2, ex3 = st.columns([3, 2, 2])
+            with ex1:
+                export_service = st.selectbox(
+                    "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="export_svc",
+                )
+            with ex2:
+                export_start = st.date_input("Desde", value=date.today(), key="export_start")
+            with ex3:
+                export_end = st.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="export_end")
+
+            if st.button("Generar PDF", type="primary", key="btn_pdf"):
+                if export_start > export_end:
+                    st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
+                else:
+                    from pdf_export import build_pdf
+                    st.session_state["pdf_bytes"]    = build_pdf(df, export_service, export_start, export_end)
+                    st.session_state["pdf_filename"] = f"planificacion_{export_service.replace(' ', '_')}_{export_start}.pdf"
+
+            if st.session_state.get("pdf_bytes"):
+                st.download_button(
+                    label="Descargar PDF",
+                    data=st.session_state["pdf_bytes"],
+                    file_name=st.session_state["pdf_filename"],
+                    mime="application/pdf",
+                    key="download_pdf",
+                )
+
     st.divider()
     with st.container(border=True):
         st.subheader("Quirófanos de tarde", divider="blue")
@@ -1189,6 +1222,16 @@ def _tab4_fn():
                     impact = st.session_state["pm_impact"]
                     st.dataframe(
                         impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
+                        column_config={
+                            "Impacto cap.": st.column_config.NumberColumn(
+                                "Impacto cap.",
+                                help="Fracción de pacientes sin cita que no caben en quirófanos de mañana (0 = todos asignados, 1 = ninguno asignado). Cuanto mayor, más necesita este servicio el quirófano de tarde.",
+                            ),
+                            "Espera sim. (d)": st.column_config.NumberColumn(
+                                "Espera sim. (d)",
+                                help="Demora media simulada en días si se añade el quirófano de tarde a este servicio durante las próximas 4 semanas.",
+                            ),
+                        },
                         use_container_width=True,
                         hide_index=True,
                         height=220,
@@ -1219,36 +1262,6 @@ def _tab4_fn():
                 st.success("Asignación guardada.")
                 st.rerun(scope="app")
 
-    st.divider()
-    with st.container(border=True):
-        st.subheader("Exportar planificación en PDF", divider="blue")
-    
-        ex1, ex2, ex3 = st.columns([3, 2, 2])
-        with ex1:
-            export_service = st.selectbox(
-                "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="export_svc",
-            )
-        with ex2:
-            export_start = st.date_input("Desde", value=date.today(), key="export_start")
-        with ex3:
-            export_end = st.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="export_end")
-    
-        if st.button("Generar PDF", type="primary", key="btn_pdf"):
-            if export_start > export_end:
-                st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
-            else:
-                from pdf_export import build_pdf
-                st.session_state["pdf_bytes"]    = build_pdf(df, export_service, export_start, export_end)
-                st.session_state["pdf_filename"] = f"planificacion_{export_service.replace(' ', '_')}_{export_start}.pdf"
-    
-        if st.session_state.get("pdf_bytes"):
-            st.download_button(
-                label="Descargar PDF",
-                data=st.session_state["pdf_bytes"],
-                file_name=st.session_state["pdf_filename"],
-                mime="application/pdf",
-                key="download_pdf",
-            )
 
     st.divider()
     with st.container(border=True):

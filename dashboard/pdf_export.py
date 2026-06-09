@@ -15,10 +15,10 @@ _USABLE_W = _PAGE_W - 2 * _MARGIN  # 267 mm
 
 # Anchos de columna (suman 267 mm)
 _COL_WIDTHS = {
-    "Fecha y hora":  50,
-    "ID Paciente":   45,
-    "Duracion (h)":  22,
-    "Procedimiento": 115,
+    "Fecha y hora":  42,
+    "ID Paciente":   68,
+    "Duracion (h)":  20,
+    "Procedimiento": 102,
     "Prioridad (%)": 35,
 }
 
@@ -98,8 +98,8 @@ class _PlanPDF(FPDF):
             if len(proc) < len(str(row["procedimiento"])):
                 proc = proc[:-1] + "..."
 
-            self.cell(_COL_WIDTHS["Fecha y hora"],  6, str(row["fecha"]),      border=0, fill=fill)
-            self.cell(_COL_WIDTHS["ID Paciente"],   6, str(row["id"])[:16],    border=0, fill=fill)
+            self.cell(_COL_WIDTHS["Fecha y hora"],  6, str(row["fecha"]),      border=0, align="C", fill=fill)
+            self.cell(_COL_WIDTHS["ID Paciente"],   6, str(row["id"]),         border=0, fill=fill)
             self.cell(_COL_WIDTHS["Duracion (h)"],  6, str(row["duracion"]),   border=0, align="C", fill=fill)
             self.cell(_COL_WIDTHS["Procedimiento"], 6, proc,                   border=0, fill=fill)
             self.cell(_COL_WIDTHS["Prioridad (%)"], 6, str(row["prioridad"]),  border=0, align="C", fill=fill)

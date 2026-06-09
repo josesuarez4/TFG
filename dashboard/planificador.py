@@ -250,8 +250,8 @@ def compute_pm_impact(df: pd.DataFrame) -> pd.DataFrame:
 
         df_sim, n_assigned = service_planning(base, svc, end, today, pm_room=None)
 
-        uncovered_ratio = (n_unscheduled - n_assigned) / n_unscheduled if n_unscheduled > 0 else 0.0
-        capacity_impact = round(uncovered_ratio * mean_duration, 3)
+        n_rooms     = len(ROOMS_BY_SERVICE.get(svc, [])) or 1
+        raw_impact  = (n_unscheduled - n_assigned) / n_rooms  # pacientes sin cubrir por OR de mañana
 
         svc_sim   = df_sim[df_sim["Servicio"] == svc].copy()
         _ingreso  = pd.to_datetime(svc_sim["Fecha_Ingreso"], errors="coerce")
@@ -264,7 +264,12 @@ def compute_pm_impact(df: pd.DataFrame) -> pd.DataFrame:
             "Sin cita":        n_unscheduled,
             "Asignados (M)":   n_assigned,
             "Dur. media (h)":  mean_duration,
-            "Impacto cap.":    capacity_impact,
+            "Impacto cap.":    raw_impact,
             "Espera sim. (d)": mean_wait,
         })
-    return pd.DataFrame(rows).sort_values("Espera sim. (d)", ascending=False)
+
+    result = pd.DataFrame(rows)
+    max_impact = result["Impacto cap."].max()
+    if max_impact > 0:
+        result["Impacto cap."] = (result["Impacto cap."] / max_impact).round(3)
+    return result.sort_values("Espera sim. (d)", ascending=False)

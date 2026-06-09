@@ -1,7 +1,7 @@
 """Registro persistente de la última planificación ejecutada por servicio."""
 
 import json
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 _LOG_PATH = Path(__file__).parent.parent / "datos_generados" / "planning_log.json"
@@ -20,8 +20,6 @@ def get_reference_date(service: str) -> date:
     if service not in log:
         return date.today()
     end = date.fromisoformat(log[service])
-    # El día siguiente al fin del plan es la primera fecha realista para nuevas citas
-    from datetime import timedelta
     next_day = end + timedelta(days=1)
     return max(next_day, date.today())
 
