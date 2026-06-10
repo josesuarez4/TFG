@@ -114,7 +114,7 @@ _n_espera_g  = int((~_sched_g).sum())
 _dem_media_g = df["Dias_Espera"].mean()
 _dem_max_g   = int(df["Dias_Espera"].max())
 _edad_esp_g  = df.loc[~_sched_g, "Edad"].mean() if _n_espera_g > 0 else None
-_hp_g        = df["Prioridad"] >= 70
+_hp_g        = df["Prioridad"] >= 65
 _indice_g    = int((_hp_g & ~_sched_g).sum())
 _df_g        = df.copy()
 
@@ -135,7 +135,7 @@ with tab1:
     k2.metric("Demora media",        f"{_dem_media_g:.0f} d")
     k3.metric("Demora máxima",       f"{_dem_max_g} d")
     k4.metric("Edad media (espera)", f"{_edad_esp_g:.1f}" if _edad_esp_g is not None else "—")
-    k5.metric("Alta prio. sin cita",    str(_indice_g))
+    k5.metric("Alta prioridad sin cita",    str(_indice_g))
     style_metric_cards(background_color="#ffffff", border_left_color="#2563eb", border_color="#e2e8f0", box_shadow=True)
 
     st.divider()
@@ -266,7 +266,7 @@ def _tab2_fn():
     svc_dem     = svc_all["Dias_Espera"].mean()
     svc_dem_max = int(svc_all["Dias_Espera"].max())
     svc_prio    = svc_all["Prioridad"].mean()
-    svc_hp      = svc_all["Prioridad"] >= 70
+    svc_hp      = svc_all["Prioridad"] >= 65
     svc_idx     = int((svc_hp & svc_all["Fecha_Intervencion"].isna()).sum())
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     k1.metric("Pacientes en servicio", svc_n)
@@ -274,7 +274,7 @@ def _tab2_fn():
     k3.metric("Demora media",          f"{svc_dem:.0f} d")
     k4.metric("Demora máxima",         f"{svc_dem_max} d")
     k5.metric("Prioridad media",       f"{svc_prio:.1f}%")
-    k6.metric("Alta prio. sin cita",   str(svc_idx))
+    k6.metric("Alta prioridad sin cita",   str(svc_idx))
 
     st.divider()
 
@@ -445,7 +445,7 @@ def _tab2_fn():
 
     st.divider()
 
-    # ── Heatmap de carga quirúrgica: quirófano × día de la semana ─────────────
+    # ── Heatmap de carga quirúrgica: quirófano × día de la semana 
     df_heat = df_filtered[df_filtered["Fecha_Intervencion"].notna()].copy()
     if not df_heat.empty:
         dias_es = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
@@ -715,7 +715,7 @@ def _tab3_fn():
             for _, gap in gaps_df.iterrows():
                 label = f"{gap['servicio']} · {gap['quirofano']} · {gap['fecha_intervencion']} · {gap['duracion_horas']}h"
                 with st.expander(label):
-                    # ── Paciente que canceló ──────────────────────────────────────
+                    # Paciente que canceló 
                     cancelled_id   = str(gap.get("id_paciente_cancelado", ""))
                     cancelled_rows = df[df["ID_Paciente"] == cancelled_id]
                     st.markdown("**Paciente que liberó el hueco**")
@@ -737,7 +737,7 @@ def _tab3_fn():
     
                     st.divider()
     
-                    # ── Candidatos con carga bajo demanda ────────────────────────
+                    # Candidatos con carga bajo demanda 
                     page_size    = 3
                     off_key = f"cand_offset_{gap['id_gap']}"
                     if off_key not in st.session_state:
@@ -839,6 +839,7 @@ def _tab3_fn():
     table_cols = [
         "ID_Paciente", "Edad", "Sexo", "Servicio", "Prioridad",
         "Fecha_Ingreso", "Fecha_Intervencion", "Quirofano", "Duracion_Horas",
+        "Tipo_Cirugia",
         "Codigo_Diagnostico", "Descripcion_Diagnostico",
         "Codigo_Procedimiento", "Descripcion_Procedimiento",
         "Comorbilidades",
@@ -882,6 +883,7 @@ def _tab3_fn():
         "Fecha_Intervencion": st.column_config.DatetimeColumn("Intervención",  format="DD/MM/YYYY HH:mm"),
         "Quirofano":          st.column_config.TextColumn("Quirófano"),
         "Duracion_Horas":     st.column_config.NumberColumn("Duración (h)",   min_value=0.5, step=0.5, format="%.1f h"),
+        "Tipo_Cirugia":       st.column_config.TextColumn("Tipo cirugía"),
         "Codigo_Diagnostico": st.column_config.TextColumn("Cód. diagnóstico"),
         "Descripcion_Diagnostico": st.column_config.TextColumn("Diagnóstico"),
         "Codigo_Procedimiento":    st.column_config.TextColumn("Cód. procedimiento"),
@@ -913,7 +915,7 @@ def _tab3_fn():
 with tab3:
     _tab3_fn()
 
-# ── TAB 4: PLANIFICACIÓN ──────────────────────────────────────────────────────
+# TAB 4: PLANIFICACIÓN 
 @st.fragment
 def _tab4_fn():
     plan_col, delete_col = st.columns(2)

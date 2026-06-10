@@ -63,13 +63,16 @@ def _assign_slot(
     day = earliest
     while day <= max_date:
         if day.weekday() < 5:
+            or_close = datetime(day.year, day.month, day.day, 22, 0)
             for slot_time in _OR_TIME_SLOTS:
                 start    = datetime(day.year, day.month, day.day, slot_time.hour, slot_time.minute)
                 end      = start + td_duration
+                if end > or_close:
+                    break  # todos los slots siguientes también excederán el cierre
                 end_blok = end + td_turnover
                 for room in rooms:
                     if not any(start < e and end_blok > s for s, e in used_slots.get(room, [])):
-                        if _specialist_available(room, start, end_blok, _unavail):
+                        if _specialist_available(room, start, end, _unavail):
                             used_slots.setdefault(room, []).append((start, end_blok))
                             return room, start.strftime("%Y-%m-%d %H:%M")
         day += timedelta(days=1)
