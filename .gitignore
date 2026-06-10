@@ -20,3 +20,4 @@ datos_generados/*
 # Sistema
 .DS_Store
 Thumbs.db
+.vscode/
