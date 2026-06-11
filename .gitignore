@@ -10,12 +10,15 @@ env/
 .env
 
 # Datos generados (reproducibles con el generador)
-datos_generados/*
-!datos_generados/.gitkeep
-!datos_generados/lista_espera_quirurgica.csv
+datos_generados/**
+!datos_generados/dashboard/
+!datos_generados/dashboard/lista_espera_quirurgica.csv
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Documentación generada
+docs/
 
 # Sistema
 .DS_Store
