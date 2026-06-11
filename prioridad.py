@@ -31,7 +31,7 @@ def calculate_priority(
     intervention_date: "str | None" = None,
     reference_date: "date | None" = None,
 ) -> float:
-    """Score 0–100: espera (40 %) + edad (30 %) + invasividad (30 %).
+    """Score 0–100: espera (40 %) + edad (35 %) + invasividad (25 %).
 
     reference_date: fecha hasta la que se calcula la espera. Si no se indica se
     usa el día de hoy. Para pacientes sin cita en servicios ya planificados se utiliza 
@@ -49,4 +49,4 @@ def calculate_priority(
     wait_pct = min(days / 365.0 * 100.0, 100.0)
     surg_pct = _SURGERY_TYPE_PCT.get(surgery_type, 0.0)
 
-    return round(wait_pct * 0.40 + _age_pct(age) * 0.30 + surg_pct * 0.30, 1)
+    return round(wait_pct * 0.40 + _age_pct(age) * 0.35 + surg_pct * 0.25, 1)

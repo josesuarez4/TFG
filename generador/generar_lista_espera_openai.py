@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))  # permite importar prioridad.py desde la raíz
 
-from proc_filter import filter_surgical_procedures
+from filtro_procedimientos import filter_surgical_procedures
 
 from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
@@ -23,13 +23,14 @@ from sentence_transformers import SentenceTransformer
 
 BASE_DIR       = Path(__file__).parent.parent
 DATA_DIR       = BASE_DIR / "datos"
-CACHE_DIR      = BASE_DIR / "datos_generados"
+GENERATOR_DIR  = BASE_DIR / "datos_generados" / "generador"
+DASHBOARD_DIR  = BASE_DIR / "datos_generados" / "dashboard"
 
 OPENAI_MODEL       = "gpt-4o-mini"
 OPENAI_MAX_TOKENS  = 500
 OPENAI_TEMPERATURE = 0.7
 EMBEDDING_MODEL    = "paraphrase-multilingual-MiniLM-L12-v2"
-EMBEDDINGS_CACHE   = CACHE_DIR / "proc_embeddings.npy"
+EMBEDDINGS_CACHE   = GENERATOR_DIR / "proc_embeddings.npy"
 N_CANDIDATES       = 30
 
 TIPO_CIRUGIA_OPTIONS = [
@@ -634,9 +635,9 @@ if __name__ == "__main__":
     print(f"Generando {n} pacientes con OpenAI ({OPENAI_MODEL})...")
     df = generate_dataset(n)
 
-    CACHE_DIR.mkdir(exist_ok=True)
-    patients_path = CACHE_DIR / "pacientes2.csv"
-    waitlist_path = CACHE_DIR / "lista_espera_quirurgica2.csv"
+    GENERATOR_DIR.mkdir(exist_ok=True)
+    patients_path = GENERATOR_DIR / "pacientes2.csv"
+    waitlist_path = GENERATOR_DIR / "lista_espera_quirurgica2.csv"
 
     df[PATIENT_COLUMNS].to_csv(patients_path, index=False, encoding="utf-8-sig")
     df[WAITLIST_COLUMNS].to_csv(waitlist_path, index=False, encoding="utf-8-sig")

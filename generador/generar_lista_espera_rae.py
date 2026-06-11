@@ -5,8 +5,8 @@ Uso:
     python3 generar_lista_espera_rae.py [N]
 
 Salida:
-    datos_generados/pacientes_rae.csv
-    datos_generados/lista_espera_quirurgica_rae.csv
+    datos_generados/generador/pacientes.csv
+    datos_generados/dashboard/lista_espera_quirurgica.csv
 """
 
 import random
@@ -17,7 +17,8 @@ from datetime import date, timedelta
 import pandas as pd
 
 from generar_lista_espera_openai import (
-    CACHE_DIR,
+    GENERATOR_DIR,
+    DASHBOARD_DIR,
     DIAG_DF,
     PATIENT_COLUMNS,
     WAITLIST_COLUMNS,
@@ -193,10 +194,11 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     n    = int(args[0]) if len(args) > 0 else 500
 
-    CACHE_DIR.mkdir(exist_ok=True)
-    patients_path    = CACHE_DIR / "pacientes.csv"
-    waitlist_path    = CACHE_DIR / "lista_espera_quirurgica.csv"
-    checkpoint_path  = CACHE_DIR / "checkpoint_rae.csv"
+    GENERATOR_DIR.mkdir(exist_ok=True)
+    DASHBOARD_DIR.mkdir(exist_ok=True)
+    patients_path    = GENERATOR_DIR / "pacientes.csv"
+    waitlist_path    = DASHBOARD_DIR / "lista_espera_quirurgica.csv"
+    checkpoint_path  = GENERATOR_DIR / "checkpoint_rae.csv"
 
     print(f"Generando {n} pacientes con distribución RAE-CMBD 2022 + OpenAI...")
     df = generate_dataset_rae(n, checkpoint_path=checkpoint_path)

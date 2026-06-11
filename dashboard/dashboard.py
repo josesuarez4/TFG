@@ -12,9 +12,9 @@ from quirofanos import ROOMS_BY_SERVICE
 from prioridad import calculate_priority
 from especialistas import specialists_for_service, SPECIALISTS_BY_ROOM
 from huecos import save_gap, load_gaps, find_candidates, remove_gap
-from quirofanos_pm import PM_ROOMS, load_pm_assignment, save_pm_assignment
+from quirofanos import PM_ROOMS, load_pm_assignment, save_pm_assignment
 from planificador import service_planning, find_free_slots, compute_pm_impact
-from planning_log import save_planning, get_reference_date
+from registro_planificacion import save_planning, get_reference_date
 from streamlit_extras.metric_cards import style_metric_cards
 from restricciones import (
     load_closed_days_df, save_closed_days_for_rooms, load_closed_days,
@@ -75,7 +75,7 @@ def _show_patient_dialog(patient: pd.Series) -> None:
         st.markdown("**Comorbilidades**")
         st.write(patient["Comorbilidades"])
 
-CSV_PATH = str(Path(__file__).parent.parent / "datos_generados" / "lista_espera_quirurgica.csv")
+CSV_PATH = str(Path(__file__).parent.parent / "datos_generados" / "dashboard" / "lista_espera_quirurgica.csv")
 
 @st.cache_data
 def load_data(mtime: float):
@@ -617,7 +617,7 @@ def _tab3_fn():
                                     selected_id,
                                     motivo,
                                 )
-                                st.session_state["tab3_success"] = f"Cita cancelada. Prioridad: {patient['Prioridad']:.1f}% → {new_priority:.1f}%"
+                                st.session_state["tab3_success"] = f"Cita cancelada correctamente."
                             st.rerun(scope="app")
 
     # Asignar cita manualmente 
@@ -696,6 +696,9 @@ def _tab3_fn():
     st.divider()
     with st.container(border=True):
         st.subheader("Huecos disponibles", divider="blue")
+
+        if msg := st.session_state.pop("gap_success", None):
+            st.success(msg)
 
         gaps_df = load_gaps()
         if gaps_df.empty:
@@ -814,7 +817,7 @@ def _tab3_fn():
                                 df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
                                 remove_gap(str(gap["id_gap"]))
                                 load_data.clear()
-                                st.success(f"Paciente {selected_candidate[:8]}… asignado al hueco.")
+                                st.session_state["gap_success"] = f"Paciente {selected_candidate[:8]}… asignado al hueco correctamente."
                                 st.rerun(scope="app")
                         with btn_b:
                             if st.button("Descartar hueco", key=f"disc_{gap['id_gap']}"):
@@ -824,7 +827,7 @@ def _tab3_fn():
     st.divider()
     st.subheader("Tabla de pacientes", divider="blue")
 
-    tf1, tf2 = st.columns([2, 3])
+    tf1, tf2, tf3 = st.columns([2, 2, 2])
     with tf1:
         table_svc_filter = st.selectbox(
             "Filtrar por servicio",
@@ -834,6 +837,10 @@ def _tab3_fn():
     with tf2:
         search_id = st.text_input(
             "Buscar por ID de paciente", placeholder="Escribe parte del ID…", key="table_search_id"
+        )
+    with tf3:
+        search_proc = st.text_input(
+            "Buscar por código de procedimiento", placeholder="Ej: 0FB03ZZ…", key="table_search_proc"
         )
 
     table_cols = [
@@ -850,6 +857,8 @@ def _tab3_fn():
     df_table = df if table_svc_filter == "Todos" else df[df["Servicio"] == table_svc_filter]
     if search_id:
         df_table = df_table[df_table["ID_Paciente"].str.contains(search_id, case=False, na=False)]
+    if search_proc:
+        df_table = df_table[df_table["Codigo_Procedimiento"].astype(str).str.contains(search_proc, case=False, na=False)]
     # Recalcular prioridad antes de filtrar columnas (necesita Tipo_Cirugia).
     # Se leen los reference dates por servicio una sola vez para evitar leer
     # el fichero JSON en cada iteración.
@@ -1015,6 +1024,9 @@ def _tab4_fn():
                     )
                     st.caption(spec_info)
 
+            if msg := st.session_state.pop("plan_success", None):
+                st.success(msg)
+
             if st.button("Planificar", type="primary", key="btn_planificar"):
                 if plan_start > plan_end:
                     st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
@@ -1099,7 +1111,7 @@ def _tab4_fn():
                                 remove_gap(str(gap["id_gap"]))
 
                     load_data.clear()
-                    st.success(
+                    st.session_state["plan_success"] = (
                         f"{n_new} pacientes asignados en **{plan_service}** "
                         f"({plan_start.strftime('%d/%m/%Y')} – {plan_end.strftime('%d/%m/%Y')})."
                     )
@@ -1128,6 +1140,9 @@ def _tab4_fn():
                 & (preview_slots < pd.Timestamp(delete_end + timedelta(days=1)))
             )
             st.caption(f"Citas encontradas con este filtro: **{int(preview_mask.sum())}**")
+
+            if msg := st.session_state.pop("delete_success", None):
+                st.success(msg)
 
             if st.button("Borrar planificación", key="btn_delete_plan"):
                 if delete_start > delete_end:
@@ -1159,7 +1174,7 @@ def _tab4_fn():
                         df_del.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
                         load_data.clear()
                         st.session_state.pop("confirm_delete_plan", None)
-                        st.success(f"{n_del} cita(s) eliminadas de **{delete_service}**.")
+                        st.session_state["delete_success"] = f"{n_del} cita(s) eliminadas de **{delete_service}**."
                         st.rerun(scope="app")
                 with c_cancel:
                     if st.button("Cancelar", key="cancel_delete_btn"):
@@ -1184,7 +1199,7 @@ def _tab4_fn():
                 if export_start > export_end:
                     st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
                 else:
-                    from pdf_export import build_pdf
+                    from exportacion_pdf import build_pdf
                     st.session_state["pdf_bytes"]    = build_pdf(df, export_service, export_start, export_end)
                     st.session_state["pdf_filename"] = f"planificacion_{export_service.replace(' ', '_')}_{export_start}.pdf"
 
@@ -1253,6 +1268,9 @@ def _tab4_fn():
                 )
                 new_assignment[pm_room_name] = selected_svc if selected_svc != "(ninguno)" else ""
     
+        if st.session_state.pop("pm_saved", False):
+            st.success("Asignación de quirófanos de tarde guardada correctamente.")
+
         if st.button("Guardar asignación de quirófanos de tarde", key="btn_save_pm"):
             clean = {k: v for k, v in new_assignment.items() if v}
             # Validar que cada quirófano se asigne a un servicio distinto
@@ -1261,7 +1279,7 @@ def _tab4_fn():
                 st.error("Cada quirófano de tarde debe asignarse a un servicio diferente.")
             else:
                 save_pm_assignment(clean)
-                st.success("Asignación guardada.")
+                st.session_state["pm_saved"] = True
                 st.rerun(scope="app")
 
 

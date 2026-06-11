@@ -57,23 +57,23 @@ def _assign_slot(
     if not rooms:
         return None, None
 
-    _unavail = unavailable_specs or {}
-    td_duration = timedelta(hours=duration)
-    td_turnover = timedelta(minutes=_TURNOVER_MINUTES)
+    _unavail       = unavailable_specs or {}
+    duration_td    = timedelta(hours=duration)
+    turnover_td    = timedelta(minutes=_TURNOVER_MINUTES)
     day = earliest
     while day <= max_date:
         if day.weekday() < 5:
-            or_close = datetime(day.year, day.month, day.day, 22, 0)
+            or_closing_time = datetime(day.year, day.month, day.day, 22, 0)
             for slot_time in _OR_TIME_SLOTS:
-                start    = datetime(day.year, day.month, day.day, slot_time.hour, slot_time.minute)
-                end      = start + td_duration
-                if end > or_close:
+                start     = datetime(day.year, day.month, day.day, slot_time.hour, slot_time.minute)
+                end       = start + duration_td
+                if end > or_closing_time:
                     break  # todos los slots siguientes también excederán el cierre
-                end_blok = end + td_turnover
+                block_end = end + turnover_td
                 for room in rooms:
-                    if not any(start < e and end_blok > s for s, e in used_slots.get(room, [])):
+                    if not any(start < ex_end and block_end > ex_start for ex_start, ex_end in used_slots.get(room, [])):
                         if _specialist_available(room, start, end, _unavail):
-                            used_slots.setdefault(room, []).append((start, end_blok))
+                            used_slots.setdefault(room, []).append((start, block_end))
                             return room, start.strftime("%Y-%m-%d %H:%M")
         day += timedelta(days=1)
     return None, None
@@ -211,17 +211,16 @@ def find_free_slots(
             if day.weekday() not in set(spec["days"]):
                 continue
 
-            spec_id      = spec.get("id", "")
-            spec_unavail = unavailable_specs.get(spec_id, [])
+            spec_id                  = spec.get("id", "")
+            spec_unavailable_periods = unavailable_specs.get(spec_id, [])
             t       = datetime(day.year, day.month, day.day, spec["start_hour"], 0)
             day_end = datetime(day.year, day.month, day.day, spec["end_hour"],    0)
-            occupied = occupied_by_room[room]
+            room_occupied_slots = occupied_by_room[room]
             while t + timedelta(hours=duration) <= day_end:
                 slot_end = t + timedelta(hours=duration) + timedelta(minutes=_TURNOVER_MINUTES)
-                # Comprobar solapamiento con citas existentes y con no disponibilidad del especialista
                 if (
-                    not any(s < slot_end and e > t for s, e in occupied)
-                    and not any(s < t + timedelta(hours=duration) and e > t for s, e in spec_unavail)
+                    not any(ex_start < slot_end and ex_end > t for ex_start, ex_end in room_occupied_slots)
+                    and not any(ex_start < t + timedelta(hours=duration) and ex_end > t for ex_start, ex_end in spec_unavailable_periods)
                 ):
                     day_candidates.append((t, room))
                     break
@@ -247,19 +246,21 @@ def compute_pm_impact(df: pd.DataFrame) -> pd.DataFrame:
     end_ts = pd.Timestamp(end)
     rows   = []
     for svc in sorted(base["Servicio"].dropna().unique()):
-        svc_mask      = base["Servicio"] == svc
-        n_unscheduled = int(svc_mask.sum())
-        mean_duration = round(float(base.loc[svc_mask, "Duracion_Horas"].fillna(1).mean()), 2)
+        service_mask  = base["Servicio"] == svc
+        n_unscheduled = int(service_mask.sum())
+        mean_duration = round(float(base.loc[service_mask, "Duracion_Horas"].fillna(1).mean()), 2)
 
         df_sim, n_assigned = service_planning(base, svc, end, today, pm_room=None)
 
-        n_rooms     = len(ROOMS_BY_SERVICE.get(svc, [])) or 1
-        raw_impact  = (n_unscheduled - n_assigned) / n_rooms  # pacientes sin cubrir por OR de mañana
+        n_rooms            = len(ROOMS_BY_SERVICE.get(svc, [])) or 1
+        unscheduled_per_room = (n_unscheduled - n_assigned) / n_rooms
 
-        svc_sim   = df_sim[df_sim["Servicio"] == svc].copy()
-        _ingreso  = pd.to_datetime(svc_sim["Fecha_Ingreso"], errors="coerce")
-        _interv   = pd.to_datetime(svc_sim["Fecha_Intervencion"], errors="coerce")
-        wait_days = _interv.sub(_ingreso).dt.days.where(_interv.notna(), (end_ts - _ingreso).dt.days)
+        service_sim_result = df_sim[df_sim["Servicio"] == svc].copy()
+        admission_dates    = pd.to_datetime(service_sim_result["Fecha_Ingreso"],       errors="coerce")
+        intervention_dates = pd.to_datetime(service_sim_result["Fecha_Intervencion"],  errors="coerce")
+        wait_days = intervention_dates.sub(admission_dates).dt.days.where(
+            intervention_dates.notna(), (end_ts - admission_dates).dt.days
+        )
         mean_wait = round(float(wait_days.mean()), 1) if n_unscheduled > 0 else 0.0
 
         rows.append({
@@ -267,7 +268,7 @@ def compute_pm_impact(df: pd.DataFrame) -> pd.DataFrame:
             "Sin cita":        n_unscheduled,
             "Asignados (M)":   n_assigned,
             "Dur. media (h)":  mean_duration,
-            "Impacto cap.":    raw_impact,
+            "Impacto cap.":    unscheduled_per_room,
             "Espera sim. (d)": mean_wait,
         })
 
