@@ -64,6 +64,27 @@ def has_pm_overlap(
     return False
 
 
+def has_service_overlap(
+    assignments: list[dict],
+    servicio: str,
+    fecha_inicio: date,
+    fecha_fin: date,
+    exclude_idx: int | None = None,
+) -> bool:
+    """Devuelve True si el servicio ya tiene otro quirófano de tarde asignado en ese rango de fechas."""
+    for i, a in enumerate(assignments):
+        if i == exclude_idx or a.get("servicio") != servicio:
+            continue
+        try:
+            a_start = date.fromisoformat(a["fecha_inicio"])
+            a_end   = date.fromisoformat(a["fecha_fin"])
+            if fecha_inicio <= a_end and fecha_fin >= a_start:
+                return True
+        except (KeyError, ValueError):
+            continue
+    return False
+
+
 # ── Quirófanos por servicio ────────────────────────────────────────────────────
 
 ROOMS_BY_SERVICE: dict[str, list[str]] = {

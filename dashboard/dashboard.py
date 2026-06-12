@@ -13,7 +13,7 @@ from prioridad import calculate_priority
 from especialistas import specialists_for_service, SPECIALISTS_BY_ROOM
 from cancelaciones import save_cancellation, load_cancellations
 from huecos import save_gap, load_gaps, find_candidates, remove_gap
-from quirofanos import PM_ROOMS, load_pm_assignment, load_pm_assignments, save_pm_assignments, has_pm_overlap
+from quirofanos import PM_ROOMS, load_pm_assignment, load_pm_assignments, save_pm_assignments, has_pm_overlap, has_service_overlap
 from planificador import service_planning, find_free_slots, compute_pm_impact
 from registro_planificacion import save_planning, get_reference_date
 from streamlit_extras.metric_cards import style_metric_cards
@@ -1247,60 +1247,64 @@ def _tab4_fn():
             with st.spinner("Calculando impacto de quirófanos de tarde..."):
                 st.session_state["pm_impact"] = compute_pm_impact(df)
 
-        if "pm_impact" in st.session_state:
-            impact = st.session_state["pm_impact"]
-            st.dataframe(
-                impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
-                column_config={
-                    "Impacto cap.": st.column_config.NumberColumn(
-                        "Impacto cap.",
-                        help="Fracción de pacientes sin cita que no caben en quirófanos de mañana.",
-                    ),
-                    "Espera sim. (d)": st.column_config.NumberColumn(
-                        "Espera sim. (d)",
-                        help="Demora media simulada en días si se añade el quirófano de tarde a este servicio.",
-                    ),
-                },
-                use_container_width=True,
-                hide_index=True,
-                height=220,
-            )
-
         if msg := st.session_state.pop("pm_saved", None):
             st.success(msg)
 
-        # ── Asignaciones existentes ────────────────────────────────────────────
         all_assignments = load_pm_assignments()
         svc_list = sorted(df["Servicio"].dropna().unique())
 
-        st.markdown("**Asignaciones actuales**")
-        if not all_assignments:
-            st.info("No hay asignaciones configuradas.")
-        else:
-            for i, a in enumerate(all_assignments):
-                c1, c2, c3, c4 = st.columns([2, 3, 2, 1])
-                c1.markdown(f"`{a['quirofano']}`")
-                c2.markdown(a["servicio"])
-                c3.markdown(f"{a['fecha_inicio']}  →  {a['fecha_fin']}")
-                if c4.button("Eliminar", key=f"del_pm_{i}"):
-                    all_assignments.pop(i)
-                    save_pm_assignments(all_assignments)
-                    st.session_state["pm_saved"] = "Asignación eliminada correctamente."
-                    st.rerun(scope="app")
+        col1, col2 = st.columns(2)
 
-        # ── Nueva asignación ───────────────────────────────────────────────────
-        st.markdown("**Nueva asignación**")
-        nf1, nf2, nf3, nf4 = st.columns([2, 3, 2, 2])
-        new_room  = nf1.selectbox("Quirófano", options=PM_ROOMS, key="new_pm_room")
-        new_svc   = nf2.selectbox("Servicio",  options=svc_list,  key="new_pm_svc")
-        new_start = nf3.date_input("Desde", value=date.today(),                      key="new_pm_start")
-        new_end   = nf4.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="new_pm_end")
+        with col1:
+            if "pm_impact" in st.session_state:
+                impact = st.session_state["pm_impact"]
+                st.dataframe(
+                    impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
+                    column_config={
+                        "Impacto cap.": st.column_config.NumberColumn(
+                            "Impacto cap.",
+                            help="Fracción de pacientes sin cita que no caben en quirófanos de mañana.",
+                        ),
+                        "Espera sim. (d)": st.column_config.NumberColumn(
+                            "Espera sim. (d)",
+                            help="Demora media simulada en días si se añade el quirófano de tarde a este servicio.",
+                        ),
+                    },
+                    use_container_width=True,
+                    hide_index=True,
+                    height=220,
+                )
+
+            st.markdown("**Asignaciones actuales**")
+            if not all_assignments:
+                st.info("No hay asignaciones configuradas.")
+            else:
+                for i, a in enumerate(all_assignments):
+                    c1, c2, c3, c4 = st.columns([1.5, 3, 2.5, 1])
+                    c1.markdown(f"`{a['quirofano']}`")
+                    c2.markdown(a["servicio"])
+                    c3.markdown(f"{a['fecha_inicio']} → {a['fecha_fin']}")
+                    if c4.button("Eliminar", key=f"del_pm_{i}"):
+                        all_assignments.pop(i)
+                        save_pm_assignments(all_assignments)
+                        st.session_state["pm_saved"] = "Asignación eliminada correctamente."
+                        st.rerun(scope="app")
+
+        with col2:
+            st.markdown("**Nueva asignación**")
+            _c, _ = st.columns([2, 1])
+            new_room  = _c.selectbox("Quirófano", options=PM_ROOMS, key="new_pm_room")
+            new_svc   = _c.selectbox("Servicio",  options=svc_list,  key="new_pm_svc")
+            new_start = _c.date_input("Desde", value=date.today(),                      key="new_pm_start")
+            new_end   = _c.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="new_pm_end")
 
         if st.button("Añadir asignación", key="btn_add_pm"):
             if new_end < new_start:
                 st.error("La fecha de fin debe ser posterior a la de inicio.")
             elif has_pm_overlap(all_assignments, new_room, new_start, new_end):
                 st.error(f"{new_room} ya tiene una asignación que se solapa con ese rango de fechas.")
+            elif has_service_overlap(all_assignments, new_svc, new_start, new_end):
+                st.error(f"{new_svc} ya tiene un quirófano de tarde asignado en ese rango de fechas.")
             else:
                 all_assignments.append({
                     "quirofano":    new_room,

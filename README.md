@@ -131,7 +131,7 @@ El dashboard se abre en el navegador en `http://localhost:8501`. Lee `datos_gene
 
 **`restricciones.py`** — Carga y persiste los días cerrados de quirófanos y los periodos de no disponibilidad de especialistas desde los CSV correspondientes. Expone `load_closed_days()` y `load_unavailable_specs()`, que devuelven estructuras indexadas por quirófano y especialista respectivamente para consulta eficiente durante la planificación.
 
-**`quirofanos.py`** — Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha y `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano.
+**`quirofanos.py`** — Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha, `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano y `has_service_overlap()` impide que un mismo servicio tenga dos quirófanos de tarde asignados simultáneamente.
 
 **`registro_planificacion.py`** — Persiste la fecha de fin de la última planificación por servicio en `registro_planificacion.json`. `get_reference_date()` devuelve el día siguiente al último horizonte planificado (o hoy si nunca se ha planificado), garantizando que los ciclos consecutivos no dejen huecos temporales.
 
