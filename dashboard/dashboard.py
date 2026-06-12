@@ -11,8 +11,9 @@ from streamlit_calendar import calendar as st_calendar
 from quirofanos import ROOMS_BY_SERVICE
 from prioridad import calculate_priority
 from especialistas import specialists_for_service, SPECIALISTS_BY_ROOM
+from cancelaciones import save_cancellation, load_cancellations
 from huecos import save_gap, load_gaps, find_candidates, remove_gap
-from quirofanos import PM_ROOMS, load_pm_assignment, save_pm_assignment
+from quirofanos import PM_ROOMS, load_pm_assignment, load_pm_assignments, save_pm_assignments, has_pm_overlap
 from planificador import service_planning, find_free_slots, compute_pm_impact
 from registro_planificacion import save_planning, get_reference_date
 from streamlit_extras.metric_cards import style_metric_cards
@@ -266,15 +267,39 @@ def _tab2_fn():
     svc_dem     = svc_all["Dias_Espera"].mean()
     svc_dem_max = int(svc_all["Dias_Espera"].max())
     svc_prio    = svc_all["Prioridad"].mean()
-    svc_hp      = svc_all["Prioridad"] >= 65
-    svc_idx     = int((svc_hp & svc_all["Fecha_Intervencion"].isna()).sum())
-    k1, k2, k3, k4, k5, k6 = st.columns(6)
-    k1.metric("Pacientes en servicio", svc_n)
-    k2.metric("Con cita asignada",     f"{svc_pct:.0f}%")
-    k3.metric("Demora media",          f"{svc_dem:.0f} d")
-    k4.metric("Demora máxima",         f"{svc_dem_max} d")
-    k5.metric("Prioridad media",       f"{svc_prio:.1f}%")
-    k6.metric("Alta prioridad sin cita",   str(svc_idx))
+    svc_hp          = svc_all["Prioridad"] >= 65
+    svc_idx         = int((svc_hp & svc_all["Fecha_Intervencion"].isna()).sum())
+    svc_hp_total    = int(svc_hp.sum())
+    svc_hp_sched    = int((svc_hp & svc_sched).sum())
+    svc_hp_pct      = svc_hp_sched / svc_hp_total * 100 if svc_hp_total > 0 else 0
+    k1, k2, k3, k4, k5, k6, k7 = st.columns(7)
+    k1.metric("Pacientes en servicio",      svc_n)
+    k2.metric("Con cita asignada",          f"{svc_pct:.0f}%")
+    k3.metric("Demora media",               f"{svc_dem:.0f} d")
+    k4.metric("Demora máxima",              f"{svc_dem_max} d")
+    k5.metric("Prioridad media",            f"{svc_prio:.1f}%")
+    k6.metric("Alta prioridad sin cita",    str(svc_idx))
+    k7.metric("Índice prioridad atendida",  f"{svc_hp_pct:.0f}%",
+              help="% de pacientes de alta prioridad (≥65) con cita asignada")
+
+    cancel_df     = load_cancellations()
+    svc_cancel    = cancel_df[cancel_df["servicio"] == selected_service] if not cancel_df.empty else cancel_df
+    cancel_total  = len(svc_cancel)
+    cancel_mes    = 0
+    cancel_motivo = "—"
+    cancel_pct    = 0.0
+    if cancel_total > 0:
+        this_month    = date.today().replace(day=1).isoformat()
+        cancel_mes    = int((svc_cancel["fecha"] >= this_month).sum())
+        cancel_motivo = svc_cancel["motivo"].value_counts().idxmax()
+        programadas   = cancel_total + int(svc_sched.sum())
+        cancel_pct    = cancel_total / programadas * 100 if programadas > 0 else 0.0
+    ck1, ck2, ck3, ck4 = st.columns(4)
+    ck1.metric("Cancelaciones totales",   cancel_total)
+    ck2.metric("Cancelaciones este mes",  cancel_mes)
+    ck3.metric("% sobre programadas",     f"{cancel_pct:.1f}%",
+               help="Cancelaciones / (cancelaciones + con cita actual)")
+    ck4.metric("Motivo más frecuente",    cancel_motivo)
 
     st.divider()
 
@@ -510,10 +535,9 @@ def _tab3_fn():
                 )
                 hc_svc  = hc["servicio"]
                 hc_dur  = hc["duracion"]
-                ta_hc   = load_pm_assignment()
-                pm_hc   = next((r for r, s in ta_hc.items() if s == hc_svc), None)
-                hc_rooms = ROOMS_BY_SERVICE.get(hc_svc, []) + ([pm_hc] if pm_hc else [])
                 hc_ref  = st.date_input("A partir del día", value=date.today(), key="hc_ref_date")
+                pm_hc   = next((r for r, s in load_pm_assignment(hc_ref).items() if s == hc_svc), None)
+                hc_rooms = ROOMS_BY_SERVICE.get(hc_svc, []) + ([pm_hc] if pm_hc else [])
                 hc_slots = find_free_slots(
                     hc_rooms, hc_ref, hc_dur, df,
                     closed_days=load_closed_days(),
@@ -592,6 +616,7 @@ def _tab3_fn():
                             df.loc[mask, "Quirofano"]          = None
                             df.loc[mask, "Prioridad"]          = new_priority
                             df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
+                            save_cancellation(str(patient["Servicio"]), selected_id, motivo)
                             load_data.clear()
                             st.session_state["cancel_id_v"] += 1
 
@@ -648,10 +673,9 @@ def _tab3_fn():
                     f"**Duración:** {man_dur:.1f} h  |  **Ingreso:** {str(man_patient['Fecha_Ingreso'])[:10]}"
                 )
 
-                ta_man = load_pm_assignment()
-                pm_man = next((r for r, s in ta_man.items() if s == man_svc), None)
-                man_rooms    = ROOMS_BY_SERVICE.get(man_svc, []) + ([pm_man] if pm_man else [])
                 man_ref_date = st.date_input("A partir del día", value=date.today(), key="man_date")
+                pm_man       = next((r for r, s in load_pm_assignment(man_ref_date).items() if s == man_svc), None)
+                man_rooms    = ROOMS_BY_SERVICE.get(man_svc, []) + ([pm_man] if pm_man else [])
 
                 free_slots = find_free_slots(
                     man_rooms, man_ref_date, man_dur, df,
@@ -952,7 +976,7 @@ def _tab4_fn():
                 f"{n_sched} con cita · {n_total - n_sched} en espera"
             )
 
-            pm_plan        = next((r for r, s in load_pm_assignment().items() if s == plan_service), None)
+            pm_plan        = next((r for r, s in load_pm_assignment(plan_start).items() if s == plan_service), None)
             service_rooms  = ROOMS_BY_SERVICE.get(plan_service, []) + ([pm_plan] if pm_plan else [])
             svc_specialists = specialists_for_service(plan_service, extra_rooms=[pm_plan] if pm_plan else [])
             spec_name_to_id = {s["name"]: s["id"] for s in svc_specialists}
@@ -1080,9 +1104,8 @@ def _tab4_fn():
                         ))
 
                     # Cargar quirófano de tarde asignado a este servicio (si existe)
-                    ta = load_pm_assignment()
                     pm_for_service = next(
-                        (room for room, svc in ta.items() if svc == plan_service), None
+                        (room for room, svc in load_pm_assignment(plan_start).items() if svc == plan_service), None
                     )
                     df_new, n_new = service_planning(
                         df, plan_service, plan_end, plan_start,
@@ -1223,63 +1246,70 @@ def _tab4_fn():
         if st.button("Calcular impacto", key="btn_recalc_impact"):
             with st.spinner("Calculando impacto de quirófanos de tarde..."):
                 st.session_state["pm_impact"] = compute_pm_impact(df)
-    
-        # Cargar asignación persistida
-        pm_assignment = load_pm_assignment()
-        svc_list = sorted(df["Servicio"].dropna().unique())
-    
-        col1, col2 = st.columns(2)
-        new_assignment: dict[str, str] = {}
-        for i, pm_room_name in enumerate(PM_ROOMS):
-            col = col1 if i == 0 else col2
-            with col:
-                st.markdown(f"**{pm_room_name}**")
-                # Mostrar tabla de impacto si ya se calculó
-                if "pm_impact" in st.session_state:
-                    impact = st.session_state["pm_impact"]
-                    st.dataframe(
-                        impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
-                        column_config={
-                            "Impacto cap.": st.column_config.NumberColumn(
-                                "Impacto cap.",
-                                help="Fracción de pacientes sin cita que no caben en quirófanos de mañana (0 = todos asignados, 1 = ninguno asignado). Cuanto mayor, más necesita este servicio el quirófano de tarde.",
-                            ),
-                            "Espera sim. (d)": st.column_config.NumberColumn(
-                                "Espera sim. (d)",
-                                help="Demora media simulada en días si se añade el quirófano de tarde a este servicio durante las próximas 4 semanas.",
-                            ),
-                        },
-                        use_container_width=True,
-                        hide_index=True,
-                        height=220,
-                    )
-                    options = ["(ninguno)"] + list(impact["Servicio"])
-                else:
-                    st.info("Pulsa **Calcular impacto** para ver la tabla de referencia.")
-                    options = ["(ninguno)"] + svc_list
-                # Servicio actualmente asignado (si existe)
-                current_svc = pm_assignment.get(pm_room_name)
-                default_idx  = options.index(current_svc) if current_svc in options else 0
-                selected_svc = st.selectbox(
-                    f"Asignar {pm_room_name} a",
-                    options=options,
-                    index=default_idx,
-                    key=f"pm_assign_{pm_room_name}",
-                )
-                new_assignment[pm_room_name] = selected_svc if selected_svc != "(ninguno)" else ""
-    
-        if st.session_state.pop("pm_saved", False):
-            st.success("Asignación de quirófanos de tarde guardada correctamente.")
 
-        if st.button("Guardar asignación de quirófanos de tarde", key="btn_save_pm"):
-            clean = {k: v for k, v in new_assignment.items() if v}
-            # Validar que cada quirófano se asigne a un servicio distinto
-            assigned_svcs = list(clean.values())
-            if len(assigned_svcs) != len(set(assigned_svcs)):
-                st.error("Cada quirófano de tarde debe asignarse a un servicio diferente.")
+        if "pm_impact" in st.session_state:
+            impact = st.session_state["pm_impact"]
+            st.dataframe(
+                impact[["Servicio", "Sin cita", "Asignados (M)", "Dur. media (h)", "Impacto cap.", "Espera sim. (d)"]],
+                column_config={
+                    "Impacto cap.": st.column_config.NumberColumn(
+                        "Impacto cap.",
+                        help="Fracción de pacientes sin cita que no caben en quirófanos de mañana.",
+                    ),
+                    "Espera sim. (d)": st.column_config.NumberColumn(
+                        "Espera sim. (d)",
+                        help="Demora media simulada en días si se añade el quirófano de tarde a este servicio.",
+                    ),
+                },
+                use_container_width=True,
+                hide_index=True,
+                height=220,
+            )
+
+        if msg := st.session_state.pop("pm_saved", None):
+            st.success(msg)
+
+        # ── Asignaciones existentes ────────────────────────────────────────────
+        all_assignments = load_pm_assignments()
+        svc_list = sorted(df["Servicio"].dropna().unique())
+
+        st.markdown("**Asignaciones actuales**")
+        if not all_assignments:
+            st.info("No hay asignaciones configuradas.")
+        else:
+            for i, a in enumerate(all_assignments):
+                c1, c2, c3, c4 = st.columns([2, 3, 2, 1])
+                c1.markdown(f"`{a['quirofano']}`")
+                c2.markdown(a["servicio"])
+                c3.markdown(f"{a['fecha_inicio']}  →  {a['fecha_fin']}")
+                if c4.button("Eliminar", key=f"del_pm_{i}"):
+                    all_assignments.pop(i)
+                    save_pm_assignments(all_assignments)
+                    st.session_state["pm_saved"] = "Asignación eliminada correctamente."
+                    st.rerun(scope="app")
+
+        # ── Nueva asignación ───────────────────────────────────────────────────
+        st.markdown("**Nueva asignación**")
+        nf1, nf2, nf3, nf4 = st.columns([2, 3, 2, 2])
+        new_room  = nf1.selectbox("Quirófano", options=PM_ROOMS, key="new_pm_room")
+        new_svc   = nf2.selectbox("Servicio",  options=svc_list,  key="new_pm_svc")
+        new_start = nf3.date_input("Desde", value=date.today(),                      key="new_pm_start")
+        new_end   = nf4.date_input("Hasta", value=date.today() + timedelta(weeks=4), key="new_pm_end")
+
+        if st.button("Añadir asignación", key="btn_add_pm"):
+            if new_end < new_start:
+                st.error("La fecha de fin debe ser posterior a la de inicio.")
+            elif has_pm_overlap(all_assignments, new_room, new_start, new_end):
+                st.error(f"{new_room} ya tiene una asignación que se solapa con ese rango de fechas.")
             else:
-                save_pm_assignment(clean)
-                st.session_state["pm_saved"] = True
+                all_assignments.append({
+                    "quirofano":    new_room,
+                    "servicio":     new_svc,
+                    "fecha_inicio": new_start.isoformat(),
+                    "fecha_fin":    new_end.isoformat(),
+                })
+                save_pm_assignments(all_assignments)
+                st.session_state["pm_saved"] = "Asignación de quirófano de tarde guardada correctamente."
                 st.rerun(scope="app")
 
 
@@ -1292,7 +1322,7 @@ def _tab4_fn():
             cal_service = st.selectbox(
                 "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="cal_service",
             )
-        pm_cal    = next((r for r, s in load_pm_assignment().items() if s == cal_service), None)
+        pm_cal    = next((r for r, s in load_pm_assignment(date.today()).items() if s == cal_service), None)
         cal_rooms = ROOMS_BY_SERVICE.get(cal_service, []) + ([pm_cal] if pm_cal else [])
         with cc2:
             cal_room = st.selectbox("Quirófano", options=cal_rooms, key="cal_room") if cal_rooms else None
