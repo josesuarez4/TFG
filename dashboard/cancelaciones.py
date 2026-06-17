@@ -1,5 +1,3 @@
-"""Registro histórico de cancelaciones de citas quirúrgicas."""
-
 from datetime import date
 from pathlib import Path
 

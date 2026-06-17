@@ -1,5 +1,3 @@
-"""Registro persistente de la última planificación ejecutada por servicio."""
-
 import json
 from datetime import date, timedelta
 from pathlib import Path

@@ -1,5 +1,3 @@
-"""Generación de PDF con la planificación quirúrgica de un servicio."""
-
 from datetime import date
 
 import pandas as pd

@@ -1,5 +1,3 @@
-"""Persistencia de días cerrados y especialistas no disponibles."""
-
 import pandas as pd
 from pathlib import Path
 from datetime import date, datetime
@@ -12,7 +10,7 @@ _CLOSED_COLS  = ["quirofano", "fecha"]
 _UNAVAIL_COLS = ["especialista_id", "especialista_nombre", "fecha", "hora_inicio", "hora_fin"]
 
 
-# ── Días cerrados ──────────────────────────────────────────────────────────────
+# Días cerrados 
 
 def load_closed_days_df() -> pd.DataFrame:
     if _CLOSED_PATH.exists():
@@ -40,7 +38,7 @@ def load_closed_days() -> dict[str, list[date]]:
     return closed_by_room
 
 
-# ── Especialistas no disponibles ───────────────────────────────────────────────
+# Especialistas no disponibles
 
 def load_unavailable_specs_df() -> pd.DataFrame:
     if _UNAVAIL_PATH.exists():

@@ -1,5 +1,3 @@
-"""Configuración de quirófanos del hospital: asignación por servicio y quirófanos de tarde."""
-
 import json
 from datetime import date
 from pathlib import Path
@@ -103,7 +101,7 @@ def has_service_overlap(
     return False
 
 
-# ── Quirófanos por servicio ────────────────────────────────────────────────────
+# Quirófanos por servicio 
 
 ROOMS_BY_SERVICE: dict[str, list[str]] = {
     "Traumatología y Cirugía Ortopédica":   ["TRAU-Q1", "TRAU-Q2", "TRAU-Q3", "TRAU-Q4"],

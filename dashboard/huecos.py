@@ -1,5 +1,3 @@
-"""Gestión de gaps quirúrgicos disponibles tras cancelaciones."""
-
 import uuid
 from pathlib import Path
 

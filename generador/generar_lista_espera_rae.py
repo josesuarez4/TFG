@@ -1,14 +1,3 @@
-"""
-Generador de lista de espera quirúrgica con distribución epidemiológica real (RAE-CMBD 2022).
-
-Uso:
-    python3 generar_lista_espera_rae.py [N]
-
-Salida:
-    datos_generados/generador/pacientes.csv
-    datos_generados/dashboard/lista_espera_quirurgica.csv
-"""
-
 import random
 import sys
 import uuid

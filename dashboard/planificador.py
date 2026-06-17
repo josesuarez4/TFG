@@ -1,5 +1,3 @@
-"""Asignación de slots quirúrgicos por prioridad para un servicio y ventana temporal."""
-
 from datetime import date, datetime, timedelta
 
 import pandas as pd

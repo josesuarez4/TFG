@@ -1,10 +1,3 @@
-"""
-Precalcula y guarda los embeddings de todos los procedimientos ICD-10-PCS.
-Ejecutar una sola vez antes de usar el generador:
-
-    python precalcular_embeddings.py
-"""
-
 # Bypass SSL en entornos con certificados corporativos
 import httpx
 _orig_client       = httpx.Client.__init__
