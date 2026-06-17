@@ -1367,7 +1367,7 @@ def _tab4_fn():
             cal_service = st.selectbox(
                 "Servicio", options=sorted(df["Servicio"].dropna().unique()), key="cal_service",
             )
-        pm_cal    = next((r for r, s in load_pm_assignment(date.today()).items() if s == cal_service), None)
+        pm_cal    = next((a["quirofano"] for a in load_pm_assignments() if a.get("servicio") == cal_service), None)
         cal_rooms = ROOMS_BY_SERVICE.get(cal_service, []) + ([pm_cal] if pm_cal else [])
         with cc2:
             cal_room = st.selectbox("Quirófano", options=cal_rooms, key="cal_room") if cal_rooms else None
