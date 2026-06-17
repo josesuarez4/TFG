@@ -27,7 +27,6 @@ TFG/
 ├── dashboard/
 │   ├── dashboard.py
 │   ├── planificador.py
-│   ├── prioridad.py
 │   ├── huecos.py
 │   ├── cancelaciones.py
 │   ├── restricciones.py
@@ -42,6 +41,7 @@ TFG/
 │   ├── filtro_procedimientos.py
 │   └── rae_cmbd_pesos.py
 ├── evaluacion_comparativa.py
+├── prioridad.py
 └── tests/
 ```
 
