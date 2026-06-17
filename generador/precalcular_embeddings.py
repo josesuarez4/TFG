@@ -1,10 +1,3 @@
-"""
-Precalcula y guarda los embeddings de todos los procedimientos ICD-10-PCS.
-Ejecutar una sola vez antes de usar el generador:
-
-    python precalcular_embeddings.py
-"""
-
 # Bypass SSL en entornos con certificados corporativos
 import httpx
 _orig_client       = httpx.Client.__init__
@@ -20,12 +13,12 @@ import numpy as np
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 
-from proc_filter import filter_surgical_procedures
+from filtro_procedimientos import filter_surgical_procedures
 
 BASE_DIR         = Path(__file__).parent.parent
 DATA_DIR        = BASE_DIR / "datos"
-CACHE_DIR        = BASE_DIR / "datos_generados"
-CACHE_EMBEDDINGS = CACHE_DIR / "proc_embeddings.npy"
+GENERATOR_DIR    = BASE_DIR / "datos_generados" / "generador"
+CACHE_EMBEDDINGS = GENERATOR_DIR / "proc_embeddings.npy"
 MODEL_NAME    = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
@@ -51,7 +44,7 @@ def main() -> None:
         show_progress_bar=True,
     )
 
-    CACHE_DIR.mkdir(exist_ok=True)
+    GENERATOR_DIR.mkdir(exist_ok=True)
     np.save(CACHE_EMBEDDINGS, embeddings)
     print(f"\nListo: {CACHE_EMBEDDINGS}  ({embeddings.shape}, {CACHE_EMBEDDINGS.stat().st_size / 1e6:.1f} MB)")
 

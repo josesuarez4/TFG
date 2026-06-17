@@ -1,11 +1,9 @@
-"""Gestión de gaps quirúrgicos disponibles tras cancelaciones."""
-
 import uuid
 from pathlib import Path
 
 import pandas as pd
 
-GAPS_PATH = Path(__file__).parent.parent / "datos_generados" / "gaps_disponibles.csv"
+GAPS_PATH = Path(__file__).parent.parent / "datos_generados" / "dashboard" / "huecos_disponibles.csv"
 
 _COLUMNS = [
     "id_gap", "fecha_intervencion", "quirofano", "servicio",
@@ -38,13 +36,13 @@ def find_candidates(df: pd.DataFrame, gap: dict, n: int = 3, offset: int = 0) ->
     Puntuación final: 60 % prioridad + 40 % similitud de procedimiento.
     Devuelve n+1 filas si existen más tras la página actual; n o menos si no hay más.
     """
-    mask = (
+    eligibility_mask = (
         (df["Servicio"] == gap["servicio"])
         & df["Fecha_Intervencion"].isna()
         & (df["Duracion_Horas"].fillna(0) <= float(gap["duracion_horas"]))
         & (df["ID_Paciente"] != gap.get("id_paciente_cancelado", ""))
     )
-    candidates = df[mask].copy()
+    candidates = df[eligibility_mask].copy()
     if candidates.empty:
         return candidates
 

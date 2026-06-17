@@ -1,14 +1,3 @@
-"""
-Generador de lista de espera quirúrgica con distribución epidemiológica real (RAE-CMBD 2022).
-
-Uso:
-    python3 generar_lista_espera_rae.py [N]
-
-Salida:
-    datos_generados/pacientes_rae.csv
-    datos_generados/lista_espera_quirurgica_rae.csv
-"""
-
 import random
 import sys
 import uuid
@@ -17,15 +6,14 @@ from datetime import date, timedelta
 import pandas as pd
 
 from generar_lista_espera_openai import (
-    CACHE_DIR,
+    GENERATOR_DIR,
+    DASHBOARD_DIR,
     DIAG_DF,
     PATIENT_COLUMNS,
     WAITLIST_COLUMNS,
     _fix_surgery_type,
     _fix_procedure_side,
     _extract_laterality,
-    _doctor,
-    _full_name,
     _generate_clinical_data,
     _procedure_candidates,
     calculate_priority,
@@ -117,13 +105,11 @@ def _fetch_patient_clinical(_: int) -> dict:
         "_admission_date": admission_date,
         "_duration":       _estimate_duration(service, surgery_type),
         "ID_Paciente":               str(uuid.uuid4()),
-        "Nombre_Apellidos":          _full_name(sex),
         "Fecha_Nacimiento":          birth_date,
-        "Medico_Peticionario":       _doctor(),
         "Edad":                      age,
         "Sexo":                      sex,
-        "Codigo_Diagnostico_1":      d1["Código"],
-        "Descripcion_Diagnostico_1": d1["Descripción"],
+        "Codigo_Diagnostico":      d1["Código"],
+        "Descripcion_Diagnostico": d1["Descripción"],
         "Codigo_Procedimiento":      proc["Código"],
         "Descripcion_Procedimiento": proc["Descripción"],
         "Tipo_Cirugia":              surgery_type,
@@ -193,10 +179,11 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     n    = int(args[0]) if len(args) > 0 else 500
 
-    CACHE_DIR.mkdir(exist_ok=True)
-    patients_path    = CACHE_DIR / "pacientes.csv"
-    waitlist_path    = CACHE_DIR / "lista_espera_quirurgica.csv"
-    checkpoint_path  = CACHE_DIR / "checkpoint_rae.csv"
+    GENERATOR_DIR.mkdir(exist_ok=True)
+    DASHBOARD_DIR.mkdir(exist_ok=True)
+    patients_path    = GENERATOR_DIR / "pacientes.csv"
+    waitlist_path    = DASHBOARD_DIR / "lista_espera_quirurgica.csv"
+    checkpoint_path  = GENERATOR_DIR / "checkpoint_rae.csv"
 
     print(f"Generando {n} pacientes con distribución RAE-CMBD 2022 + OpenAI...")
     df = generate_dataset_rae(n, checkpoint_path=checkpoint_path)
@@ -218,7 +205,7 @@ if __name__ == "__main__":
     print(f"  Prioridad media : {df['Prioridad'].mean():.1f}")
     print(f"\n  Muestra:")
     for _, row in df.head(3).iterrows():
-        print(f"    [{row['Codigo_Diagnostico_1']}] {row['Descripcion_Diagnostico_1'][:55]}")
+        print(f"    [{row['Codigo_Diagnostico']}] {row['Descripcion_Diagnostico'][:55]}")
         print(f"      -> [{row['Codigo_Procedimiento']}] {row['Descripcion_Procedimiento'][:55]}")
         print(f"         Servicio: {row['Servicio']}  |  Prioridad: {row['Prioridad']}")
         print()

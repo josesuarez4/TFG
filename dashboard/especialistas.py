@@ -1,11 +1,3 @@
-"""Especialistas quirúrgicos asignados a cada quirófano.
-
-Todos los quirófanos fijos operan solo en turno de mañana.
-Los dos quirófanos de tarde flotantes (TARDE-Q1, TARDE-Q2) tienen
-su propio especialista de tarde y se asignan dinámicamente
-a servicios desde el dashboard.
-"""
-
 from quirofanos import ROOMS_BY_SERVICE
 
 SPECIALISTS_BY_ROOM: dict[str, list[dict]] = {

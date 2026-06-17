@@ -1,0 +1,80 @@
+/* Fondo general */
+.stApp {
+    background-color: #eef4fb;
+}
+
+/* Tarjetas de gráficas */
+[data-testid="stPlotlyChart"] {
+    border: 2px solid #2563eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Selectboxes e inputs: fondo blanco con borde claro */
+[data-baseweb="select"] > div:first-child,
+[data-baseweb="input"] > div,
+[data-baseweb="base-input"] {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+[data-baseweb="select"] > div:first-child:focus-within,
+[data-baseweb="input"] > div:focus-within {
+    border-color: #2563eb !important;
+}
+
+/* Header de pestañas: barra tipo navegación compacta */
+[data-baseweb="tab-list"] {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 4px 6px;
+    gap: 4px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    width: fit-content !important;
+}
+button[data-baseweb="tab"] {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    color: #475569 !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    transition: background 0.15s;
+}
+button[data-baseweb="tab"]:hover {
+    background-color: #eff6ff !important;
+    color: #2563eb !important;
+}
+button[data-baseweb="tab"][aria-selected="true"] {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+}
+/* Ocultar línea subrayada por defecto */
+[data-baseweb="tab-highlight"],
+[data-baseweb="tab-border"] {
+    display: none !important;
+}
+
+
+/* Tarjetas de métricas (reemplaza el bloque JS de styleCards) */
+[data-testid="stMetric"] {
+    background-color: #c8ddf5 !important;
+}
+
+
+
+
+
+/* Tabla de pacientes */
+[data-testid="stDataFrame"] {
+    border: 2px solid #2563eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+}
+[data-testid="stDataFrame"] > div {
+    border-radius: 10px;
+    overflow: hidden;
+}

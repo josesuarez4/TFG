@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))  # permite importar prioridad.py desde la raíz
 
-from proc_filter import filter_surgical_procedures
+from filtro_procedimientos import filter_surgical_procedures
 
 from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
@@ -23,13 +23,14 @@ from sentence_transformers import SentenceTransformer
 
 BASE_DIR       = Path(__file__).parent.parent
 DATA_DIR       = BASE_DIR / "datos"
-CACHE_DIR      = BASE_DIR / "datos_generados"
+GENERATOR_DIR  = BASE_DIR / "datos_generados" / "generador"
+DASHBOARD_DIR  = BASE_DIR / "datos_generados" / "dashboard"
 
 OPENAI_MODEL       = "gpt-4o-mini"
 OPENAI_MAX_TOKENS  = 500
 OPENAI_TEMPERATURE = 0.7
 EMBEDDING_MODEL    = "paraphrase-multilingual-MiniLM-L12-v2"
-EMBEDDINGS_CACHE   = CACHE_DIR / "proc_embeddings.npy"
+EMBEDDINGS_CACHE   = GENERATOR_DIR / "proc_embeddings.npy"
 N_CANDIDATES       = 30
 
 TIPO_CIRUGIA_OPTIONS = [
@@ -370,15 +371,6 @@ def _patient_data() -> tuple[str, int, str]:
     return birth_date.isoformat(), age, sex
 
 
-def _full_name(sex: str) -> str:
-    fn = fake.first_name_male if sex == "Hombre" else fake.first_name_female
-    return f"{fn()} {fake.last_name()} {fake.last_name()}"
-
-
-def _doctor() -> str:
-    title = random.choice(["Dr.", "Dra."])
-    return f"{title} {fake.last_name()}, {fake.first_name()}"
-
 
 def _select_diagnoses(sex: str, age: int) -> list[pd.Series]:
     candidates = DIAG_DF[DIAG_DF["Mujer"] != "1"] if sex == "Hombre" else DIAG_DF[DIAG_DF["Hombre"] != "1"]
@@ -574,14 +566,12 @@ def generate_patient() -> dict:
 
     return {
         "ID_Paciente":               str(uuid.uuid4()),
-        "Nombre_Apellidos":          _full_name(sex),
         "Fecha_Nacimiento":          birth_date,
-        "Medico_Peticionario":       _doctor(),
         "Edad":                      age,
         "Sexo":                      sex,
         "Prioridad":                 priority,
-        "Codigo_Diagnostico_1":      d1["Código"],
-        "Descripcion_Diagnostico_1": d1["Descripción"],
+        "Codigo_Diagnostico":      d1["Código"],
+        "Descripcion_Diagnostico": d1["Descripción"],
         "Codigo_Procedimiento":      proc["Código"],
         "Descripcion_Procedimiento": proc["Descripción"],
         "Tipo_Cirugia":              surgery_type,
@@ -610,14 +600,12 @@ def generate_dataset(n: int = 500) -> pd.DataFrame:
 
 PATIENT_COLUMNS = [
     "ID_Paciente",
-    "Nombre_Apellidos",
     "Fecha_Nacimiento",
-    "Medico_Peticionario",
 ]
 
 WAITLIST_COLUMNS = [
     "ID_Paciente", "Edad", "Sexo", "Prioridad",
-    "Codigo_Diagnostico_1", "Descripcion_Diagnostico_1",
+    "Codigo_Diagnostico", "Descripcion_Diagnostico",
     "Codigo_Procedimiento", "Descripcion_Procedimiento",
     "Tipo_Cirugia", "Servicio", "Lateralidad", "Observaciones", "Curso_Clinico",
     "Intervenciones_Previas", "Otros_Parametros_Clinicos", "Comorbilidades",
@@ -634,9 +622,9 @@ if __name__ == "__main__":
     print(f"Generando {n} pacientes con OpenAI ({OPENAI_MODEL})...")
     df = generate_dataset(n)
 
-    CACHE_DIR.mkdir(exist_ok=True)
-    patients_path = CACHE_DIR / "pacientes2.csv"
-    waitlist_path = CACHE_DIR / "lista_espera_quirurgica2.csv"
+    GENERATOR_DIR.mkdir(exist_ok=True)
+    patients_path = GENERATOR_DIR / "pacientes2.csv"
+    waitlist_path = GENERATOR_DIR / "lista_espera_quirurgica2.csv"
 
     df[PATIENT_COLUMNS].to_csv(patients_path, index=False, encoding="utf-8-sig")
     df[WAITLIST_COLUMNS].to_csv(waitlist_path, index=False, encoding="utf-8-sig")
@@ -647,5 +635,5 @@ if __name__ == "__main__":
     print(f"  Total: {len(df)}  |  Edad media: {df['Edad'].mean():.1f}  |  "
           f"H/M: {(df['Sexo']=='Hombre').sum()}/{(df['Sexo']=='Mujer').sum()}")
     for _, row in df.head(3).iterrows():
-        print(f"  [{row['Codigo_Diagnostico_1']}] {row['Descripcion_Diagnostico_1'][:50]}")
+        print(f"  [{row['Codigo_Diagnostico']}] {row['Descripcion_Diagnostico'][:50]}")
         print(f"    → [{row['Codigo_Procedimiento']}] {row['Descripcion_Procedimiento'][:50]}")

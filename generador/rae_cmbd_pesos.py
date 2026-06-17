@@ -1,12 +1,3 @@
-"""
-Tablas RAE-CMBD 2022 (SNS) para generación de pacientes con distribución epidemiológica real.
-
-Funciones públicas:
-    select_diagnosis_rae(sex, age, diag_df) -> list[pd.Series]
-    sample_comorbidities_rae(sex, age)      -> str
-    sample_age_rae(fake_instance)           -> (birth_date_iso, age, sex)
-"""
-
 import random
 import re
 from datetime import date
