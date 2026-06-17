@@ -13,7 +13,7 @@ from prioridad import calculate_priority
 from especialistas import specialists_for_service, SPECIALISTS_BY_ROOM
 from cancelaciones import save_cancellation, load_cancellations
 from huecos import save_gap, load_gaps, find_candidates, remove_gap
-from quirofanos import PM_ROOMS, load_pm_assignment, load_pm_assignments, save_pm_assignments, has_pm_overlap, has_service_overlap
+from quirofanos import PM_ROOMS, load_pm_assignment, load_pm_assignments, save_pm_assignments, has_pm_overlap, has_service_overlap, find_pm_for_service_in_range
 from planificador import service_planning, find_free_slots, compute_pm_impact
 from registro_planificacion import save_planning, get_reference_date
 from streamlit_extras.metric_cards import style_metric_cards
@@ -976,7 +976,8 @@ def _tab4_fn():
                 f"{n_sched} con cita · {n_total - n_sched} en espera"
             )
 
-            pm_plan        = next((r for r, s in load_pm_assignment(plan_start).items() if s == plan_service), None)
+            _pm_plan_info  = find_pm_for_service_in_range(plan_service, plan_start, plan_end)
+            pm_plan        = _pm_plan_info[0] if _pm_plan_info else None
             service_rooms  = ROOMS_BY_SERVICE.get(plan_service, []) + ([pm_plan] if pm_plan else [])
             svc_specialists = specialists_for_service(plan_service, extra_rooms=[pm_plan] if pm_plan else [])
             spec_name_to_id = {s["name"]: s["id"] for s in svc_specialists}
@@ -993,6 +994,36 @@ def _tab4_fn():
                     "Quirófano": cd_svc["quirofano"].tolist(),
                     "Fecha":     cd_svc["fecha"].tolist(),
                 }) if not cd_svc.empty else pd.DataFrame({"Quirófano": pd.Series(dtype=str), "Fecha": pd.Series(dtype="object")})
+
+                # Formulario para añadir un día o rango de días cerrados
+                with st.form(f"add_closed_range_{plan_service}"):
+                    rc1, rc2, rc3, rc4 = st.columns([2, 1.5, 1.5, 1])
+                    new_closed_room  = rc1.selectbox("Quirófano", options=service_rooms)
+                    new_closed_start = rc2.date_input("Desde", value=date.today())
+                    new_closed_end   = rc3.date_input("Hasta", value=date.today())
+                    add_range = rc4.form_submit_button("Añadir", use_container_width=True)
+
+                if add_range:
+                    if new_closed_end < new_closed_start:
+                        st.error("La fecha de fin debe ser posterior o igual a la de inicio.")
+                    else:
+                        new_dates = [
+                            new_closed_start + timedelta(days=i)
+                            for i in range((new_closed_end - new_closed_start).days + 1)
+                        ]
+                        all_cd = load_closed_days_df()
+                        existing_room = set(all_cd[all_cd["quirofano"] == new_closed_room]["fecha"].tolist())
+                        new_cd_rows = [
+                            {"quirofano": new_closed_room, "fecha": d.isoformat()}
+                            for d in new_dates if d.isoformat() not in existing_room
+                        ]
+                        if new_cd_rows:
+                            current_room_rows = [
+                                {"quirofano": r["quirofano"], "fecha": r["fecha"]}
+                                for _, r in all_cd[all_cd["quirofano"] == new_closed_room].iterrows()
+                            ]
+                            save_closed_days_for_rooms([new_closed_room], current_room_rows + new_cd_rows)
+                            st.rerun()
 
                 closed_df = st.data_editor(
                     cd_init,
@@ -1103,13 +1134,23 @@ def _tab4_fn():
                             datetime(d.year, d.month, d.day, end_h,   end_m),
                         ))
 
-                    # Cargar quirófano de tarde asignado a este servicio (si existe)
-                    pm_for_service = next(
-                        (room for room, svc in load_pm_assignment(plan_start).items() if svc == plan_service), None
-                    )
+                    # Cargar quirófano de tarde asignado a este servicio (si existe en la ventana)
+                    _pm_info       = find_pm_for_service_in_range(plan_service, plan_start, plan_end)
+                    pm_for_service = _pm_info[0] if _pm_info else None
+
+                    # Bloquear el quirófano de tarde en días fuera de su rango asignado
+                    effective_closed = dict(closed_days) if closed_days else {}
+                    if _pm_info:
+                        _, pm_room_start, pm_room_end = _pm_info
+                        cur = plan_start
+                        while cur <= plan_end:
+                            if not (pm_room_start <= cur <= pm_room_end):
+                                effective_closed.setdefault(pm_for_service, []).append(cur)
+                            cur += timedelta(days=1)
+
                     df_new, n_new = service_planning(
                         df, plan_service, plan_end, plan_start,
-                        closed_days or None, unavailable_specs or None,
+                        effective_closed or None, unavailable_specs or None,
                         pm_room=pm_for_service,
                     )
                     df_new.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")

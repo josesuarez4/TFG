@@ -19,11 +19,11 @@ TFG/
 │   │   ├── quirofanos_tarde.json              # Asignaciones de quirófanos de tarde
 │   │   ├── dias_cerrados.csv                  # Días cerrados por quirófano
 │   │   ├── especialistas_no_disponibles.csv   # Periodos de no disponibilidad
-│   │   └── cancelaciones.csv                  # Historial de cancelaciones
+│   │   ├── cancelaciones.csv                  # Historial de cancelaciones
+│   │   └── resultados_evaluacion.txt          # Resultados de la evaluación comparativa
 │   └── generador/
 │       ├── proc_embeddings.npy                # Caché de embeddings (generado una vez)
-│       ├── pacientes.csv                      # Datos identificativos generados
-│       └── resultados_evaluacion.txt          # Resultados de la evaluación comparativa
+│       └── pacientes.csv                      # Datos identificativos generados
 ├── dashboard/
 │   ├── dashboard.py
 │   ├── planificador.py
@@ -91,7 +91,7 @@ Salidas:
 
 **`generar_lista_espera_rae.py`** — Generador principal. `generate_dataset_rae()` produce cada paciente de forma secuencial usando los pesos epidemiológicos RAE-CMBD 2022 para seleccionar diagnóstico, edad y comorbilidades, y delega la generación de campos clínicos en `generar_lista_espera_openai.py`. Guarda checkpoints cada 500 pacientes para poder reanudar ante interrupciones.
 
-**`generar_lista_espera_openai.py`** — Núcleo compartido del generador. `_procedure_candidates()` codifica el diagnóstico con `sentence-transformers` y calcula la similitud coseno contra los embeddings precalculados para seleccionar los 30 procedimientos más relevantes. `_generate_clinical_data()` envía esos candidatos a GPT-4o-mini y obtiene en JSON el procedimiento elegido y todos los campos clínicos. Ante fallos de la API aplica un fallback con valores por defecto para no interrumpir la generación.
+**`generar_lista_espera_openai.py`** — Núcleo compartido del generador. `_procedure_candidates()` codifica el diagnóstico con `sentence-transformers` y calcula la similitud coseno contra los embeddings precalculados para seleccionar los 30 procedimientos más relevantes. `_generate_clinical_data()` envía esos candidatos a GPT-4o-mini y obtiene en JSON el procedimiento elegido y todos los campos clínicos. Ante fallos de la API aplica un fallback con valores por defecto para no interrumpir la generación. Los campos identificativos del paciente (`Nombre_Apellidos`, `Medico_Peticionario`) no se generan para evitar datos PII innecesarios.
 
 **`precalcular_embeddings.py`** — Descarga el modelo `paraphrase-multilingual-MiniLM-L12-v2` y calcula los embeddings de todos los procedimientos ICD-10-PCS con normalización L2, guardándolos en `proc_embeddings.npy`. Si el fichero ya existe no lo sobreescribe.
 
@@ -125,13 +125,13 @@ El dashboard se abre en el navegador en `http://localhost:8501`. Lee `datos_gene
 
 **`planificador.py`** — Núcleo del algoritmo de planificación. La función `_assign_slot()` busca el primer hueco libre en los quirófanos del servicio comprobando solapamientos con cirugías ya asignadas y periodos de no disponibilidad de especialistas, incluyendo el tiempo de rotación entre intervenciones. `service_planning()` ordena los pacientes por prioridad y llama a `_assign_slot()` para cada uno dentro de la ventana de fechas indicada. `find_free_slots()` realiza la misma búsqueda para asignaciones manuales o reasignaciones tras cancelación. `compute_pm_impact()` simula cuatro semanas de planificación por servicio para estimar qué servicio se beneficiaría más de un quirófano de tarde.
 
-**`prioridad.py`** — Calcula la puntuación de prioridad (0–100) de cada paciente con la fórmula `espera·0,40 + edad·0,35 + invasividad·0,25`. El componente de edad aplica una curva no lineal que beneficia tanto a neonatos como a pacientes de edad avanzada. El componente de invasividad asigna un peso fijo por tipo de cirugía (robótica y cardiovascular en el extremo alto, percutánea y endoscópica en el bajo).
+**`prioridad.py`** — Calcula la puntuación de prioridad (0–100) de cada paciente con la fórmula `espera·0,40 + edad·0,35 + invasividad·0,25`. El componente de edad aplica una curva en V asimétrica con vértice en los 35 años (suelo de 15 puntos), de modo que la prioridad crece tanto hacia edades muy jóvenes como hacia edades avanzadas. El componente de invasividad asigna un peso fijo por tipo de cirugía (abierta en el extremo alto, percutánea y endoscópica en el bajo).
 
 **`huecos.py`** — Gestiona el ciclo de vida de los huecos generados por cancelaciones. `procedure_similarity()` calcula la similitud entre dos códigos ICD-10-PCS ponderando cada posición del código (sección, sistema, operación…) con un peso distinto. `find_candidates()` filtra pacientes elegibles del mismo servicio y los puntúa combinando prioridad (60 %) y similitud de procedimiento (40 %), con soporte de paginación.
 
 **`restricciones.py`** — Carga y persiste los días cerrados de quirófanos y los periodos de no disponibilidad de especialistas desde los CSV correspondientes. Expone `load_closed_days()` y `load_unavailable_specs()`, que devuelven estructuras indexadas por quirófano y especialista respectivamente para consulta eficiente durante la planificación.
 
-**`quirofanos.py`** — Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha, `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano y `has_service_overlap()` impide que un mismo servicio tenga dos quirófanos de tarde asignados simultáneamente.
+**`quirofanos.py`** — Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha, `find_pm_for_service_in_range(service, start, end)` devuelve el quirófano de tarde activo en la ventana de planificación, `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano y `has_service_overlap()` impide que un mismo servicio tenga dos quirófanos de tarde asignados simultáneamente.
 
 **`registro_planificacion.py`** — Persiste la fecha de fin de la última planificación por servicio en `registro_planificacion.json`. `get_reference_date()` devuelve el día siguiente al último horizonte planificado (o hoy si nunca se ha planificado), garantizando que los ciclos consecutivos no dejen huecos temporales.
 

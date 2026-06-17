@@ -35,6 +35,24 @@ def load_pm_assignment(for_date: date | None = None) -> dict[str, str]:
     return result
 
 
+def find_pm_for_service_in_range(
+    service: str, plan_start: date, plan_end: date
+) -> tuple[str, date, date] | None:
+    """Devuelve (quirofano, pm_start, pm_end) si el servicio tiene un quirófano de tarde
+    cuyo rango se solapa con [plan_start, plan_end], o None si no existe."""
+    for a in load_pm_assignments():
+        try:
+            if a.get("servicio") != service:
+                continue
+            pm_start = date.fromisoformat(a["fecha_inicio"])
+            pm_end   = date.fromisoformat(a["fecha_fin"])
+            if pm_start <= plan_end and pm_end >= plan_start:
+                return a["quirofano"], pm_start, pm_end
+        except (KeyError, ValueError):
+            continue
+    return None
+
+
 def save_pm_assignments(assignments: list[dict]) -> None:
     """Persiste la lista completa de asignaciones."""
     _ASSIGNMENT_PATH.parent.mkdir(exist_ok=True)

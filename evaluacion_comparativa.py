@@ -223,7 +223,7 @@ def save_results(metrics_fifo: dict, metrics_prio: dict,
         [46, 12, 12, 16],
     )
 
-    output_path = os.path.join(_ROOT, "datos_generados", "generador", "resultados_evaluacion.txt")
+    output_path = os.path.join(_ROOT, "datos_generados", "dashboard", "resultados_evaluacion.txt")
     with open(output_path, "w", encoding="utf-8") as file:
         file.write("\n".join(lines) + "\n")
 

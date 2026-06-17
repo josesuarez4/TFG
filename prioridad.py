@@ -13,15 +13,19 @@ _SURGERY_TYPE_PCT: dict[str, float] = {
     "No aplica":               0.0,
 }
 
-# Edad a la que el componente pediátrico llega a 0 (curva en U)
-_PEDIATRIC_THRESHOLD: float = 14.0
+# Curva en V asimétrica: mínimo en _AGE_VERTEX con suelo _AGE_MIN,
+# decrece desde 100 en neonatos y crece hasta 100 a los 90 años.
+_AGE_VERTEX: float = 35.0
+_AGE_MIN:    float = 15.0
 
 
 def _age_pct(age: int) -> float:
-    """Curva en U: 100 % en neonatos, mínimo en adolescentes, sube con los años."""
-    young_pct = max(0.0, 100.0 * (1.0 - age / _PEDIATRIC_THRESHOLD))
-    old_pct   = min(age / 90.0 * 100.0, 100.0)
-    return max(young_pct, old_pct)
+    """Curva en V con vértice en ~35 años: prioriza neonatos y pacientes de edad avanzada."""
+    if age <= _AGE_VERTEX:
+        t = (_AGE_VERTEX - age) / _AGE_VERTEX
+    else:
+        t = (age - _AGE_VERTEX) / (90.0 - _AGE_VERTEX)
+    return _AGE_MIN + (100.0 - _AGE_MIN) * t
 
 
 def calculate_priority(

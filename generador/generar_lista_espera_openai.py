@@ -371,15 +371,6 @@ def _patient_data() -> tuple[str, int, str]:
     return birth_date.isoformat(), age, sex
 
 
-def _full_name(sex: str) -> str:
-    fn = fake.first_name_male if sex == "Hombre" else fake.first_name_female
-    return f"{fn()} {fake.last_name()} {fake.last_name()}"
-
-
-def _doctor() -> str:
-    title = random.choice(["Dr.", "Dra."])
-    return f"{title} {fake.last_name()}, {fake.first_name()}"
-
 
 def _select_diagnoses(sex: str, age: int) -> list[pd.Series]:
     candidates = DIAG_DF[DIAG_DF["Mujer"] != "1"] if sex == "Hombre" else DIAG_DF[DIAG_DF["Hombre"] != "1"]
@@ -575,9 +566,7 @@ def generate_patient() -> dict:
 
     return {
         "ID_Paciente":               str(uuid.uuid4()),
-        "Nombre_Apellidos":          _full_name(sex),
         "Fecha_Nacimiento":          birth_date,
-        "Medico_Peticionario":       _doctor(),
         "Edad":                      age,
         "Sexo":                      sex,
         "Prioridad":                 priority,
@@ -611,9 +600,7 @@ def generate_dataset(n: int = 500) -> pd.DataFrame:
 
 PATIENT_COLUMNS = [
     "ID_Paciente",
-    "Nombre_Apellidos",
     "Fecha_Nacimiento",
-    "Medico_Peticionario",
 ]
 
 WAITLIST_COLUMNS = [
