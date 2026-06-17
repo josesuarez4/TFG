@@ -1,4 +1,4 @@
-# Lista de Espera Quirúrgica — TFG
+# Cuadro de mando para la gestión de listas de espera quirúrgicas — TFG
 
 Herramienta de generación de datos sintéticos y dashboard de gestión de lista de espera quirúrgica para un hospital español, usando códigos CIE-10-ES e ICD-10-PCS-ES reales.
 
