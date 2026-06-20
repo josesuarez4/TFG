@@ -52,7 +52,7 @@ _CLINICAL_FALLBACK: dict = {
     "comorbilidades":        "Ninguna",
 }
 
-# Capítulo ICD-10 → sistemas orgánicos ICD-10-PCS permitidos
+# Capítulo CIE-10-ES → sistemas orgánicos CIE-10-ES permitidos
 _DIAG_TO_PROC_SYSTEMS: dict[str, frozenset[str]] = {
     'A': frozenset({'D', 'F', 'H', 'J', 'W'}),
     'B': frozenset({'D', 'F', 'H', 'J', 'W'}),
@@ -108,6 +108,8 @@ def _lookup_sub(
     table: list[tuple[tuple[str, str], frozenset[str]]],
     fallback: frozenset[str] = frozenset({'W'}),
 ) -> frozenset[str]:
+    """Busca en una tabla de subrangos el frozenset de sistemas CIE-10-ES asociado al subcódigo dado,
+    o devuelve fallback si no encaja en ninguno."""
     for (start, end), systems in table:
         if start[1:] <= sub <= end[1:]:
             return systems
@@ -115,7 +117,7 @@ def _lookup_sub(
 
 
 def _get_proc_systems(diag_code: str) -> frozenset[str]:
-    """Sistemas ICD-10-PCS válidos para el diagnóstico. frozenset vacío = sin filtro."""
+    """Sistemas CIE-10-ES válidos para el diagnóstico. frozenset vacío = sin filtro."""
     if not diag_code:
         return frozenset()
     chapter = diag_code[0]
@@ -142,7 +144,7 @@ def _get_proc_systems(diag_code: str) -> frozenset[str]:
     return direct if direct is not None else frozenset()
 
 
-# Abordaje ICD-10-PCS (índice 4) → tipo de cirugía
+# Abordaje CIE-10-ES (índice 4) → tipo de cirugía
 _APPROACH_TIPO: dict[str, str] = {
     '0': "Abierta",
     '3': "Percutánea",
@@ -178,6 +180,7 @@ _TRUNK_DESC_RE = re.compile(
 
 
 def _norm_laterality(term: str) -> str:
+    """Normaliza un término de lateralidad libre a Derecha, Izquierda o Bilateral."""
     t = term.lower()
     if "derech"   in t: return "Derecha"
     if "izquierd" in t: return "Izquierda"
@@ -185,7 +188,7 @@ def _norm_laterality(term: str) -> str:
 
 
 def _extract_laterality(desc_proc: str, llm_lat: str) -> str:
-    """Lateralidad desde la descripción ICD-10-PCS; si no aparece, usa el valor del LLM."""
+    """Lateralidad desde la descripción de los procedimientos CIE-10-ES; si no aparece, usa el valor del LLM."""
     m = _LAT_DESC_RE.search(desc_proc)
     return _norm_laterality(m.group(1)) if m else llm_lat
 
@@ -220,7 +223,7 @@ def _fix_procedure_side(diags: list[pd.Series], candidates: pd.DataFrame, proc_i
 
 
 def _fix_surgery_type(codigo_proc: str, llm_tipo: str) -> str:
-    """Corrige el tipo de cirugía según el carácter de abordaje del código ICD-10-PCS."""
+    """Corrige el tipo de cirugía según el carácter de abordaje del código de procedimiento CIE-10-ES."""
     if len(codigo_proc) < 5:
         return llm_tipo
     approach = codigo_proc[4]
@@ -238,6 +241,7 @@ _openai_client: OpenAI | None = None
 
 
 def _get_openai_client() -> OpenAI:
+    """Crea o reutiliza el cliente de OpenAI a partir de OPENAI_API_KEY, lanzando un error si la variable de entorno no está definida."""
     global _openai_client
     if _openai_client is None:
         api_key = os.environ.get("OPENAI_API_KEY")
@@ -252,6 +256,9 @@ def _get_openai_client() -> OpenAI:
 
 
 def _load_csv() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Carga y depura los catálogos CIE-10-ES de procedimientos y diagnósticos: se queda solo con códigos hoja, 
+    elimina categorías genéricas con subcódigos más específicos, 
+    descarta capítulos no quirúrgicos y localizaciones anatómicas vagas."""
     diag_raw = pd.read_csv(DATA_DIR / "Diagnosticos_ES2026.csv", dtype=str)
     proc_raw = pd.read_csv(DATA_DIR / "Procedimientos_ES2026.csv", dtype=str)
 
@@ -291,6 +298,7 @@ _proc_embeddings: np.ndarray | None = None
 
 
 def _get_embedding_model() -> SentenceTransformer:
+    """Carga (una sola vez) el modelo de sentence-transformers usado para calcular similitud semántica diagnóstico-procedimiento."""
     global _model
     if _model is None:
         _model = SentenceTransformer(EMBEDDING_MODEL)
@@ -298,6 +306,8 @@ def _get_embedding_model() -> SentenceTransformer:
 
 
 def _get_procedure_embeddings() -> np.ndarray:
+    """Carga en memoria la caché de embeddings de procedimientos precalculada, 
+    falla si no se ha ejecutado antes precalcular_embeddings.py."""
     global _proc_embeddings
     if _proc_embeddings is None:
         if not EMBEDDINGS_CACHE.exists():
@@ -309,7 +319,7 @@ def _get_procedure_embeddings() -> np.ndarray:
     return _proc_embeddings
 
 
-# Sistema orgánico ICD-10-PCS (carácter 2) → servicio quirúrgico
+# Sistema orgánico CIE-10-ES (carácter 2) → servicio quirúrgico
 _BODY_SYSTEM_SERVICE: dict[str, str] = {
     '0': 'Neurocirugía',                            # SNC y Nervios Craneales
     '1': 'Neurocirugía',                            # Sistema Nervioso Periférico
@@ -350,6 +360,8 @@ _PROC_SECTION_SERVICE: dict[str, str] = {
 
 
 def service_by_procedure(codigo: str) -> str:
+    """Devuelve el servicio quirúrgico asociado a un código de procedimiento CIE-10-ES,
+    o Cirugía General y Aparato Digestivo si no se encuentra."""
     if not codigo or len(codigo) < 2:
         return 'Cirugía General y Aparato Digestivo'
     sec = codigo[0]
@@ -362,6 +374,7 @@ from prioridad import calculate_priority
 
 
 def _patient_data() -> tuple[str, int, str]:
+    """Genera fecha de nacimiento, edad y sexo aleatorios para un paciente."""
     sex        = random.choice(["Hombre", "Mujer"])
     birth_date = fake.date_of_birth(minimum_age=18, maximum_age=90)
     today      = date.today()
@@ -373,6 +386,8 @@ def _patient_data() -> tuple[str, int, str]:
 
 
 def _select_diagnoses(sex: str, age: int) -> list[pd.Series]:
+    """Elige un diagnóstico aleatorio compatible con el sexo y la edad del paciente, 
+    aplicando filtros de exclusión por sexo, neonatalidad y pediatría."""
     candidates = DIAG_DF[DIAG_DF["Mujer"] != "1"] if sex == "Hombre" else DIAG_DF[DIAG_DF["Hombre"] != "1"]
     if sex == "Hombre":
         candidates = candidates[candidates["Código"].str[0] != "O"]
@@ -487,7 +502,7 @@ def _generate_clinical_data(
 
     user_msg = (
         f"Paciente: {sex}, {age} años.\n\n"
-        f"Diagnósticos (ICD-10-ES):\n{diag_text}\n\n"
+        f"Diagnósticos (CIE-10-ES):\n{diag_text}\n\n"
         f"Procedimientos candidatos:\n{options}\n\n"
         "### Selección del procedimiento\n"
         "Elige el número del procedimiento que:\n"
@@ -544,6 +559,8 @@ def _generate_clinical_data(
 
 
 def generate_patient() -> dict:
+    """Se encarga de la generación completa de un paciente sintético: datos demográficos, diagnóstico, 
+    búsqueda semántica de procedimiento, validación clínica vía LLM y cálculo de prioridad inicial."""
     birth_date, age, sex = _patient_data()
     diags      = _select_diagnoses(sex, age)
     candidates = _procedure_candidates(diags, sex)
@@ -590,6 +607,8 @@ def generate_patient() -> dict:
 
 
 def generate_dataset(n: int = 500) -> pd.DataFrame:
+    """Genera n pacientes sintéticos de forma secuencial y los devuelve como DataFrame, 
+    mostrando el progreso por consola."""
     rows = []
     for i in range(n):
         print(f"  Generando paciente {i + 1}/{n}...", end="\r")

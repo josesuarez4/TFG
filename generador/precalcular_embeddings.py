@@ -23,6 +23,8 @@ MODEL_NAME    = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
 def main() -> None:
+    """Calcula y guarda en caché los embeddings de todos los procedimientos quirúrgicos CIE-10-ES,
+    no sobrescribe la caché si ya existe."""
     if CACHE_EMBEDDINGS.exists():
         print(f"El fichero ya existe: {CACHE_EMBEDDINGS}")
         print("Bórralo manualmente para recalcular.")

@@ -127,6 +127,8 @@ _COMORBIDITIES: list[tuple[str, float, int | None, float]] = [
 
 
 def _age_multiplier(age: int) -> float:
+    """Factor multiplicador de prevalencia de comorbilidades según tramo de edad, 
+    creciente a partir de los 40 años."""
     if age < 40:  return 0.08
     if age < 55:  return 0.45
     if age < 65:  return 0.75
@@ -135,6 +137,7 @@ def _age_multiplier(age: int) -> float:
 
 
 def _age_group(age: int) -> str:
+    """Clasifica una edad en uno de los tramos epidemiológicos usados por las tablas RAE-CMBD 2022."""
     if age < 1:   return "<1"
     if age <= 14: return "1-14"
     if age <= 44: return "15-44"
@@ -144,11 +147,15 @@ def _age_group(age: int) -> str:
 
 
 def _in_range(code: str, start: str, end: str) -> bool:
+    """Comprueba si un código CIE-10-ES está dentro del rango [start, end] 
+    comparando solo los primeros caracteres del rango."""
     n = len(start)
     return start <= code[:n] <= end
 
 
 def _filter_diag(rng: tuple[str, str], diag_df: pd.DataFrame, sex: str) -> pd.DataFrame:
+    """Filtra el catálogo de diagnósticos a un rango de códigos, 
+    aplicando además las exclusiones por sexo correspondientes."""
     start, end = rng
     mask   = diag_df["Código"].apply(lambda c: _in_range(c, start, end))
     subset = diag_df[mask].copy()
@@ -259,7 +266,7 @@ _AGE_RANGES: list[tuple[int, int, float]] = [
 
 
 def sample_age_rae(fake_instance) -> tuple[str, int, str]:
-    """Genera (fecha_nacimiento_iso, edad, sexo) con distribución RAE-CMBD 2022."""
+    """Genera (fecha_nacimiento, edad, sexo) con distribución RAE-CMBD 2022."""
     sex = random.choices(["Hombre", "Mujer"], weights=[0.497, 0.503])[0]
 
     min_age, max_age, _ = random.choices(

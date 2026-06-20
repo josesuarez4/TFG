@@ -11,12 +11,12 @@ _COLUMNS = [
     "motivo_cancelacion",
 ]
 
-# Pesos por posición en el código ICD-10-PCS (sección, sistema, operación, parte, abordaje, dispositivo, calificador)
+# Pesos por posición en el código de procedimiento CIE-10-ES (sección, sistema, operación, parte, abordaje, dispositivo, calificador)
 _PROC_WEIGHTS = [0.20, 0.20, 0.25, 0.15, 0.10, 0.05, 0.05]
 
 
 def procedure_similarity(code1: str, code2: str) -> float:
-    """Similitud 0–1 entre dos códigos ICD-10-PCS por coincidencia de caracteres ponderada."""
+    """Similitud 0–1 entre dos códigos de procedimiento CIE-10-ES por coincidencia de caracteres ponderada."""
     score = 0.0
     for i, (c1, c2) in enumerate(zip(str(code1)[:7].upper(), str(code2)[:7].upper())):
         if c1 == c2:
@@ -85,11 +85,13 @@ def save_gap(
 
 
 def load_gaps() -> pd.DataFrame:
+    """Carga el CSV de huecos disponibles, devolviendo un DataFrame con las columnas esperadas."""
     if GAPS_PATH.exists():
         return pd.read_csv(GAPS_PATH)
     return pd.DataFrame(columns=_COLUMNS)
 
 
 def remove_gap(gap_id: str) -> None:
+    """Borra del CSV el hueco con ese id, al limpiar la lista de huecos disponibles tras asignar un candidato."""
     df = load_gaps()
     df[df["id_gap"] != gap_id].to_csv(GAPS_PATH, index=False, encoding="utf-8-sig")

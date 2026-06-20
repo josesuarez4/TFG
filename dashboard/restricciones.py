@@ -30,6 +30,7 @@ def save_closed_days_for_rooms(rooms: list[str], rows: list[dict]) -> None:
 
 
 def load_closed_days() -> dict[str, list[date]]:
+    """Convierte el CSV de días cerrados en {quirofano: [fechas]} para el planificador"""
     closed_by_room: dict[str, list[date]] = {}
     for _, row in load_closed_days_df().iterrows():
         parsed_date = pd.to_datetime(row["fecha"], errors="coerce")
@@ -41,6 +42,7 @@ def load_closed_days() -> dict[str, list[date]]:
 # Especialistas no disponibles
 
 def load_unavailable_specs_df() -> pd.DataFrame:
+    """Carga el CSV de especialistas no disponibles, devolviendo un DataFrame con las columnas esperadas."""
     if _UNAVAIL_PATH.exists():
         df = pd.read_csv(_UNAVAIL_PATH, dtype=str)
         return df[[c for c in _UNAVAIL_COLS if c in df.columns]].reindex(columns=_UNAVAIL_COLS, fill_value="")
@@ -58,6 +60,7 @@ def save_unavailable_specs_for_ids(spec_ids: list[str], rows: list[dict]) -> Non
 
 
 def load_unavailable_specs() -> dict[str, list[tuple[datetime, datetime]]]:
+    """Convierte el CSV de especialistas no disponibles en {especialista_id: [(inicio, fin)]} para el planificador"""
     unavailable_by_spec: dict[str, list[tuple[datetime, datetime]]] = {}
     for _, row in load_unavailable_specs_df().iterrows():
         parsed_date = pd.to_datetime(row["fecha"], errors="coerce")

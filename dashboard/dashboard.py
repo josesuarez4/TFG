@@ -559,6 +559,8 @@ def _tab3_fn():
                             hc_slot.strftime("%Y-%m-%d %H:%M"),
                         )
                         df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
+                        save_gap(hc["fecha"], hc["quirofano"], hc_svc, hc_dur,
+                            hc["codigo_procedimiento"], hc["id"], "Causa del hospital")
                         load_data.clear()
                         del st.session_state["hospital_cancel"]
                         st.session_state["tab3_success"] = (

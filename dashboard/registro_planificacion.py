@@ -6,6 +6,7 @@ _LOG_PATH = Path(__file__).parent.parent / "datos_generados" / "dashboard" / "re
 
 
 def save_planning(service: str, end_date: date) -> None:
+    """Guarda hasta qué fecha quedó planificado este servicio, para continuar desde ahí la próxima vez."""
     log_data = _load_raw()
     log_data[service] = end_date.isoformat()
     _LOG_PATH.write_text(json.dumps(log_data, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -23,6 +24,7 @@ def get_reference_date(service: str) -> date:
 
 
 def _load_raw() -> dict:
+    """Lee el JSON de planificaciones, si no existe o no es válido lo devuelve vacío."""
     if not _LOG_PATH.exists():
         return {}
     try:

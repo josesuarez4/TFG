@@ -15,6 +15,8 @@ _FRAGMENTATION_NOQX_APPROACHES = frozenset("3X")
 
 
 def filter_surgical_procedures(raw_df: pd.DataFrame) -> pd.DataFrame:
+    """Filtra el catálogo de procedimientos CIE-10-ES para quedarse solo con procedimientos quirúrgicos: 
+    secciones 0 y X con raíz quirúrgica, excluyendo cualificador diagnóstico y manipulaciones externas no quirúrgicas."""
     # Secciones 0 (Medical & Surgical) y X (New Technology)
     mask = (
         (raw_df["Código"].str[0] == "0") |

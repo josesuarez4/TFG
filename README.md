@@ -1,6 +1,6 @@
 # Cuadro de mando para la gestión de listas de espera quirúrgicas - TFG
 
-Herramienta de generación de datos sintéticos y dashboard de gestión de lista de espera quirúrgica para un hospital español, usando códigos CIE-10-ES e ICD-10-PCS-ES reales.
+Herramienta de generación de datos sintéticos y dashboard de gestión de lista de espera quirúrgica para un hospital español, usando códigos CIE-10-ES reales.
 
 ---
 
@@ -10,7 +10,7 @@ Herramienta de generación de datos sintéticos y dashboard de gestión de lista
 TFG/
 ├── datos/
 │   ├── Diagnosticos_ES2026.csv               # Códigos CIE-10-ES de diagnósticos
-│   └── Procedimientos_ES2026.csv             # Códigos ICD-10-PCS-ES de procedimientos
+│   └── Procedimientos_ES2026.csv             # Códigos CIE-10-ES de procedimientos
 ├── datos_generados/
 │   ├── dashboard/
 │   │   ├── lista_espera_quirurgica.csv        # Dato central del dashboard
@@ -67,14 +67,14 @@ OPENAI_API_KEY=sk-...
 
 ### Ejecución
 
-**Paso previo — calcular embeddings (solo la primera vez):**
+**Paso previo: calcular embeddings (solo la primera vez):**
 
 ```bash
 cd generador
 python3 precalcular_embeddings.py
 ```
 
-Descarga el modelo `paraphrase-multilingual-MiniLM-L12-v2` y calcula los embeddings de todos los procedimientos ICD-10-PCS, guardándolos en `datos_generados/generador/proc_embeddings.npy`. Si el fichero ya existe no se sobreescribe.
+Descarga el modelo `paraphrase-multilingual-MiniLM-L12-v2` y calcula los embeddings de todos los procedimientos CIE-10-ES, guardándolos en `datos_generados/generador/proc_embeddings.npy`. Si el fichero ya existe no se sobreescribe.
 
 **Generar la lista de espera:**
 
@@ -91,11 +91,11 @@ Salidas:
 
 **`generar_lista_espera_rae.py`**: Generador principal. `generate_dataset_rae()` produce cada paciente de forma secuencial usando los pesos epidemiológicos RAE-CMBD 2022 para seleccionar diagnóstico, edad y comorbilidades, y delega la generación de campos clínicos en `generar_lista_espera_openai.py`. Guarda checkpoints cada 500 pacientes para poder reanudar ante interrupciones.
 
-**`generar_lista_espera_openai.py`**: Núcleo compartido del generador. `_procedure_candidates()` codifica el diagnóstico con `sentence-transformers` y calcula la similitud coseno contra los embeddings precalculados para seleccionar los 30 procedimientos más relevantes. `_generate_clinical_data()` envía esos candidatos a GPT-4o-mini y obtiene en JSON el procedimiento elegido y todos los campos clínicos. Ante fallos de la API aplica un fallback con valores por defecto para no interrumpir la generación. Los campos identificativos del paciente (`Nombre_Apellidos`, `Medico_Peticionario`) no se generan para evitar datos PII innecesarios.
+**`generar_lista_espera_openai.py`**: Núcleo compartido del generador. `_procedure_candidates()` codifica el diagnóstico con `sentence-transformers` y calcula la similitud coseno contra los embeddings precalculados para seleccionar los 30 procedimientos más relevantes. `_generate_clinical_data()` envía esos candidatos a GPT-4o-mini y obtiene en JSON el procedimiento elegido y todos los campos clínicos. Ante fallos de la API aplica un fallback con valores por defecto para no interrumpir la generación. El propio fichero incluye además `generate_patient()` y `generate_dataset()`, una vía de generación (ejecutable con python3 generar_lista_espera_openai.py [N]) sin los pesos RAE-CMBD, pensada para pruebas rápidas del pipeline de selección y generación clínica sin pasar por generar_lista_espera_rae.py.
 
-**`precalcular_embeddings.py`**: Descarga el modelo `paraphrase-multilingual-MiniLM-L12-v2` y calcula los embeddings de todos los procedimientos ICD-10-PCS con normalización L2, guardándolos en `proc_embeddings.npy`. Si el fichero ya existe no lo sobreescribe.
+**`precalcular_embeddings.py`**: Descarga el modelo `paraphrase-multilingual-MiniLM-L12-v2` y calcula los embeddings de todos los procedimientos CIE-10-ES con normalización L2, guardándolos en `proc_embeddings.npy`. Si el fichero ya existe no lo sobreescribe.
 
-**`filtro_procedimientos.py`**: `filter_surgical_procedures()` filtra el CSV de procedimientos para quedarse únicamente con los de la sección 0 del ICD-10-PCS (procedimientos quirúrgicos médico-quirúrgicos), descartando las secciones de imagen, rehabilitación u otros.
+**`filtro_procedimientos.py`**: `filter_surgical_procedures()` filtra el CSV de procedimientos para quedarse únicamente con los de la sección 0 del CIE-10-ES (procedimientos quirúrgicos médico-quirúrgicos), descartando las secciones de imagen, rehabilitación u otros.
 
 **`rae_cmbd_pesos.py`**: Contiene las funciones `select_diagnosis_rae()`, `sample_age_rae()` y `sample_comorbidities_rae()`, que muestrean diagnóstico, edad y comorbilidades según los pesos de prevalencia extraídos del informe RAE-CMBD 2022, garantizando una distribución epidemiológicamente coherente con la realidad hospitalaria española.
 
@@ -104,7 +104,7 @@ Salidas:
 1. **Selección de diagnóstico**: se elige según los pesos de prevalencia RAE-CMBD 2022, respetando restricciones de sexo y edad.
 2. **Búsqueda de procedimiento**: se codifica el diagnóstico con `sentence-transformers` y se calcula la similitud coseno contra los embeddings precalculados. Se seleccionan los 30 candidatos más relevantes.
 3. **Generación clínica**: GPT-4o-mini recibe los candidatos y el perfil del paciente y devuelve en JSON el procedimiento elegido y todos los campos clínicos (tipo de cirugía, lateralidad, comorbilidades, curso clínico, etc.).
-4. **Asignación de servicio**: se asigna automáticamente por el capítulo ICD-10 del diagnóstico, sin intervención del modelo.
+4. **Asignación de servicio**: se asigna automáticamente por el capítulo CIE-10-ES del diagnóstico, sin intervención del modelo.
 
 ---
 
@@ -127,11 +127,11 @@ El dashboard se abre en el navegador en `http://localhost:8501`. Lee `datos_gene
 
 **`prioridad.py`**: Calcula la puntuación de prioridad (0–100) de cada paciente con la fórmula `espera·0,40 + edad·0,35 + invasividad·0,25`. El componente de edad aplica una curva en V asimétrica con vértice en los 35 años (suelo de 15 puntos), de modo que la prioridad crece tanto hacia edades muy jóvenes como hacia edades avanzadas. El componente de invasividad asigna un peso fijo por tipo de cirugía (abierta en el extremo alto, percutánea y endoscópica en el bajo).
 
-**`huecos.py`**: Gestiona el ciclo de vida de los huecos generados por cancelaciones. `procedure_similarity()` calcula la similitud entre dos códigos ICD-10-PCS ponderando cada posición del código (sección, sistema, operación…) con un peso distinto. `find_candidates()` filtra pacientes elegibles del mismo servicio y los puntúa combinando prioridad (60 %) y similitud de procedimiento (40 %), con soporte de paginación.
+**`huecos.py`**: Gestiona el ciclo de vida de los huecos generados por cancelaciones. `save_gap()` registra un hueco en huecos_disponibles.csv cada vez que una cita se libera, ya sea por cancelación normal o por causa del hospital (incluso si el paciente afectado se reasigna de inmediato a otro hueco). `procedure_similarity()` calcula la similitud entre dos códigos CIE-10-ES de procedimientos ponderando cada posición del código (sección, sistema, operación…) con un peso distinto. `find_candidates()` filtra pacientes elegibles del mismo servicio y los puntúa combinando prioridad (60 %) y similitud de procedimiento (40 %), con soporte de paginación. `load_gaps()` lee el CSV completo de huecos disponibles y `remove_gap()` elimina uno por su id una vez asignado o descartado.
 
-**`restricciones.py`**: Carga y persiste los días cerrados de quirófanos y los periodos de no disponibilidad de especialistas desde los CSV correspondientes. Expone `load_closed_days()` y `load_unavailable_specs()`, que devuelven estructuras indexadas por quirófano y especialista respectivamente para consulta eficiente durante la planificación.
+**`restricciones.py`**: Carga y persiste los días cerrados de quirófanos y los periodos de no disponibilidad de especialistas desde los CSV correspondientes. Expone `load_closed_days()` y `load_unavailable_specs()`, que devuelven estructuras indexadas por quirófano y especialista respectivamente para consulta eficiente durante la planificación. Internamente, `load_closed_days_df()/save_closed_days_for_rooms()` y `load_unavailable_specs_df()/save_unavailable_specs_for_ids()` leen y escriben directamente los CSV en formato tabla, antes de convertirse a esas estructuras indexadas.
 
-**`quirofanos.py`**: Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha, `find_pm_for_service_in_range(service, start, end)` devuelve el quirófano de tarde activo en la ventana de planificación, `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano y `has_service_overlap()` impide que un mismo servicio tenga dos quirófanos de tarde asignados simultáneamente.
+**`quirofanos.py`**: Define el diccionario `ROOMS_BY_SERVICE` con los quirófanos asignados a cada servicio. Gestiona los quirófanos de tarde mediante una lista de asignaciones con rango de fechas; `load_pm_assignment(fecha)` devuelve solo las activas en esa fecha, `find_pm_for_service_in_range(service, start, end)` devuelve el quirófano de tarde activo en la ventana de planificación, `has_pm_overlap()` impide guardar rangos solapados para el mismo quirófano y `has_service_overlap()` impide que un mismo servicio tenga dos quirófanos de tarde asignados simultáneamente. `load_pm_assignments()` y `save_pm_assignments()` leen y persisten la lista completa de asignaciones sin filtrar por fecha, y son la base sobre la que se construyen las funciones anteriores.
 
 **`registro_planificacion.py`**: Persiste la fecha de fin de la última planificación por servicio en `registro_planificacion.json`. `get_reference_date()` devuelve el día siguiente al último horizonte planificado (o hoy si nunca se ha planificado), garantizando que los ciclos consecutivos no dejen huecos temporales.
 
